@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.david0926.drop.model.ArticleModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_article"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:title=""
+            app:titleTextAppearance="@style/TitleBarTextAppearance" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_article">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:padding="24dp"
+                tools:context=".ArticleActivity">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_article_profile"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_undraw_quitting_time"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_article_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.user_name, default=`Username`}"
+                    android:textColor="@color/materialGray7"
+                    android:textSize="18sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toTopOf="@id/txt_article_time"
+                    app:layout_constraintStart_toEndOf="@+id/img_article_profile"
+                    app:layout_constraintTop_toTopOf="@+id/img_article_profile" />
+
+                <TextView
+                    android:id="@+id/txt_article_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="0 hour ago"
+                    android:textColor="@color/materialGray5"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_article_profile"
+                    app:layout_constraintStart_toEndOf="@+id/img_article_profile"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_name"
+                    app:timeago="@{item.upload_time}" />
+
+
+                <ImageView
+                    android:id="@+id/img_article_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="161dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_undraw_quitting_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_article_profile" />
+
+
+                <TextView
+                    android:id="@+id/txt_article_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.product_name, default=`Product Name`}"
+                    android:textColor="@color/materialGray7"
+                    android:textSize="28sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_article_product" />
+
+
+                <TextView
+                    android:id="@+id/txt_article_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_box_radius"
+                    android:elevation="8dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:padding="8dp"
+                    android:text="분실"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    app:articleType="@{item.type}"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_article_product"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/txt_article_product"
+                    app:layout_constraintTop_toTopOf="@+id/txt_article_product" />
+
+                <TextView
+                    android:id="@+id/txt_article_productdesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.product_desc, default=`Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis`}"
+                    android:textColor="@color/materialGray5"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_product" />
+
+                <TextView
+                    android:id="@+id/txt_article_producttimetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="분실/습득 시간"
+                    android:textColor="@color/materialGray7"
+                    android:textSize="24sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_productdesc" />
+
+                <TextView
+                    android:id="@+id/txt_article_producttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.product_desc, default=`2020/06/25 2:00 PM`}"
+                    android:textColor="@color/materialGray5"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_producttimetitle" />
+
+                <TextView
+                    android:id="@+id/txt_article_productplacetitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="분실/습득 장소"
+                    android:textColor="@color/materialGray7"
+                    android:textSize="24sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_producttime" />
+
+                <TextView
+                    android:id="@+id/txt_article_productplace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.product_desc, default=`PC 14 Seat 25`}"
+                    android:textColor="@color/materialGray5"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_productplacetitle" />
+
+                <TextView
+                    android:id="@+id/txt_article_productaddinfotitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="More Info"
+                    android:textColor="@color/materialGray7"
+                    android:textSize="24sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_productplace" />
+
+                <TextView
+                    android:id="@+id/txt_article_productaddinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:includeFontPadding="false"
+                    android:text="@{item.product_desc, default=`CU gifticon`}"
+                    android:textColor="@color/materialGray5"
+                    android:textSize="14sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_article_productaddinfotitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/round_box_radius"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:text="Comments 3"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/round_box"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:text="Interaction Button"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

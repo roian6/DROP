@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#ffffff</item>
+<!--        <item name="android:windowLightStatusBar">false</item>-->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:ambientShadowAlpha">0.05</item>
         <item name="android:spotShadowAlpha">0.05</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,8 +13,8 @@
     </style>
 
     <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">#ffffff</item>
+<!--        <item name="android:windowLightStatusBar">false</item>-->
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:ambientShadowAlpha">0.05</item>
         <item name="android:spotShadowAlpha">0.05</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -30,7 +30,6 @@
     <style name="TitleBarTextAppearance" parent="android:TextAppearance">
         <item name="android:fontFamily">@font/apple_sd_gothic_neo_h</item>
         <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@color/materialDarkBlack</item>
     </style>
 
 </resources>

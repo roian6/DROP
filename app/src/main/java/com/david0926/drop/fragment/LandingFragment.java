@@ -1,4 +1,4 @@
-package com.david0926.drop;
+package com.david0926.drop.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ public class LandingFragment extends Fragment implements ISlideBackgroundColorHo
     private static final String ARG_LAYOUT_RES_ID = "layoutResId";
     private int layoutResId;
 
-    static LandingFragment newInstance(int layoutResId) {
+    public static LandingFragment newInstance(int layoutResId) {
         LandingFragment fragment = new LandingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_LAYOUT_RES_ID, layoutResId);

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.david0926.drop.model.ArticleModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_box"
+        android:backgroundTint="@android:color/white"
+        android:elevation="8dp"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_rowarticle_profile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_undraw_quitting_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.david0926.drop.util.NPTextView
+            android:id="@+id/txt_rowarticle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:text="@{item.user_name, default=`Username`}"
+            android:textColor="@color/materialGray7"
+            android:textSize="18sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/txt_rowarticle_time"
+            app:layout_constraintStart_toEndOf="@+id/img_rowarticle_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_rowarticle_profile" />
+
+        <com.david0926.drop.util.NPTextView
+            android:id="@+id/txt_rowarticle_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:text="0 hour ago"
+            android:textColor="@color/materialGray5"
+            android:textSize="14sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/img_rowarticle_profile"
+            app:layout_constraintStart_toEndOf="@+id/img_rowarticle_profile"
+            app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_name"
+            app:timeago="@{item.upload_time}" />
+
+
+        <ImageView
+            android:id="@+id/img_rowarticle_product"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_undraw_quitting_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_profile" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_product">
+
+            <TextView
+                android:id="@+id/txt_rowarticle_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:includeFontPadding="false"
+                android:text="@{item.product_name, default=`Product Name`}"
+                android:textColor="@color/materialGray7"
+                android:textSize="24sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_rowarticle_productinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:includeFontPadding="false"
+                android:text="@{item.product_time+` | `+item.product_place, default=`6/25 3:00 PM | PC 14`}"
+                android:textColor="@color/materialGray5"
+                android:textSize="14sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_product" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/txt_rowarticle_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_box_radius"
+            android:elevation="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            android:text="분실"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:articleType="@{item.type}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

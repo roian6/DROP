@@ -15,13 +15,23 @@
             android:id="@+id/toolbar_main4"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:title="더보기"
-            app:titleTextAppearance="@style/TitleBarTextAppearance" />
+            app:titleTextAppearance="@style/TitleBarTextAppearance"
+            app:titleTextColor="@android:color/white" />
 
+        <Button
+            android:id="@+id/btn_main4_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_main4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

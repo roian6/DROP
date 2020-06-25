@@ -1,8 +1,23 @@
 package com.david0926.drop.util;
 
 import android.view.View;
+import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
+import androidx.databinding.ObservableArrayList;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.david0926.drop.R;
+import com.david0926.drop.adapter.ArticleAdapter;
+import com.david0926.drop.model.ArticleModel;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class BindingOptions {
@@ -10,6 +25,54 @@ public class BindingOptions {
     @BindingConversion
     public static int convertBooleanToVisibility(boolean visible) {
         return visible ? View.VISIBLE : View.GONE;
+    }
+
+    @BindingAdapter("articleItem")
+    public static void bindArticleItem(RecyclerView recyclerView, ObservableArrayList<ArticleModel> items) {
+        ArticleAdapter adapter = (ArticleAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
+    @BindingAdapter("articleType")
+    public static void bindArticleType(TextView view, String type) {
+        if(type==null) return;
+        if(type.equals("lost")){
+            view.setText("분실");
+            view.setTextColor(view.getContext().getColor(R.color.colorPrimary));
+            view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius));
+        }
+        else{
+            view.setText("습득");
+            view.setTextColor(view.getContext().getColor(R.color.materialGreen));
+            view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius_green));
+        }
+
+    }
+
+    @BindingAdapter("timeago")
+    public static void setTime(TextView view, String time) {
+        if (time == null) return;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
+        String ago;
+        try {
+            Date past = format.parse(time);
+            Date now = new Date();
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime() - past.getTime());
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - past.getTime());
+            long hours = TimeUnit.MILLISECONDS.toHours(now.getTime() - past.getTime());
+            long days = TimeUnit.MILLISECONDS.toDays(now.getTime() - past.getTime());
+
+            if (seconds < 60) ago = seconds + "초";
+            else if (minutes < 60) ago = minutes + "분";
+            else if (hours < 24) ago = hours + "시간";
+            else ago = days + "일";
+            ago += " 전";
+
+            view.setText(ago);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

@@ -18,49 +18,146 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/round_box_top"
             android:visibility="invisible"
             tools:visibility="visible">
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/btn_fab_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_close_black_24dp"
-                android:tint="@android:color/white" />
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraint_fab_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="12dp"
+                <View
+                    android:id="@+id/view_fab_dot"
+                    android:layout_width="36dp"
+                    android:layout_height="6dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:text="대충 아무 버튼"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:backgroundTint="@color/materialGray4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom"
+                    app:layout_constraintTop_toBottomOf="@id/view_fab_dot">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/round_box"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/constraintLayout2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="96dp"
+                            android:src="@drawable/ic_undraw_quitting_time"
+                            app:layout_constraintBottom_toTopOf="@+id/txt_fragfab_found"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txt_fragfab_found"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/apple_sd_gothic_neo_h"
+                            android:text="물건 분실"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/constraintLayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/round_box"
+                        android:elevation="4dp"
+                        android:padding="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_marginBottom="8dp"
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="96dp"
+                            android:src="@drawable/ic_undraw_quitting_time"
+                            app:layout_constraintBottom_toTopOf="@+id/txt_fragfab_lost"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txt_fragfab_lost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/apple_sd_gothic_neo_h"
+                            android:text="분실물 습득"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_fab_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="12dp"
+                        android:background="@drawable/round_box"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/apple_sd_gothic_neo_h"
+                        android:gravity="center"
+                        android:padding="12dp"
+                        android:text="게시물 등록하기"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
     </com.allattentionhere.fabulousfilter.AAH_FilterView>

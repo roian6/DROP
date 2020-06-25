@@ -3,9 +3,6 @@ package com.david0926.drop.fragment;
 import android.app.Dialog;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -23,10 +20,10 @@ public class FabFragment extends AAH_FabulousFragment {
     public void setupDialog(Dialog dialog, int style) {
         FragmentFabBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.fragment_fab, null, false);
-        binding.btnFabClose.setOnClickListener(view -> closeFilter("closed"));
+//        binding.btnFabClose.setOnClickListener(view -> closeFilter("closed"));
 
         //setCancelable(false);
-        setAnimationDuration(500);
+        setAnimationDuration(400);
         setPeekHeight(300);
         //setCallbacks((Callbacks) getActivity());
         setViewgroupStatic(binding.constraintFabBottom);

@@ -4,17 +4,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.david0926.drop.databinding.ActivityMainBinding;
 import com.david0926.drop.fragment.FabFragment;
 import com.david0926.drop.fragment.MainFragment1;
@@ -23,7 +22,7 @@ import com.david0926.drop.fragment.MainFragment3;
 import com.david0926.drop.fragment.MainFragment4;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
     private ActivityMainBinding binding;
@@ -33,8 +32,13 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN); //fullscreen
+
         binding.fabMain.setColorFilter(Color.WHITE);
         binding.fabMain.setOnClickListener(view -> {
+            binding.fabMain.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+            binding.fabMain.setColorFilter(getColor(R.color.colorPrimary));
             FabFragment fabFragment = FabFragment.newInstance();
             fabFragment.setParentFab(binding.fabMain);
             fabFragment.show(getSupportFragmentManager(), fabFragment.getTag());
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity{
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
                 if (action != null && action.equals("invalidate_fab")) {
+                    binding.fabMain.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorPrimary)));
+                    binding.fabMain.setColorFilter(Color.WHITE);
                     binding.bottombarMain.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
                     binding.bottombarMain.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
                 }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -33,6 +34,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-core:17.4.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.airbnb.android:lottie:3.3.1'
+    implementation 'gun0912.ted:tedkeyboardobserver:1.0.2'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'gun0912.ted:tedimagepicker:1.0.12'
     implementation 'com.allattentionhere:fabulousfilter:0.0.5'
     implementation "androidx.preference:preference:1.1.1"
     implementation 'de.hdodenhof:circleimageview:3.1.0'

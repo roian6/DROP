@@ -49,15 +49,15 @@
 
         </FrameLayout>
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:elevation="4dp"
             android:id="@+id/fab_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_black_24dp"
             app:backgroundTint="@color/colorPrimary"
             app:layout_anchor="@id/bottombar_main"
-            app:rippleColor="@color/colorPrimary"
+            app:rippleColor="@android:color/white"
             app:tint="@android:color/white" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

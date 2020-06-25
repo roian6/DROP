@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             //isLandingShown = false; //remove this line, to show landing page only once
 
             if (isLandingShown) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(SplashActivity.this, LandingActivity.class);

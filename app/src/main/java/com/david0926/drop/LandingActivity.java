@@ -6,6 +6,7 @@ import android.view.WindowManager;
 
 import androidx.fragment.app.Fragment;
 
+import com.david0926.drop.fragment.LandingFragment;
 import com.david0926.drop.util.SharedPreferenceUtil;
 import com.github.paolorotolo.appintro.AppIntro;
 
@@ -49,7 +50,7 @@ public class LandingActivity extends AppIntro {
     private void finishLanding() {
 //        if (SharedPreferenceUtil.getBoolean(this, "permission_granted", false)) {
         SharedPreferenceUtil.putBoolean(this, "landing_shown", true);
-        startActivity(new Intent(LandingActivity.this, MainActivity.class));
+        startActivity(new Intent(LandingActivity.this, LoginActivity.class));
         finish();
 //        } else Toast.makeText(this, "먼저 권한에 동의해 주세요.", Toast.LENGTH_SHORT).show();
 
