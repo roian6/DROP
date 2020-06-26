@@ -56,7 +56,9 @@ public class MainFragment1 extends Fragment{
         binding.setArticleList(articleItems);
 
         adapter.setOnItemClickListener((view, item) -> {
-            startActivity(new Intent(mContext, ArticleActivity.class));
+            Intent intent = new Intent(mContext, ArticleActivity.class);
+            intent.putExtra("article", item);
+            startActivity(intent);
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
@@ -65,9 +67,13 @@ public class MainFragment1 extends Fragment{
         model.setUser_name("정찬효");
         model.setType("lost");
         model.setUpload_time("2020/06/25 11:36:00");
+        model.setUser_profile(getString(R.string.test_image));
+        model.setProduct_image(getString(R.string.test_image));
         model.setProduct_name("AirPods Pro");
+        model.setProduct_desc("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis");
         model.setProduct_time("6/20 오후 3시쯤");
         model.setProduct_place("2학년 6반 교실");
+        model.setProduct_addinfo("매점에서 사례하겠습니다.");
 
         ArticleModel model2 = new ArticleModel();
 
@@ -75,8 +81,12 @@ public class MainFragment1 extends Fragment{
         model2.setType("found");
         model2.setUpload_time("2020/06/25 14:36:00");
         model2.setProduct_name("티머니 교통카드");
+        model2.setUser_profile(getString(R.string.test_image));
+        model2.setProduct_image(getString(R.string.test_image));
+        model2.setProduct_desc("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis");
         model2.setProduct_time("6/25 아침");
         model2.setProduct_place("컴 14실");
+        model2.setProduct_addinfo("2학년 6반으로 오세요");
 
         articleItems.add(model);
         articleItems.add(model2);

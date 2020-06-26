@@ -1,6 +1,7 @@
 package com.david0926.drop.util;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -9,9 +10,12 @@ import androidx.databinding.BindingConversion;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
+import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.model.ArticleModel;
+import com.david0926.drop.model.GroupModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,9 +31,21 @@ public class BindingOptions {
         return visible ? View.VISIBLE : View.GONE;
     }
 
+    @BindingAdapter("imageLink")
+    public static void setImageLink(ImageView view, String link) {
+        if(link==null||link.isEmpty()) return;
+        Glide.with(view).load(link).into(view);
+    }
+
     @BindingAdapter("articleItem")
     public static void bindArticleItem(RecyclerView recyclerView, ObservableArrayList<ArticleModel> items) {
         ArticleAdapter adapter = (ArticleAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
+    @BindingAdapter("socialGroupItem")
+    public static void bindSocialGroupItem(RecyclerView recyclerView, ObservableArrayList<GroupModel> items) {
+        SocialGroupAdapter adapter = (SocialGroupAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setItem(items);
     }
 
@@ -50,7 +66,7 @@ public class BindingOptions {
     }
 
     @BindingAdapter("timeago")
-    public static void setTime(TextView view, String time) {
+    public static void setTimeAgo(TextView view, String time) {
         if (time == null) return;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.ENGLISH);
         String ago;

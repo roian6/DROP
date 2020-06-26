@@ -22,6 +22,7 @@
         android:padding="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            app:imageLink="@{item.product_image}"
             android:id="@+id/img_rowarticle_profile"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -67,6 +68,7 @@
             android:layout_height="164dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_undraw_quitting_time"
+            app:imageLink="@{item.product_image}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_profile" />

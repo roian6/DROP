@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">DROP</string>
+
+    <string name="test_image">https://raw.githubusercontent.com/roian6/FileDrive/master/%EB%A7%81%ED%81%AC%EC%9A%A9%20%EC%9D%B4%EB%AF%B8%EC%A7%80/undraw_content_team_3epn.png</string>
+
+    <string name="article_lost_title">분실물 정보</string>
+    <string name="article_found_title">습득물 정보</string>
+
+    <string name="article_lost_time">언제 잃어버렸나요?</string>
+    <string name="article_found_time">언제 발견했나요?</string>
+    <string name="article_lost_place">어디서 잃어버렸나요?</string>
+    <string name="article_found_place">어디서 발견했나요?</string>
+
+    <string name="article_lost_addinfo">습득 리워드</string>
+    <string name="article_found_addinfo">수령 가능한 시간/장소</string>
+
 </resources>

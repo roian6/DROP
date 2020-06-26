@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="activity"
+            type="com.david0926.drop.ArticleActivity" />
+
+        <variable
             name="item"
             type="com.david0926.drop.model.ArticleModel" />
 
@@ -13,7 +17,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_article"
@@ -24,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-            app:title=""
+            app:title="@{item.type.equals(`lost`)?@string/article_lost_title:@string/article_found_title, default=`Title`}"
             app:titleTextAppearance="@style/TitleBarTextAppearance" />
 
 
@@ -38,12 +43,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:padding="24dp"
                 tools:context=".ArticleActivity">
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    app:imageLink="@{item.user_profile}"
                     android:id="@+id/img_article_profile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
@@ -84,6 +89,7 @@
 
 
                 <ImageView
+                    app:imageLink="@{item.product_image}"
                     android:id="@+id/img_article_product"
                     android:layout_width="match_parent"
                     android:layout_height="161dp"
@@ -103,38 +109,16 @@
                     android:includeFontPadding="false"
                     android:text="@{item.product_name, default=`Product Name`}"
                     android:textColor="@color/materialGray7"
-                    android:textSize="28sp"
+                    android:textSize="32sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_article_product" />
-
-
-                <TextView
-                    android:id="@+id/txt_article_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/round_box_radius"
-                    android:elevation="8dp"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
-                    android:includeFontPadding="false"
-                    android:padding="8dp"
-                    android:text="분실"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    app:articleType="@{item.type}"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintBottom_toBottomOf="@+id/txt_article_product"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/txt_article_product"
-                    app:layout_constraintTop_toTopOf="@+id/txt_article_product" />
 
                 <TextView
                     android:id="@+id/txt_article_productdesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
                     android:text="@{item.product_desc, default=`Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis`}"
@@ -151,7 +135,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="분실/습득 시간"
+                    android:text="@{item.type.equals(`lost`)?@string/article_lost_time:@string/article_found_time, default=`Time`}"
                     android:textColor="@color/materialGray7"
                     android:textSize="24sp"
                     app:layout_constrainedWidth="true"
@@ -165,7 +149,7 @@
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="@{item.product_desc, default=`2020/06/25 2:00 PM`}"
+                    android:text="@{item.product_time, default=`0000/00/00 00:00 PM`}"
                     android:textColor="@color/materialGray5"
                     android:textSize="14sp"
                     app:layout_constrainedWidth="true"
@@ -179,7 +163,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="분실/습득 장소"
+                    android:text="@{item.type.equals(`lost`)?@string/article_lost_place:@string/article_found_place, default=`Place`}"
                     android:textColor="@color/materialGray7"
                     android:textSize="24sp"
                     app:layout_constrainedWidth="true"
@@ -193,7 +177,7 @@
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="@{item.product_desc, default=`PC 14 Seat 25`}"
+                    android:text="@{item.product_place, default=`Lorem Ipsum`}"
                     android:textColor="@color/materialGray5"
                     android:textSize="14sp"
                     app:layout_constrainedWidth="true"
@@ -207,7 +191,7 @@
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="More Info"
+                    android:text="@{item.type.equals(`lost`)?@string/article_lost_addinfo:@string/article_found_addinfo, default=`More Info`}"
                     android:textColor="@color/materialGray7"
                     android:textSize="24sp"
                     app:layout_constrainedWidth="true"
@@ -221,7 +205,7 @@
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
-                    android:text="@{item.product_desc, default=`CU gifticon`}"
+                    android:text="@{item.product_addinfo, default=`Lorem Ipsum`}"
                     android:textColor="@color/materialGray5"
                     android:textSize="14sp"
                     app:layout_constrainedWidth="true"
@@ -239,7 +223,7 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_box_radius"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="Comments 3"
+            android:text="@{`Comments `+item.comments.size(), default=`Comments 3`}"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"

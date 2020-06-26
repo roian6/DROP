@@ -1,16 +1,20 @@
 package com.david0926.drop.model;
 
-public class ArticleModel {
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    private String id, user_name, user_email, user_profile, type, upload_time, product_name,
+public class ArticleModel implements Serializable {
+
+    private String group_id, id, user_name, user_email, user_profile, type, upload_time, product_name,
             product_image, product_desc, product_time, product_place, product_addinfo;
     private Boolean solve;
-    private CommentModel[] comments;
+    private ArrayList<CommentModel> comments;
 
     public ArticleModel() {
     }
 
-    public ArticleModel(String id, String user_name, String user_email, String user_profile, String type, String upload_time, String product_name, String product_image, String product_desc, String product_time, String product_place, String product_addinfo, Boolean solve, CommentModel[] comments) {
+    public ArticleModel(String group_id, String id, String user_name, String user_email, String user_profile, String type, String upload_time, String product_name, String product_image, String product_desc, String product_time, String product_place, String product_addinfo, Boolean solve, ArrayList<CommentModel> comments) {
+        this.group_id = group_id;
         this.id = id;
         this.user_name = user_name;
         this.user_email = user_email;
@@ -25,6 +29,14 @@ public class ArticleModel {
         this.product_addinfo = product_addinfo;
         this.solve = solve;
         this.comments = comments;
+    }
+
+    public String getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(String group_id) {
+        this.group_id = group_id;
     }
 
     public String getId() {
@@ -131,11 +143,11 @@ public class ArticleModel {
         this.solve = solve;
     }
 
-    public CommentModel[] getComments() {
+    public ArrayList<CommentModel> getComments() {
         return comments;
     }
 
-    public void setComments(CommentModel[] comments) {
+    public void setComments(ArrayList<CommentModel> comments) {
         this.comments = comments;
     }
 }
