@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
+import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.GroupModel;
@@ -47,6 +48,12 @@ public class BindingOptions {
     @BindingAdapter("socialGroupItem")
     public static void bindSocialGroupItem(RecyclerView recyclerView, ObservableArrayList<GroupModel> items) {
         SocialGroupAdapter adapter = (SocialGroupAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
+    @BindingAdapter("groupItem")
+    public static void bindGroupItem(RecyclerView recyclerView, ObservableArrayList<GroupModel> items) {
+        GroupAdapter adapter = (GroupAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setItem(items);
     }
 

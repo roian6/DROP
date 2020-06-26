@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.david0926.drop.model.GroupModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_box"
+        android:backgroundTint="@android:color/white"
+        android:elevation="8dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/img_rowarticle_product"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
+            android:src="@drawable/ic_undraw_quitting_time"
+            app:imageLink="@{item.image}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginTop="8dp"
+            android:id="@+id/txt_rowarticle_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:text="@{item.name, default=`Group Name`}"
+            android:textColor="@color/materialGray7"
+            android:textSize="24sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_product" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

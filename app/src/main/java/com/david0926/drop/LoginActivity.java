@@ -20,6 +20,7 @@ import com.david0926.drop.Interface.RegisterModel;
 import com.david0926.drop.Interface.RetrofitRegisterInterface;
 import com.david0926.drop.databinding.ActivityLoginBinding;
 import com.david0926.drop.model.UserModel;
+import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -170,9 +171,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String body = response.body().string();
-                    JSONObject responseObject = new JSONObject(body).getJSONObject("data").getJSONObject("user");
 
-                    UserCache.setUser(LoginActivity.this, responseObject.toString());
+                    JSONObject dataObject = new JSONObject(body).getJSONObject("data");
+                    JSONObject tokenObject = dataObject.getJSONObject("token");
+                    JSONObject userObject = dataObject.getJSONObject("user");
+
+                    TokenCache.setToken(LoginActivity.this, tokenObject.toString());
+                    UserCache.setUser(LoginActivity.this, userObject.toString());
+
                     finishSignIn();
                 } catch(Exception e) {
                     showErrorMsg("아이디 또는 비밀번호가 일치하지 않습니다.");

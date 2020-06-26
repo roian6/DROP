@@ -123,7 +123,7 @@
                     android:includeFontPadding="false"
                     android:text="@{item.product_desc, default=`Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis`}"
                     android:textColor="@color/materialGray5"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_article_product" />
@@ -151,7 +151,7 @@
                     android:includeFontPadding="false"
                     android:text="@{item.product_time, default=`0000/00/00 00:00 PM`}"
                     android:textColor="@color/materialGray5"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_article_producttimetitle" />
@@ -179,7 +179,7 @@
                     android:includeFontPadding="false"
                     android:text="@{item.product_place, default=`Lorem Ipsum`}"
                     android:textColor="@color/materialGray5"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_article_productplacetitle" />
@@ -200,14 +200,14 @@
 
                 <TextView
                     android:id="@+id/txt_article_productaddinfo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="wrap_content" 
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:includeFontPadding="false"
                     android:text="@{item.product_addinfo, default=`Lorem Ipsum`}"
                     android:textColor="@color/materialGray5"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_article_productaddinfotitle" />

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.david0926.drop.ArticleActivity;
+import com.david0926.drop.GroupActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
@@ -63,9 +64,9 @@ public class MainFragment2 extends Fragment {
         binding.setGroupList(groupItems);
 
         adapter.setOnItemClickListener((view, item) -> {
-//            Intent intent = new Intent(mContext, ArticleActivity.class);
-//            intent.putExtra("article", item);
-//            startActivity(intent);
+            if(item.getId().equals("add_group")){
+                startActivity(new Intent(mContext, GroupActivity.class));
+            }
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
