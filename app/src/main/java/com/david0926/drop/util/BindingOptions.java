@@ -1,10 +1,11 @@
 package com.david0926.drop.util;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.res.ResourcesCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.BindingConversion;
 import androidx.databinding.ObservableArrayList;
@@ -33,7 +34,7 @@ public class BindingOptions {
 
     @BindingAdapter("imageLink")
     public static void setImageLink(ImageView view, String link) {
-        if(link==null||link.isEmpty()) return;
+        if (link == null || link.isEmpty()) return;
         Glide.with(view).load(link).into(view);
     }
 
@@ -49,15 +50,34 @@ public class BindingOptions {
         if (adapter != null) adapter.setItem(items);
     }
 
+    @BindingAdapter("isViewSelected")
+    public static void setIsViewSelected(View view, Boolean selected) {
+        if (selected == null) return;
+        view.setBackgroundTintList(ContextCompat.getColorStateList(view.getContext(),
+                selected ? R.color.colorPrimary : R.color.colorWhite));
+    }
+
+    @BindingAdapter("isTextSelected")
+    public static void setIsTextSelected(TextView view, Boolean selected) {
+        if (selected == null) return;
+        view.setTextColor(view.getContext().getColor(selected ? R.color.colorWhite : R.color.colorPrimary));
+    }
+
+    @BindingAdapter("buttonEnabled")
+    public static void setButtonEnabled(Button button, Boolean enabled) {
+        button.setEnabled(enabled);
+        button.setBackgroundTintList(ContextCompat.getColorStateList(button.getContext(),
+                enabled ? R.color.colorPrimary : R.color.materialGray5));
+    }
+
     @BindingAdapter("articleType")
     public static void bindArticleType(TextView view, String type) {
-        if(type==null) return;
-        if(type.equals("lost")){
+        if (type == null) return;
+        if (type.equals("lost")) {
             view.setText("분실");
             view.setTextColor(view.getContext().getColor(R.color.colorPrimary));
             view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius));
-        }
-        else{
+        } else {
             view.setText("습득");
             view.setTextColor(view.getContext().getColor(R.color.materialGreen));
             view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius_green));

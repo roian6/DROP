@@ -82,7 +82,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView5"
                         app:socialGroupItem="@{groupList}"
-                        tools:listitem="@layout/row_socialgroup" />
+                        tools:listitem="@layout/row_social_group" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -150,7 +150,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                     <Button
-                        android:id="@+id/btn_main2_editprofile"
+                        android:id="@+id/btn_main2_edit_profile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"

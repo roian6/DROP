@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import androidx.databinding.DataBindingUtil;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
+import com.david0926.drop.ArticleUploadActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.databinding.FragmentFabBinding;
 
@@ -20,12 +21,19 @@ public class FabFragment extends AAH_FabulousFragment {
     public void setupDialog(Dialog dialog, int style) {
         FragmentFabBinding binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()),
                 R.layout.fragment_fab, null, false);
-//        binding.btnFabClose.setOnClickListener(view -> closeFilter("closed"));
 
-        //setCancelable(false);
+        binding.btnFragfabLost.setOnClickListener(view -> binding.setSelected("lost"));
+        binding.btnFragfabFound.setOnClickListener(view -> binding.setSelected("found"));
+
+        binding.btnFragfabUpload.setOnClickListener(view -> {
+            closeFilter("close");
+            Intent intent = new Intent(getContext(), ArticleUploadActivity.class);
+            intent.putExtra("type", binding.getSelected());
+            startActivity(intent);
+        });
+
         setAnimationDuration(400);
         setPeekHeight(300);
-        //setCallbacks((Callbacks) getActivity());
         setViewgroupStatic(binding.constraintFabBottom);
         setViewMain(binding.relativeFabContent);
         setMainContentView(binding.getRoot());
