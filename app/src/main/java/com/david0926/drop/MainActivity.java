@@ -20,6 +20,7 @@ import com.david0926.drop.fragment.MainFragment1;
 import com.david0926.drop.fragment.MainFragment2;
 import com.david0926.drop.fragment.MainFragment3;
 import com.david0926.drop.fragment.MainFragment4;
+import com.david0926.drop.model.UserModel;
 import com.google.android.material.bottomappbar.BottomAppBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         registerReceiver(broadcastReceiver, new IntentFilter("invalidate_fab"));
+
+        
 
         binding.bottomnavMain.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

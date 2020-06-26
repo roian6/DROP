@@ -40,7 +40,7 @@ public class MainFragment4 extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main4, container, false);
 
         binding.btnMain4Logout.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
+//            FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(mContext, LoginActivity.class));
             getActivity().finish();
         });

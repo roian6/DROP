@@ -15,11 +15,14 @@ import retrofit2.http.PartMap;
 
 public interface RetrofitRegisterInterface {
 
-    @POST("v1/user")
     @Multipart
+    @POST("v1/user")
     Call<ResponseBody> CreateUser(
 //            @Body RegisterModel rm
-            @PartMap Map<String, RequestBody> params
+            @Part("userid") RequestBody userid,
+            @Part("password") RequestBody password,
+            @Part("name") RequestBody name,
+            @Part MultipartBody.Part photo
     );
 
     @POST("v1/auth")

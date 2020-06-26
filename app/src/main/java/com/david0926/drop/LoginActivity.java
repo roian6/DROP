@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             String id = binding.getId(), pw = binding.getPw();
 
             if (TextUtils.isEmpty(id) || TextUtils.isEmpty(pw)) //empty field
-                showErrorMsg("Please fill all required fields.");
+                showErrorMsg("아이디와 비밀번호를 입력하세요.");
             else signIn(id, pw);
 
         });
@@ -164,16 +164,13 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
         Call<ResponseBody> mCallResponse = mRetrofitAPI.Login(new LoginModel(id,pw));
-        System.out.println("-=== 로그인 레드로핏 실행 ===-");
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    System.out.println("성공.");
                     String body = response.body().string();
-                    System.out.println();
                     JSONObject responseObject = new JSONObject(body).getJSONObject("data").getJSONObject("user");
-                    UserCache.setUser(LoginActivity.this, new UserModel(responseObject.getString("name"),responseObject.getString("userid"), ""));
+                    UserCache.setUser(LoginActivity.this, new UserModel(responseObject.getString("name"),responseObject.getString("userid"), responseObject.getString("photo")));
                     finishSignIn();
                 } catch(Exception e) {
                     showErrorMsg("아이디또는 비밀번호가 일치하지 않습니다.");
@@ -184,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 try {
-                    System.out.println("E R R O R");
+
                 } catch(Exception e) {
                     e.printStackTrace();
                 }

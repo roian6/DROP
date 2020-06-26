@@ -32,6 +32,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -61,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private StorageReference storageReference = firebaseStorage.getReference();
 
-    private String uri;
+    private Uri uri;
 
     private ActivityRegisterBinding binding;
 
@@ -102,23 +104,22 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (TextUtils.isEmpty(binding.getName()) || TextUtils.isEmpty(binding.getEmail())
                     || TextUtils.isEmpty(binding.getPw()) || TextUtils.isEmpty(binding.getPwcheck())) //empty field
-                showErrorMsg("Please fill all required fields.");
+                showErrorMsg("빈칸을 모두 채워주세요.");
 
             else if (!isValidEmail(binding.getEmail())) //invalid email
-                showErrorMsg("Please enter a valid email address.");
+                showErrorMsg("올바른 이메일 주소를 입력해주세요.");
 
             else if (!isValidPw(binding.getPw())) //invalid password
-                showErrorMsg("Please enter a valid password. (6~24 letters, 0-9 + A-z)");
+                showErrorMsg("올바른 패스워드를 입력해주세요. (6~24자, 숫자+대소문자)");
 
             else if (!binding.getPw().equals(binding.getPwcheck())) //password confirm failed
-                showErrorMsg("Please enter same password in both fields.");
+                showErrorMsg("비밀번호가 일치하지 않습니다.");
 
             else if (binding.imgRegiProfile.getDrawable() == null) //profile image not uploaded
-                showErrorMsg("Please upload your profile image.");
+                showErrorMsg("프로필 사진을 넣어주세요.");
 
             else { //confirm success
 
-                System.out.println("레트로핏 진입");
 //                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()),
 //                        binding.getName(), binding.getEmail(), binding.getPw());
                 createAccount(uri,
@@ -130,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void createAccount(String profile, String name, String email, String pw) {
+    private void createAccount(Uri profile, String name, String email, String pw) {
 
 
 //
@@ -140,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
 //            storageReference
 //                    .child("profile/" + email + ".png")
 //                    .putBytes(profile)
-//                    .addOnSuccessListener(snapshot -> finishSignUp())
+////                    .addOnSuccessListener(snapshot -> finishSignUp())
 //                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
 //        };
 //
@@ -167,35 +168,43 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
         RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
 
-        File file = new File(profile);
+        File file;
+        try {
+            file = new File(profile.getPath());
+        } catch(NullPointerException e) {
+            showErrorMsg("프로필 사진을 넣어주세요");
+            return;
+        }
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
         Map<String, RequestBody> m = new ArrayMap<>();
-
-        m.put("userid", RequestBody.create(MediaType.parse("multipart/form-data"), email));
-        m.put("name", RequestBody.create(MediaType.parse("multipart/form-data"), name));
-        m.put("password", RequestBody.create(MediaType.parse("multipart/form-data"), pw));
-        m.put("photo", requestFile);
-
-
-        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(m);
-        System.out.println("-=== 레드로핏 실행 ===-");
+        RequestBody userid =
+                RequestBody.create(MediaType.parse("multipart/form-data"), email);
+        RequestBody namebody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), name);
+        RequestBody password =
+                RequestBody.create(MediaType.parse("multipart/form-data"), pw);
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(userid, password, namebody, photo);
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            System.out.println("성공.");
-                            System.out.println(response.body().string());
+                try {
+                        if (response.body().string() == null) {
+                            showErrorMsg("이미 존재하는 계정입니다.");
+                            return;
+                        }
                     finishSignUp();
                 } catch(Exception e) {
+                    showErrorMsg("이미 존재하는 계정입니다.");
                     e.printStackTrace();
+                    return;
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 try {
-                    System.out.println("E R R O R");
+
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -221,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void setProfileImage(Uri uri) {
         if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
             Glide.with(this).load(uri).into(binding.imgRegiProfile);
-            this.uri = uri.getPath();
+            this.uri = uri;
         } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
     }
 

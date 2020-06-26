@@ -24,6 +24,7 @@ import com.david0926.drop.databinding.FragmentMain2Binding;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
+import com.david0926.drop.util.UserCache;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +51,9 @@ public class MainFragment2 extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main2, container, false);
 
         mContext.getTheme().applyStyle(R.style.AppTheme, true);
+
+        System.out.println("Loading Image : " + UserCache.getUser(mContext).getProfile());
+        binding.setUser(UserCache.getUser(mContext));
 
         LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
                 mContext, LinearLayoutManager.HORIZONTAL, false);
@@ -92,12 +96,7 @@ public class MainFragment2 extends Fragment {
         groupItems.add(model3);
         groupItems.add(model4);
 
-        UserModel user = new UserModel();
-        user.setName("정찬효");
-        user.setEmail("roian6@naver.com");
-        user.setProfile(getString(R.string.test_image));
 
-        binding.setUser(user);
 
         return binding.getRoot();
     }
