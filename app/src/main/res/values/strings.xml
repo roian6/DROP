@@ -11,7 +11,7 @@
     <string name="article_lost_place">어디서 잃어버렸나요?</string>
     <string name="article_found_place">어디서 발견했나요?</string>
 
-    <string name="article_lost_addinfo">습득 리워드</string>
+    <string name="article_lost_addinfo">찾아주시는 분께</string>
     <string name="article_found_addinfo">수령 가능한 시간/장소</string>
 
 </resources>
