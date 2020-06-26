@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="article"
+            type="com.david0926.drop.model.ArticleModel" />
+
+        <variable
+            name="type"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ArticleUploadActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_article_upload"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:title="@{type.equals(`lost`)?@string/article_upload_lost_title:@string/article_upload_found_title, default=`Title`}"
+            app:titleTextAppearance="@style/TitleBarTextAppearance" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_article_upload">
+
+            <Spinner
+                android:id="@+id/spinner_article_upload_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_box"
+                android:backgroundTint="@color/materialGray1"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:layout_marginTop="16dp"
+                android:id="@+id/edt_article_upload_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_box"
+                android:backgroundTint="@color/materialGray1"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:hint="물건 이름을 입력해 주세요."
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:text="@={article.product_name}"
+                android:textColorHint="@color/materialGray5"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_article_upload_group" />
+
+            <EditText
+                android:layout_marginTop="16dp"
+                android:id="@+id/edt_article_upload_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_box"
+                android:backgroundTint="@color/materialGray1"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:hint="물건 이름을 입력해 주세요."
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:text="@={article.product_name}"
+                android:textColorHint="@color/materialGray5"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

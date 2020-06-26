@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.david0926.drop.databinding.RowSocialgroupBinding;
+import com.david0926.drop.databinding.RowSocialGroupBinding;
 import com.david0926.drop.model.GroupModel;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class SocialGroupAdapter extends RecyclerView.Adapter<SocialGroupAdapter.
     @NonNull
     @Override
     public GroupHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new GroupHolder(RowSocialgroupBinding
+        return new GroupHolder(RowSocialGroupBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
@@ -64,9 +64,9 @@ public class SocialGroupAdapter extends RecyclerView.Adapter<SocialGroupAdapter.
 
     static class GroupHolder extends RecyclerView.ViewHolder {
 
-        RowSocialgroupBinding binding;
+        RowSocialGroupBinding binding;
 
-        GroupHolder(RowSocialgroupBinding binding) {
+        GroupHolder(RowSocialGroupBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
