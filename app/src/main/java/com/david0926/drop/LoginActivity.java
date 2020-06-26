@@ -64,9 +64,9 @@ public class LoginActivity extends AppCompatActivity {
             binding.scrollLogin.smoothScrollTo(0, binding.scrollLogin.getBottom());
         });
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        }
+//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//        }
 
         //sign in button clicked
         binding.btnLoginSignin.setOnClickListener(view -> {

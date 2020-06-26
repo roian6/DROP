@@ -22,6 +22,14 @@ public class UserCache {
                 .apply();
     }
 
+    public static void logoutUser(Context context) {
+        setUser(context, new UserModel("logout", "logout", "logout"));
+    }
+
+    public static boolean islogoutUser(Context context) {
+        return getUser(context).getEmail().equals("logout") && getUser(context).equals("email@email.com") == false;
+    }
+
     public static UserModel getUser(Context context) {
         UserModel model = new UserModel();
         model.setName(getSharedPreferences(context).getString("user_name", "username"));

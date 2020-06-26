@@ -15,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.databinding.FragmentMain4Binding;
+import com.david0926.drop.util.UserCache;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +43,7 @@ public class MainFragment4 extends Fragment {
 
         binding.btnMain4Logout.setOnClickListener(view -> {
 //            FirebaseAuth.getInstance().signOut();
+            UserCache.logoutUser(mContext);
             startActivity(new Intent(mContext, LoginActivity.class));
             getActivity().finish();
         });
