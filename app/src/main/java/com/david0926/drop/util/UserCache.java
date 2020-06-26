@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 import com.david0926.drop.model.UserModel;
+import com.google.gson.Gson;
 
 public class UserCache {
 
@@ -13,28 +14,26 @@ public class UserCache {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static void setUser(Context context, UserModel model) {
+    public static void setUser(Context context, String json) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor
-                .putString("user_name", model.getName())
-                .putString("user_email", model.getEmail())
-                .putString("user_profile", model.getProfile())
-                .apply();
+        editor.putString("user_json", json).apply();
     }
 
     public static void logoutUser(Context context) {
-        setUser(context, new UserModel("logout", "logout", "logout"));
+        setUser(context, null);
     }
 
-    public static boolean islogoutUser(Context context) {
-        return getUser(context).getEmail().equals("logout") && getUser(context).equals("email@email.com") == false;
+    public static boolean isLogoutUser(Context context) {
+        return getUser(context) == null;
     }
 
     public static UserModel getUser(Context context) {
-        UserModel model = new UserModel();
-        model.setName(getSharedPreferences(context).getString("user_name", "username"));
-        model.setEmail(getSharedPreferences(context).getString("user_email", "email@email.com"));
-        model.setProfile(getSharedPreferences(context).getString("user_profile", ""));
-        return model;
+
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(getSharedPreferences(context).getString("user_json", ""), UserModel.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

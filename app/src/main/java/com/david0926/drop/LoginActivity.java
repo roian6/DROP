@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import gun0912.tedkeyboardobserver.TedKeyboardObserver;
@@ -159,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 //        //coroutine this code later...
 
         Retrofit register = new Retrofit.Builder()
-                .baseUrl("https://api.drop.hadmarine.com/")
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
@@ -170,10 +171,11 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     String body = response.body().string();
                     JSONObject responseObject = new JSONObject(body).getJSONObject("data").getJSONObject("user");
-                    UserCache.setUser(LoginActivity.this, new UserModel(responseObject.getString("name"),responseObject.getString("userid"), responseObject.getString("photo")));
+
+                    UserCache.setUser(LoginActivity.this, responseObject.toString());
                     finishSignIn();
                 } catch(Exception e) {
-                    showErrorMsg("아이디또는 비밀번호가 일치하지 않습니다.");
+                    showErrorMsg("아이디 또는 비밀번호가 일치하지 않습니다.");
                     e.printStackTrace();
                 }
             }

@@ -3,6 +3,7 @@ package com.david0926.drop;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.david0926.drop.databinding.ActivityArticleUploadBinding;
@@ -15,5 +16,13 @@ public class ArticleUploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_upload);
+
+        //finish activity, when back button pressed
+        binding.toolbarArticleUpload.setNavigationOnClickListener(view -> finish());
+
+        Intent getIntent = getIntent();
+        binding.setType(getIntent.getStringExtra("type"));
+
+
     }
 }

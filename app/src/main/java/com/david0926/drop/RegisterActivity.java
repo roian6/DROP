@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
 //
         Retrofit register = new Retrofit.Builder()
-                .baseUrl("https://api.drop.hadmarine.com/")
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
@@ -197,7 +197,6 @@ public class RegisterActivity extends AppCompatActivity {
                 } catch(Exception e) {
                     showErrorMsg("이미 존재하는 계정입니다.");
                     e.printStackTrace();
-                    return;
                 }
             }
 
@@ -211,8 +210,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-        //coroutine later
     }
 
 

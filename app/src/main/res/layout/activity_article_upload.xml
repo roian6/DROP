@@ -31,67 +31,186 @@
             app:title="@{type.equals(`lost`)?@string/article_upload_lost_title:@string/article_upload_found_title, default=`Title`}"
             app:titleTextAppearance="@style/TitleBarTextAppearance" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_article_upload"
             app:layout_constraintTop_toBottomOf="@id/toolbar_article_upload">
 
-            <Spinner
-                android:id="@+id/spinner_article_upload_group"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_box"
-                android:backgroundTint="@color/materialGray1"
-                android:padding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="16dp">
 
-            <EditText
-                android:layout_marginTop="16dp"
-                android:id="@+id/edt_article_upload_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_box"
-                android:backgroundTint="@color/materialGray1"
-                android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:hint="물건 이름을 입력해 주세요."
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:padding="16dp"
-                android:text="@={article.product_name}"
-                android:textColorHint="@color/materialGray5"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_article_upload_group" />
+                <RelativeLayout
+                    android:id="@+id/box_regi_profile"
+                    android:layout_width="144dp"
+                    android:layout_height="144dp"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.494"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:layout_marginTop="16dp"
-                android:id="@+id/edt_article_upload_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_box"
-                android:backgroundTint="@color/materialGray1"
-                android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:hint="물건 이름을 입력해 주세요."
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:maxLength="10"
-                android:maxLines="1"
-                android:padding="16dp"
-                android:text="@={article.product_name}"
-                android:textColorHint="@color/materialGray5"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_name" />
+                    <ImageView
+                        android:id="@+id/img_regi_editprofile"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:elevation="4dp"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_edit_black_24dp"
+                        android:tint="@android:color/white"
+                        android:translationZ="16dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/img_article_upload_image"
+                        android:layout_width="128dp"
+                        android:layout_height="128dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:src="@drawable/ic_undraw_quitting_time"
+                        app:civ_border_color="@color/materialGray2"
+                        app:civ_border_width="0.5dp" />
+
+                </RelativeLayout>
+
+                <Spinner
+                    android:id="@+id/spinner_article_upload_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:padding="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/box_regi_profile" />
+
+                <EditText
+                    android:id="@+id/edt_article_upload_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:hint="@{type.equals(`lost`)?@string/article_upload_lost_name:@string/article_upload_found_name, default=`Name`}"
+                    android:importantForAutofill="no"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text="@={article.product_name}"
+                    android:textColorHint="@color/materialGray5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_article_upload_group" />
+
+                <EditText
+                    android:id="@+id/edt_article_upload_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:hint="@{type.equals(`lost`)?@string/article_upload_lost_time:@string/article_upload_found_time, default=`Time`}"
+                    android:importantForAutofill="no"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text="@={article.product_name}"
+                    android:textColorHint="@color/materialGray5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_name" />
+
+                <EditText
+                    android:id="@+id/edt_article_upload_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:hint="@{type.equals(`lost`)?@string/article_upload_lost_place:@string/article_upload_found_place, default=`Place`}"
+                    android:importantForAutofill="no"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text="@={article.product_name}"
+                    android:textColorHint="@color/materialGray5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_time" />
+
+                <EditText
+                    android:id="@+id/edt_article_upload_addinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:hint="@{type.equals(`lost`)?@string/article_upload_lost_addinfo:@string/article_upload_found_addinfo, default=`More Info`}"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text="@={article.product_name}"
+                    android:textColorHint="@color/materialGray5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_place" />
+
+                <EditText
+                    android:id="@+id/edt_article_upload_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/materialGray1"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:gravity="top"
+                    android:hint="@{type.equals(`lost`)?@string/article_upload_lost_desc:@string/article_upload_found_desc, default=`Description`}"
+                    android:minLines="3"
+                    android:padding="16dp"
+                    android:text="@={article.product_name}"
+                    android:textColorHint="@color/materialGray5"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_article_upload_addinfo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_article_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/round_box"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:text="게시물 등록하기"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

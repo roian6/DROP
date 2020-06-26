@@ -117,7 +117,7 @@
                         android:layout_margin="8dp"
                         android:elevation="8dp"
                         android:src="@drawable/ic_undraw_quitting_time"
-                        app:imageLink="@{user.profile}"
+                        app:imageLink="@{user.photo}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/apple_sd_gothic_neo_h"
                         android:includeFontPadding="false"
-                        android:text="@{user.email, default=`email@email.com`}"
+                        android:text="@{user.userid, default=`email@email.com`}"
                         android:textColor="@color/materialGray6"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="@+id/lottie_regi_profile"

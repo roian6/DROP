@@ -52,7 +52,6 @@ public class MainFragment2 extends Fragment {
 
         mContext.getTheme().applyStyle(R.style.AppTheme, true);
 
-        System.out.println("Loading Image : " + UserCache.getUser(mContext).getProfile());
         binding.setUser(UserCache.getUser(mContext));
 
         LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
