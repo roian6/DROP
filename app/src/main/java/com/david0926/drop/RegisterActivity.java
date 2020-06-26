@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
+import com.david0926.drop.Interface.RegisterModel;
+import com.david0926.drop.Interface.RetrofitRegisterInterface;
 import com.david0926.drop.databinding.ActivityRegisterBinding;
 import com.david0926.drop.model.UserModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,14 +33,25 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
 import gun0912.tedkeyboardobserver.TedKeyboardObserver;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -46,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private StorageReference storageReference = firebaseStorage.getReference();
+
+    private String uri;
 
     private ActivityRegisterBinding binding;
 
@@ -74,7 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
                     .startAnimation(R.anim.slide_up, R.anim.slide_up_before)
                     .finishAnimation(R.anim.slide_down_before, R.anim.slide_down)
                     .start(this::setProfileImage);
+
         });
+
 
         //sign up button clicked
         binding.btnRegiSignup.setOnClickListener(view -> {
@@ -98,55 +116,104 @@ public class RegisterActivity extends AppCompatActivity {
             else if (binding.imgRegiProfile.getDrawable() == null) //profile image not uploaded
                 showErrorMsg("Please upload your profile image.");
 
-            else //confirm success
-                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()),
+            else { //confirm success
+
+                System.out.println("레트로핏 진입");
+//                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()),
+//                        binding.getName(), binding.getEmail(), binding.getPw());
+                createAccount(uri,
                         binding.getName(), binding.getEmail(), binding.getPw());
+
+            }
 
         });
 
     }
 
-    private void createAccount(byte[] profile, String name, String email, String pw) {
+    private void createAccount(String profile, String name, String email, String pw) {
 
-        OnSuccessListener<Void> firestoreSuccessListener = aVoid -> {
 
-            //3. firebase storage (upload profile image)
-            storageReference
-                    .child("profile/" + email + ".png")
-                    .putBytes(profile)
-                    .addOnSuccessListener(snapshot -> finishSignUp())
-                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
-        };
+//
+//        OnSuccessListener<Void> firestoreSuccessListener = aVoid -> {
+//
+//            //3. firebase storage (upload profile image)
+//            storageReference
+//                    .child("profile/" + email + ".png")
+//                    .putBytes(profile)
+//                    .addOnSuccessListener(snapshot -> finishSignUp())
+//                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
+//        };
+//
+//        OnSuccessListener<AuthResult> authSuccessListener = task -> {
+//
+//            //2. firestore (upload user information)
+//            firebaseFirestore
+//                    .collection("users")
+//                    .document(email)
+//                    .set(new UserModel(name, email, timeNow()))
+//                    .addOnSuccessListener(firestoreSuccessListener)
+//                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
+//        };
+//
+//        //1. firebase auth (create user)
+//        firebaseAuth
+//                .createUserWithEmailAndPassword(email, pw)
+//                .addOnSuccessListener(this, authSuccessListener)
+//                .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
+//
+        Retrofit register = new Retrofit.Builder()
+                .baseUrl("https://api.drop.hadmarine.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
 
-        OnSuccessListener<AuthResult> authSuccessListener = task -> {
+        File file = new File(profile);
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        Map<String, RequestBody> m = new ArrayMap<>();
 
-            //2. firestore (upload user information)
-            firebaseFirestore
-                    .collection("users")
-                    .document(email)
-                    .set(new UserModel(name, email, timeNow()))
-                    .addOnSuccessListener(firestoreSuccessListener)
-                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
-        };
+        m.put("userid", RequestBody.create(MediaType.parse("multipart/form-data"), email));
+        m.put("name", RequestBody.create(MediaType.parse("multipart/form-data"), name));
+        m.put("password", RequestBody.create(MediaType.parse("multipart/form-data"), pw));
+        m.put("photo", requestFile);
 
-        //1. firebase auth (create user)
-        firebaseAuth
-                .createUserWithEmailAndPassword(email, pw)
-                .addOnSuccessListener(this, authSuccessListener)
-                .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(m);
+        System.out.println("-=== 레드로핏 실행 ===-");
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            System.out.println("성공.");
+                            System.out.println(response.body().string());
+                    finishSignUp();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    System.out.println("E R R O R");
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
         //coroutine later
     }
 
+
     private void finishSignUp() {
-        sendBroadcast(new Intent("finish_signup"));
+//        sendBroadcast(new Intent("finish_signup"));
 
         binding.animatorRegi.showNext();
         binding.lottieRegiFinish.playAnimation();
 
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             finish();
         }, binding.lottieRegiFinish.getDuration() + 1000);
     }
@@ -154,6 +221,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void setProfileImage(Uri uri) {
         if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
             Glide.with(this).load(uri).into(binding.imgRegiProfile);
+            this.uri = uri.getPath();
         } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
     }
 

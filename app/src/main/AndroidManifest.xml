@@ -4,6 +4,8 @@
     package="com.david0926.drop"
     tools:ignore="LockedOrientationActivity">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
