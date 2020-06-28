@@ -1,6 +1,8 @@
 package com.david0926.drop.model;
 
-public class GroupModel {
+import java.io.Serializable;
+
+public class GroupModel implements Serializable {
 
     private String id, name, photo, description, v;
 

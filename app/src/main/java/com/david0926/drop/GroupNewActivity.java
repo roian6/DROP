@@ -1,14 +1,10 @@
 package com.david0926.drop;
 
-import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.webkit.MimeTypeMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -16,12 +12,10 @@ import androidx.databinding.DataBindingUtil;
 import com.bumptech.glide.Glide;
 import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.databinding.ActivityGroupNewBinding;
-import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.util.MimeTypeUtil;
 import com.david0926.drop.util.TokenCache;
 
 import java.io.File;
-import java.util.Map;
 
 import gun0912.tedimagepicker.builder.TedImagePicker;
 import okhttp3.MediaType;
@@ -63,7 +57,7 @@ public class GroupNewActivity extends AppCompatActivity {
             if (binding.getName().isEmpty() || binding.getDescription().isEmpty())
                 showErrorMsg("빈칸을 모두 채워주세요.");
 
-            else if (profileUri==null)
+            else if (profileUri == null)
                 showErrorMsg("그룹 사진을 등록해 주세요.");
 
             else { //confirm success
@@ -73,8 +67,8 @@ public class GroupNewActivity extends AppCompatActivity {
         });
     }
 
-    void newGroup(String name, String description, Uri photo){
-        Log.d("debug", "newGroup: "+name+", "+description);
+    void newGroup(String name, String description, Uri photo) {
+        Log.d("debug", "newGroup: " + name + ", " + description);
         //종수야부탁해...!!
 
         Retrofit register = new Retrofit.Builder()
@@ -86,7 +80,7 @@ public class GroupNewActivity extends AppCompatActivity {
         File file;
         try {
             file = new File(photo.getPath());
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             showErrorMsg("그룹 사진을 등록해 주세요.");
             return;
         }
@@ -106,7 +100,7 @@ public class GroupNewActivity extends AppCompatActivity {
                         return;
                     }
                     finish();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     showErrorMsg("이미 존재하는 그룹입니다.");
                     e.printStackTrace();
                 }
@@ -121,7 +115,7 @@ public class GroupNewActivity extends AppCompatActivity {
 
     private void setGroupImage(Uri uri) {
         String mimeType = MimeTypeUtil.getMimeType(this, uri);
-        if (mimeType.equals("image/jpeg") || mimeType.equals("image/png")) {
+        if (mimeType == null || mimeType.equals("image/jpeg") || mimeType.equals("image/png")) {
             Glide.with(this).load(uri).into(binding.imgGroupNewImage);
             profileUri = uri;
         } else showErrorMsg("올바른 형식의 이미지를 업로드 해주세요. (jpeg, png)");

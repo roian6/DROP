@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.david0926.drop.GroupActivity;
+import com.david0926.drop.GroupInfoActivity;
 import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.SocialGroupAdapter;
@@ -23,6 +24,7 @@ import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -73,6 +75,11 @@ public class MainFragment2 extends Fragment {
             if(item.getId()!=null && item.getId().equals("add_group")){
                 startActivity(new Intent(mContext, GroupActivity.class));
             }
+            else{
+                Intent intent = new Intent(mContext, GroupInfoActivity.class);
+                intent.putExtra("group", item);
+                startActivity(intent);
+            }
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
@@ -104,17 +111,10 @@ public class MainFragment2 extends Fragment {
                     JSONObject object = new JSONObject(body);
                     JSONArray array = object.getJSONArray("data");
 
-
+                    Gson gson = new Gson();
 
                     for(int i = array.length()-1; i >= 0; i--) { // 최신순
-                        GroupModel model = new GroupModel();
-                        model.setName(array.getJSONObject(i).getString("name"));
-                        model.setId(array.getJSONObject(i).getString("_id"));
-                        try {
-                            model.setPhoto(array.getJSONObject(i).getString("photo"));
-                        } catch(Exception err){
-                            model.setPhoto(getString(R.string.test_image));
-                        }
+                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupItems.add(model);
                     }
 

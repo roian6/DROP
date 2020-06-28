@@ -89,6 +89,7 @@
 
 
                 <ImageView
+                    android:scaleType="centerCrop"
                     app:imageLink="@{item.product_image}"
                     android:id="@+id/img_article_product"
                     android:layout_width="match_parent"

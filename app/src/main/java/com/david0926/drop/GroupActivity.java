@@ -14,6 +14,7 @@ import com.david0926.drop.databinding.ActivityGroupBinding;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,20 +49,15 @@ public class GroupActivity extends AppCompatActivity {
         binding.setGroupList(groupItems);
 
         adapter.setOnItemClickListener((view, item) -> {
-//            Intent intent = new Intent(this, ArticleActivity.class);
-//            intent.putExtra("article", item);
-//            startActivity(intent);
+            Intent intent = new Intent(GroupActivity.this, GroupInfoActivity.class);
+            intent.putExtra("group", item);
+            startActivity(intent);
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
         binding.btnGroupNew.setOnClickListener(view ->
                 startActivity(new Intent(GroupActivity.this, GroupNewActivity.class)));
 
-    }
-
-    @Override
-    protected void onResume() {
-        groupItems.clear();
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -77,17 +73,10 @@ public class GroupActivity extends AppCompatActivity {
                     JSONObject object = new JSONObject(body);
                     JSONArray array = object.getJSONArray("data");
 
-
+                    Gson gson = new Gson();
 
                     for(int i = array.length()-1; i >= 0; i--) { // 최신순
-                        GroupModel model = new GroupModel();
-                        model.setName(array.getJSONObject(i).getString("name"));
-                        model.setId(array.getJSONObject(i).getString("_id"));
-                        try {
-                            model.setPhoto(array.getJSONObject(i).getString("photo"));
-                        } catch(Exception err){
-                            model.setPhoto(getString(R.string.test_image));
-                        }
+                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupItems.add(model);
                     }
 
@@ -100,6 +89,42 @@ public class GroupActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+//        groupItems.clear();
+//        Retrofit register = new Retrofit.Builder()
+//                .baseUrl(getString(R.string.base_url))
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+//        Call<ResponseBody> mCallResponse = mRetrofitAPI.getGroups(TokenCache.getToken(this).getAccess());
+//        mCallResponse.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                try {
+//                    String body = response.body().string();
+//                    System.out.println(body);
+//                    JSONObject object = new JSONObject(body);
+//                    JSONArray array = object.getJSONArray("data");
+//
+//                    Gson gson = new Gson();
+//
+//                    for(int i = array.length()-1; i >= 0; i--) { // 최신순
+//                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
+//                        groupItems.add(model);
+//                    }
+//
+//                } catch(Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//
+//            }
+//        });
 
         super.onResume();
     }

@@ -22,9 +22,10 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/img_rowarticle_product"
+            android:scaleType="centerCrop"
+            android:id="@+id/img_row_group_name"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
+            android:layout_height="196dp"
             android:src="@drawable/ic_undraw_quitting_time"
             app:imageLink="@{item.photo}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,20 +34,38 @@
 
 
         <TextView
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:layout_marginTop="8dp"
-            android:id="@+id/txt_rowarticle_product"
+            android:id="@+id/txt_row_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:includeFontPadding="false"
+            android:singleLine="true"
             android:text="@{item.name, default=`Group Name`}"
             android:textColor="@color/materialGray7"
             android:textSize="24sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_product" />
+            app:layout_constraintTop_toBottomOf="@+id/img_row_group_name" />
+
+        <TextView
+            android:id="@+id/txt_row_group_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:includeFontPadding="false"
+            android:maxLines="3"
+            android:text="@{item.description, default=`Group Description`}"
+            android:textColor="@color/materialGray6"
+            android:textSize="16sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_row_group_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
