@@ -48,11 +48,8 @@ public class LandingActivity extends AppIntro {
 
 
     private void finishLanding() {
-//        if (SharedPreferenceUtil.getBoolean(this, "permission_granted", false)) {
         SharedPreferenceUtil.putBoolean(this, "landing_shown", true);
         startActivity(new Intent(LandingActivity.this, LoginActivity.class));
         finish();
-//        } else Toast.makeText(this, "먼저 권한에 동의해 주세요.", Toast.LENGTH_SHORT).show();
-
     }
 }

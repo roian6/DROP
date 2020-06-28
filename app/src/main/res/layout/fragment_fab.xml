@@ -150,7 +150,7 @@
                     android:weightSum="2"
                     app:layout_constraintBottom_toBottomOf="parent">
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_fragfab_upload"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -162,7 +162,6 @@
                         android:padding="12dp"
                         android:text="게시물 등록하기"
                         android:textColor="@android:color/white"
-                        android:textSize="16sp"
                         app:buttonEnabled="@{selected!=null}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

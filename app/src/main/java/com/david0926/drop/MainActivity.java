@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN); //fullscreen
-
         binding.fabMain.setColorFilter(Color.WHITE);
         binding.fabMain.setOnClickListener(view -> {
             binding.fabMain.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
@@ -58,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         registerReceiver(broadcastReceiver, new IntentFilter("invalidate_fab"));
-
-        
 
         binding.bottomnavMain.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

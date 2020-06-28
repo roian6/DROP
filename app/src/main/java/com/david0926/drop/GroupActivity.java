@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.databinding.ActivityGroupBinding;
-import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 
@@ -46,19 +44,22 @@ public class GroupActivity extends AppCompatActivity {
 
         GroupModel model = new GroupModel();
         model.setName("선린인터넷고등학교 분실물센터");
-        model.setImage(getString(R.string.test_image));
+        model.setPhoto(getString(R.string.test_image));
 
         GroupModel model2 = new GroupModel();
         model2.setName("디지털미디어고등학교 분실물센터");
-        model2.setImage(getString(R.string.test_image));
+        model2.setPhoto(getString(R.string.test_image));
 
         GroupModel model3 = new GroupModel();
         model3.setName("분실한 정신줄 관리센터");
-        model3.setImage(getString(R.string.test_image));
+        model3.setPhoto(getString(R.string.test_image));
 
         groupItems.add(model);
         groupItems.add(model2);
         groupItems.add(model3);
+
+        binding.btnGroupNew.setOnClickListener(view ->
+                startActivity(new Intent(GroupActivity.this, GroupNewActivity.class)));
 
     }
 }

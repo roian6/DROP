@@ -32,9 +32,9 @@
             app:titleTextAppearance="@style/TitleBarTextAppearance" />
 
         <ScrollView
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toTopOf="@+id/btn_article_upload"
             app:layout_constraintTop_toBottomOf="@id/toolbar_article_upload">
 
@@ -106,7 +106,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_name:@string/article_upload_found_name, default=`Name`}"
                     android:importantForAutofill="no"
                     android:maxLines="1"
@@ -125,7 +125,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_time:@string/article_upload_found_time, default=`Time`}"
                     android:importantForAutofill="no"
                     android:maxLines="1"
@@ -144,7 +144,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_place:@string/article_upload_found_place, default=`Place`}"
                     android:importantForAutofill="no"
                     android:maxLines="1"
@@ -163,7 +163,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_addinfo:@string/article_upload_found_addinfo, default=`More Info`}"
                     android:maxLines="1"
                     android:padding="16dp"
@@ -181,7 +181,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:gravity="top"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_desc:@string/article_upload_found_desc, default=`Description`}"
                     android:minLines="3"
@@ -208,8 +208,7 @@
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

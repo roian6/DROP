@@ -36,11 +36,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    private StorageReference storageReference = firebaseStorage.getReference();
-
     private ActivityLoginBinding binding;
 
     @Override
@@ -54,10 +49,6 @@ public class LoginActivity extends AppCompatActivity {
         new TedKeyboardObserver(this).listen(isShow -> {
             binding.scrollLogin.smoothScrollTo(0, binding.scrollLogin.getBottom());
         });
-
-//        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//        }
 
         //sign in button clicked
         binding.btnLoginSignin.setOnClickListener(view -> {

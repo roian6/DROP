@@ -22,6 +22,7 @@ import androidx.databinding.DataBindingUtil;
 import com.bumptech.glide.Glide;
 import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.databinding.ActivityRegisterBinding;
+import com.david0926.drop.util.MimeTypeUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,11 +51,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RegisterActivity extends AppCompatActivity {
-
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    private StorageReference storageReference = firebaseStorage.getReference();
 
     private Uri uri;
 
@@ -92,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
         //sign up button clicked
         binding.btnRegiSignup.setOnClickListener(view -> {
 
-            startProgress();
+            binding.setOnProgress(true);
             hideKeyboard(this);
 
             if (TextUtils.isEmpty(binding.getName()) || TextUtils.isEmpty(binding.getEmail())
@@ -112,49 +108,14 @@ public class RegisterActivity extends AppCompatActivity {
                 showErrorMsg("프로필 사진을 넣어주세요.");
 
             else { //confirm success
-
-//                createAccount(imageToByte(binding.imgRegiProfile.getDrawable()),
-//                        binding.getName(), binding.getEmail(), binding.getPw());
-                createAccount(uri,
-                        binding.getName(), binding.getEmail(), binding.getPw());
-
+                createAccount(uri, binding.getName(), binding.getEmail(), binding.getPw());
             }
-
         });
 
     }
 
     private void createAccount(Uri profile, String name, String email, String pw) {
 
-
-//
-//        OnSuccessListener<Void> firestoreSuccessListener = aVoid -> {
-//
-//            //3. firebase storage (upload profile image)
-//            storageReference
-//                    .child("profile/" + email + ".png")
-//                    .putBytes(profile)
-////                    .addOnSuccessListener(snapshot -> finishSignUp())
-//                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
-//        };
-//
-//        OnSuccessListener<AuthResult> authSuccessListener = task -> {
-//
-//            //2. firestore (upload user information)
-//            firebaseFirestore
-//                    .collection("users")
-//                    .document(email)
-//                    .set(new UserModel(name, email, timeNow()))
-//                    .addOnSuccessListener(firestoreSuccessListener)
-//                    .addOnFailureListener(e -> showErrorMsg(e.getLocalizedMessage()));
-//        };
-//
-//        //1. firebase auth (create user)
-//        firebaseAuth
-//                .createUserWithEmailAndPassword(email, pw)
-//                .addOnSuccessListener(this, authSuccessListener)
-//                .addOnFailureListener(this, e -> showErrorMsg(e.getLocalizedMessage()));
-//
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -203,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void finishSignUp() {
-//        sendBroadcast(new Intent("finish_signup"));
 
         binding.animatorRegi.showNext();
         binding.lottieRegiFinish.playAnimation();
@@ -214,38 +174,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setProfileImage(Uri uri) {
-        if (getMimeType(uri).equals("image/jpeg") || getMimeType(uri).equals("image/png")) {
+        String mimeType = MimeTypeUtil.getMimeType(this, uri);
+        if (mimeType.equals("image/jpeg") || mimeType.equals("image/png")) {
             Glide.with(this).load(uri).into(binding.imgRegiProfile);
             this.uri = uri;
-        } else showErrorMsg("Please upload valid profile image. (jpeg, png)");
-    }
-
-    public String getMimeType(Uri uri) {
-
-        String mimeType;
-        if (uri.getScheme() != null && uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
-            ContentResolver cr = this.getContentResolver();
-            mimeType = cr.getType(uri);
-        } else {
-            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
-                    .toString());
-            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                    fileExtension.toLowerCase());
-        }
-        return mimeType;
-    }
-
-    private byte[] imageToByte(Drawable drawable) {
-
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 10, outputStream);
-
-        return outputStream.toByteArray();
+        } else showErrorMsg("올바른 형식의 이미지를 업로드 해주세요. (jpeg, png)");
     }
 
     private void showErrorMsg(String msg) {
-        finishProgress();
+        binding.setOnProgress(false);
         binding.txtRegiError.setVisibility(View.VISIBLE);
         binding.txtRegiError.setText(msg);
         binding.txtRegiError.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
@@ -263,26 +200,12 @@ public class RegisterActivity extends AppCompatActivity {
         return m.find() && !target.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*");
     }
 
-    private void startProgress() {
-        binding.txtRegiSignup.setVisibility(View.GONE);
-        binding.progressRegi.setVisibility(View.VISIBLE);
-    }
-
-    private void finishProgress() {
-        binding.txtRegiSignup.setVisibility(View.VISIBLE);
-        binding.progressRegi.setVisibility(View.GONE);
-    }
-
     private void hideKeyboard(Activity activity) {
         View v = activity.getCurrentFocus();
         if (v != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm != null) imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
-    }
-
-    private String timeNow() {
-        return new SimpleDateFormat("yyyy/MM/dd hh:mm aa", Locale.ENGLISH).format(new Date());
     }
 
     @Override
