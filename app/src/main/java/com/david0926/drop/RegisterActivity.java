@@ -131,7 +131,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-        Map<String, RequestBody> m = new ArrayMap<>();
         RequestBody userid =
                 RequestBody.create(MediaType.parse("multipart/form-data"), email);
         RequestBody namebody =

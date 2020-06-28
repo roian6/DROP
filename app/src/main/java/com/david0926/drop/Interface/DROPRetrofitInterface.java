@@ -33,16 +33,24 @@ public interface DROPRetrofitInterface {
             @Body LoginModel lm
     );
 
-    @POST("v1/post")
+    @Multipart
+    @POST("v1/group")
     Call<ResponseBody> CreateGroup(
             @Header("x-access-token") String token,
-            @Body String group
+            @Part("name") RequestBody name,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part photo
+    );
+
+    @GET("v1/group")
+    Call<ResponseBody> getGroups(
+            @Header("x-access-token") String token
     );
 
     @POST("v1/group/join")
     Call<ResponseBody> JoinGroup(
             @Header("x-access-token") String token,
-            @Body String group
+            @Body String groupid
     );
 
     @GET("v1/group/user")
