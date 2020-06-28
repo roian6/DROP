@@ -3,7 +3,6 @@ package com.david0926.drop;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,18 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.david0926.drop.Interface.RegisterModel;
-import com.david0926.drop.Interface.RetrofitRegisterInterface;
+import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.databinding.ActivityRegisterBinding;
-import com.david0926.drop.model.UserModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -166,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        RetrofitRegisterInterface mRetrofitAPI = register.create(RetrofitRegisterInterface.class);
+        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
 
         File file;
         try {
@@ -202,11 +195,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                try {
-
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
+                showErrorMsg("서버가 응답하지 않습니다.");
             }
         });
 
