@@ -18,8 +18,8 @@
             android:id="@+id/constraintLayout4"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/round_box"
             android:backgroundTint="@android:color/white"
@@ -28,44 +28,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:foregroundTint="@android:color/transparent"
-                android:foreground="@drawable/round_box"
-                android:id="@+id/img_rowgroup_product"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:translationZ="16dp"
-                app:imageLink="@{item.photo}"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/materialGray1"
-                android:padding="24dp"
-                android:src="@drawable/ic_add_black_24dp"
-                android:tint="@android:color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:translationZ="16dp"
+                    android:id="@+id/img_rowgroup_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:imageLink="@{item.photo}" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/materialGray1"
+                    android:padding="24dp"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:tint="@android:color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:id="@+id/txt_rowgroup_product"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:includeFontPadding="false"
             android:gravity="center"
+            android:includeFontPadding="false"
+            android:singleLine="true"
             android:text="@{item.name, default=`Group Name`}"
             android:textColor="@color/materialGray7"
             android:textSize="16sp"

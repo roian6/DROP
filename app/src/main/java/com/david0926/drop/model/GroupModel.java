@@ -4,34 +4,34 @@ import java.io.Serializable;
 
 public class GroupModel implements Serializable {
 
-    private String id, user_id, name, photo, description, v;
+    private String _id, creator, name, photo, description, v;
 
     public GroupModel() {
     }
 
-    public GroupModel(String id, String user_id, String name, String photo, String description, String v) {
-        this.id = id;
-        this.user_id = user_id;
+    public GroupModel(String _id, String creator, String name, String photo, String description, String v) {
+        this._id = _id;
+        this.creator = creator;
         this.name = name;
         this.photo = photo;
         this.description = description;
         this.v = v;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getCreator() {
+        return creator;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setCreator(String creator) {
+        this.creator = creator;
     }
 
     public String getName() {

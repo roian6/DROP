@@ -32,8 +32,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_article">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,11 +43,11 @@
 
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    app:imageLink="@{item.user_profile}"
                     android:id="@+id/img_article_profile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:src="@drawable/ic_undraw_quitting_time"
+                    app:imageLink="@{item.user_profile}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,13 +84,13 @@
 
 
                 <ImageView
-                    android:scaleType="centerCrop"
-                    app:imageLink="@{item.product_image}"
                     android:id="@+id/img_article_product"
                     android:layout_width="match_parent"
                     android:layout_height="161dp"
                     android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_undraw_quitting_time"
+                    app:imageLink="@{item.product_image}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_article_profile" />
@@ -197,7 +196,7 @@
 
                 <TextView
                     android:id="@+id/txt_article_productaddinfo"
-                    android:layout_width="wrap_content" 
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
@@ -212,37 +211,55 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/button"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/round_box_radius"
-            android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="@{`Comments `+item.comments.size(), default=`Comments 3`}"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/round_box"
-            android:backgroundTint="@color/colorPrimary"
-            android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="Interaction Button"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:background="@drawable/round_box_top"
+            android:backgroundTint="@android:color/white"
+            android:elevation="8dp"
+            android:paddingTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/btn_article_comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/round_box_radius"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:text="@{`Comments `+item.comments.size(), default=`Comments 3`}"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button2"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/round_box"
+                android:backgroundTint="@color/colorPrimary"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:text="Interaction Button"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_article_comments" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

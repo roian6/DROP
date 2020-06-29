@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,7 +76,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
                 showErrorMsg("물건 이미지를 등록해 주세요.");
 
             else { //confirm success
-                uploadArticle(groupList.get(binding.spinnerArticleUploadGroup.getSelectedItemPosition()).getId(),
+                uploadArticle(groupList.get(binding.spinnerArticleUploadGroup.getSelectedItemPosition()).get_id(),
                         binding.getArticle(), getIntent().getStringExtra("type"), imageUri);
             }
         });

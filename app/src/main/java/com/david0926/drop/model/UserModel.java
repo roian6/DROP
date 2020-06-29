@@ -6,7 +6,7 @@ public class UserModel {
 
     private String authority;
     private List<String> group;
-    private String id;
+    private String _id;
     private String userid;
     private String password;
     private String enckey;
@@ -14,10 +14,10 @@ public class UserModel {
     private String photo;
     private Integer v;
 
-    public UserModel(String authority, List<String> group, String id, String userid, String password, String enckey, String name, String photo, Integer v) {
+    public UserModel(String authority, List<String> group, String _id, String userid, String password, String enckey, String name, String photo, Integer v) {
         this.authority = authority;
         this.group = group;
-        this.id = id;
+        this._id = _id;
         this.userid = userid;
         this.password = password;
         this.enckey = enckey;
@@ -42,12 +42,12 @@ public class UserModel {
         this.group = group;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getUserid() {

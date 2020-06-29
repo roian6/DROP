@@ -72,7 +72,7 @@ public class MainFragment2 extends Fragment {
         binding.setGroupList(groupItems);
 
         adapter.setOnItemClickListener((view, item) -> {
-            if(item.getId()!=null && item.getId().equals("add_group")){
+            if(item.get_id()!=null && item.get_id().equals("add_group")){
                 startActivity(new Intent(mContext, GroupActivity.class));
             }
             else{
@@ -91,7 +91,7 @@ public class MainFragment2 extends Fragment {
         groupItems.clear();
 
         GroupModel addModel = new GroupModel();
-        addModel.setId("add_group");
+        addModel.set_id("add_group");
         addModel.setName("그룹 추가");
         groupItems.add(addModel);
 

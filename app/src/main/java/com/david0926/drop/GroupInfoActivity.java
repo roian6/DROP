@@ -3,7 +3,6 @@ package com.david0926.drop;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -19,6 +18,8 @@ import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
 import com.google.gson.Gson;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,13 +43,17 @@ public class GroupInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_group_info);
+        binding.setIsMember(false);
+
+        Logger.addLogAdapter(new AndroidLogAdapter());
+
+        setSupportActionBar(binding.toolbarGroupInfo);
 
         //finish activity, when back button pressed
         binding.toolbarGroupInfo.setNavigationOnClickListener(view -> finish());
 
         group = (GroupModel) getIntent().getSerializableExtra("group");
         binding.setGroup(group);
-        binding.setUser(UserCache.getUser(this));
 
         LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
                 this, LinearLayoutManager.VERTICAL, false);
@@ -65,50 +70,73 @@ public class GroupInfoActivity extends AppCompatActivity {
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
-        if (UserCache.getUser(this).getGroup().contains(group.getId())) {
-            Retrofit register = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
-            System.out.println("T " + TokenCache.getToken(this).getAccess());
-            Call<ResponseBody> mCallResponse = mRetrofitAPI.MyGroups(TokenCache.getToken(this).getAccess());
-            mCallResponse.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        String body = response.body().string();
-                        System.out.println(body);
-                        JSONObject object = new JSONObject(body);
-                        JSONArray array = object.getJSONArray("data");
+        Retrofit register = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        System.out.println("T " + TokenCache.getToken(this).getAccess());
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.MyGroups(TokenCache.getToken(this).getAccess());
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body = response.body().string();
+                    System.out.println(body);
+                    JSONObject object = new JSONObject(body);
+                    JSONArray array = object.getJSONArray("data");
 
-                        Gson gson = new Gson();
-                        for(int i = array.length()-1; i >= 0; i--) { // 최신순
-                            GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
-                            groupList.add(model);
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
+                    Gson gson = new Gson();
+                    for (int i = array.length() - 1; i >= 0; i--) { // 최신순
+                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
+                        groupList.add(model);
                     }
-                }
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    setMemberState();
 
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    void setMemberState() {
+
+        Gson gson = new Gson();
+
+        Logger.json(gson.toJson(group));
+        Logger.json(gson.toJson(groupList));
+
+        Logger.d(group.getCreator());
+        Logger.d(UserCache.getUser(this).get_id());
+
+        for(GroupModel model:groupList){
+            if(model.get_id().equals(group.get_id())) binding.setIsMember(true);
         }
+
+        invalidateOptionsMenu();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (group.getUser_id() == null) return false;
-
-        MenuInflater inflater = getMenuInflater();
-        if (group.getUser_id().equals(UserCache.getUser(this).getId())) { //admin
-            inflater.inflate(R.menu.menu_group_info_admin, menu);
-        } else if (groupList.contains(group)) { //member
-            inflater.inflate(R.menu.menu_group_info_member, menu);
-        }
+        getMenuInflater().inflate(R.menu.menu_group_info, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if (group.getCreator().equals(UserCache.getUser(this).get_id())) { //admin
+            menu.findItem(R.id.action_delete).setVisible(true);
+            menu.findItem(R.id.action_edit).setVisible(true);
+        } else if (binding.getIsMember()) { //member
+            menu.findItem(R.id.action_exit).setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 }

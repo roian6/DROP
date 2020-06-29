@@ -27,11 +27,11 @@
     <string name="article_upload_lost_place">잃어버린 장소</string>
     <string name="article_upload_found_place">습득한 장소</string>
 
-    <string name="article_upload_lost_addinfo">소정의 사례 (선택)</string>
-    <string name="article_upload_found_addinfo">전달 가능 시간/장소</string>
+    <string name="article_upload_lost_addinfo">찾을 시 소정의 사례 (선택)</string>
+    <string name="article_upload_found_addinfo">전달 가능한 시간/장소</string>
 
-    <string name="article_upload_lost_desc">생김새나 특징, 잃어버린 계기 등 자세한 설명을 적어주세요.</string>
-    <string name="article_upload_found_desc">생김새나 특징, 발견 경로 등 자세한 설명을 적어주세요.</string>
+    <string name="article_upload_lost_desc">물건의 생김새나 특징, 잃어버린 계기 등 자세한 설명을 적어주세요.</string>
+    <string name="article_upload_found_desc">물건의 생김새나 특징, 발견 경로 등 자세한 설명을 적어주세요.</string>
 
 
 </resources>
