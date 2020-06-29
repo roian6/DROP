@@ -42,8 +42,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_article_upload"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_article_upload_error"
             app:layout_constraintTop_toBottomOf="@id/toolbar_article_upload">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +52,7 @@
                 android:padding="16dp">
 
                 <RelativeLayout
-                    android:id="@+id/box_regi_profile"
+                    android:id="@+id/box_article_upload_image"
                     android:layout_width="144dp"
                     android:layout_height="144dp"
                     android:gravity="center"
@@ -62,7 +62,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                        android:id="@+id/img_regi_editprofile"
+                        android:id="@+id/img_article_upload_image_edit"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:layout_alignParentEnd="true"
@@ -78,6 +78,7 @@
                         android:translationZ="16dp" />
 
                     <ImageView
+                        android:scaleType="centerCrop"
                         android:id="@+id/img_article_upload_image"
                         android:layout_width="128dp"
                         android:layout_height="128dp"
@@ -95,17 +96,32 @@
 
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:text="그룹"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/spinner_article_upload_group"
+                    app:layout_constraintEnd_toStartOf="@+id/spinner_article_upload_group"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/spinner_article_upload_group" />
+
                 <Spinner
                     android:id="@+id/spinner_article_upload_group"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
-                    android:padding="16dp"
+                    android:theme="@style/SpinnerTheme"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/box_regi_profile"
+                    app:layout_constraintStart_toEndOf="@+id/textView9"
+                    app:layout_constraintTop_toBottomOf="@+id/box_article_upload_image"
                     app:spinnerItem="@{groupList}" />
 
                 <EditText
@@ -204,6 +220,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/txt_article_upload_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:text="Error Message"
+            android:textColor="@color/materialRed"
+            android:textSize="15sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/btn_article_upload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_article_upload"

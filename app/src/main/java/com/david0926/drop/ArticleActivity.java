@@ -17,7 +17,6 @@ public class ArticleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article);
-        binding.setActivity(this);
 
         //finish activity, when back button pressed
         binding.toolbarArticle.setNavigationOnClickListener(view -> finish());

@@ -24,6 +24,7 @@ import com.david0926.drop.model.GroupModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +46,9 @@ public class BindingOptions {
     @BindingAdapter("spinnerItem")
     public static void bindSpinnerItem(Spinner spinner, ObservableArrayList<GroupModel> items) {
         if(items==null) return;
-        spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_dropdown_item, items));
+        ArrayList<String> name = new ArrayList<>();
+        for(GroupModel model:items) name.add(model.getName());
+        spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_dropdown_item, name));
     }
 
     @BindingAdapter("articleItem")

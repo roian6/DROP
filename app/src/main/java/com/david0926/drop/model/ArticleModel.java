@@ -1,9 +1,14 @@
 package com.david0926.drop.model;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.david0926.drop.BR;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ArticleModel implements Serializable {
+public class ArticleModel extends BaseObservable implements Serializable {
 
     private String group_id, id, user_name, user_email, user_profile, type, upload_time, product_name,
             product_image, product_desc, product_time, product_place, product_addinfo;
@@ -87,52 +92,64 @@ public class ArticleModel implements Serializable {
         this.upload_time = upload_time;
     }
 
+    @Bindable
     public String getProduct_name() {
         return product_name;
     }
 
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
+        notifyPropertyChanged(BR.product_name);
     }
 
+    @Bindable
     public String getProduct_image() {
         return product_image;
     }
 
     public void setProduct_image(String product_image) {
         this.product_image = product_image;
+        notifyPropertyChanged(BR.product_image);
     }
 
+    @Bindable
     public String getProduct_desc() {
         return product_desc;
     }
 
     public void setProduct_desc(String product_desc) {
         this.product_desc = product_desc;
+        notifyPropertyChanged(BR.product_desc);
     }
 
+    @Bindable
     public String getProduct_time() {
         return product_time;
     }
 
     public void setProduct_time(String product_time) {
         this.product_time = product_time;
+        notifyPropertyChanged(BR.product_time);
     }
 
+    @Bindable
     public String getProduct_place() {
         return product_place;
     }
 
     public void setProduct_place(String product_place) {
         this.product_place = product_place;
+        notifyPropertyChanged(BR.product_place);
     }
 
+    @Bindable
     public String getProduct_addinfo() {
         return product_addinfo;
     }
 
     public void setProduct_addinfo(String product_addinfo) {
         this.product_addinfo = product_addinfo;
+        notifyPropertyChanged(BR.product_addinfo);
     }
 
     public Boolean getSolve() {

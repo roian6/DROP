@@ -75,6 +75,7 @@
                         android:translationZ="16dp" />
 
                     <ImageView
+                        android:scaleType="centerCrop"
                         android:id="@+id/img_group_new_image"
                         android:layout_width="128dp"
                         android:layout_height="128dp"
@@ -141,7 +142,7 @@
             android:id="@+id/txt_group_new_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/productb"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:text="Error Message"
             android:textColor="@color/materialRed"
             android:textSize="15sp"

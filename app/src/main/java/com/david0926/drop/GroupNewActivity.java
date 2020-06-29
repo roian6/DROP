@@ -30,8 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GroupNewActivity extends AppCompatActivity {
 
-    private ActivityGroupNewBinding binding;
     private Uri profileUri;
+    private ActivityGroupNewBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,6 @@ public class GroupNewActivity extends AppCompatActivity {
 
     void newGroup(String name, String description, Uri photo) {
         Log.d("debug", "newGroup: " + name + ", " + description);
-        //종수야부탁해...!!
 
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
