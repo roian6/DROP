@@ -13,17 +13,32 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import com.david0926.drop.ArticleActivity;
+import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.databinding.FragmentMain1Binding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
+import com.david0926.drop.util.TokenCache;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainFragment1 extends Fragment{
 
@@ -35,6 +50,8 @@ public class MainFragment1 extends Fragment{
 
     private Context mContext;
     private FragmentMain1Binding binding;
+
+    int offset = 10;
 
     @Override
     public void onAttach(@NotNull Context context) {
@@ -62,36 +79,96 @@ public class MainFragment1 extends Fragment{
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
-        ArticleModel model = new ArticleModel();
+        binding.recyclerMain1.addOnScrollListener(new RecyclerView.OnScrollListener() { // 페이지네이션
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
-        model.setUser_name("정찬효");
-        model.setType("lost");
-        model.setUpload_time("2020/06/25 11:36:00");
-        model.setUser_profile(getString(R.string.test_image));
-        model.setProduct_image(getString(R.string.test_image));
-        model.setProduct_name("AirPods Pro");
-        model.setProduct_desc("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis");
-        model.setProduct_time("6/20 오후 3시쯤");
-        model.setProduct_place("2학년 6반 교실");
-        model.setProduct_addinfo("매점에서 사례하겠습니다.");
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-        ArticleModel model2 = new ArticleModel();
+                int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                int totalCount = recyclerView.getAdapter().getItemCount();
+                if(lastPosition == totalCount-1 && totalCount % 10 == 0){
+                    refreshPost(offset);
+                    offset += 10;
+                }
+            }
+        });
 
-        model2.setUser_name("김선린");
-        model2.setType("found");
-        model2.setUpload_time("2020/06/25 14:36:00");
-        model2.setProduct_name("티머니 교통카드");
-        model2.setUser_profile(getString(R.string.test_image));
-        model2.setProduct_image(getString(R.string.test_image));
-        model2.setProduct_desc("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis");
-        model2.setProduct_time("6/25 아침");
-        model2.setProduct_place("컴 14실");
-        model2.setProduct_addinfo("2학년 6반으로 오세요");
-
-        articleItems.add(model);
-        articleItems.add(model2);
-
-
+        refreshPost(0);
         return binding.getRoot();
     }
+
+    private void refreshPost(int length) {
+
+
+            Retrofit register = new Retrofit.Builder()
+                    .baseUrl(getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+
+            Call<ResponseBody> mCallResponse = mRetrofitAPI.getPosts(TokenCache.getToken(mContext).getAccess(), length);
+            mCallResponse.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        String body = response.body().string();
+                        JSONObject object = new JSONObject(body);
+                        JSONArray array = object.getJSONArray("data");
+
+                        Gson gson = new Gson();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            ArticleModel am = new ArticleModel();
+                            am.setGroup_id(obj.getString("group"));
+                            am.setId(obj.getString("_id"));
+
+                            am.setType(obj.getString("type"));
+                            am.setSolve(obj.getBoolean("isResolved"));
+
+//                            am.setUser_email();
+//                            am.setUser_name();
+//                            am.setUser_profile();
+
+                            am.setProduct_addinfo(obj.getString("reward"));
+                            try {
+                                am.setProduct_desc(obj.getString("description"));
+                            } catch(Exception e) {
+                                am.setProduct_desc("설명이 존재하지 않습니다");
+                            }
+                            am.setProduct_image(obj.getString("photo"));
+                            am.setProduct_name(obj.getString("title"));
+                            am.setProduct_place(obj.getString("place"));
+                            am.setProduct_time(obj.getString("time"));
+
+//                            am.setUpload_time("uploadTime");
+
+                            JSONArray c_array = obj.getJSONArray("comment");
+                            ArrayList<CommentModel> c_list = new ArrayList<>();
+                            for(int j = c_array.length() - 1; j >= 0; j--) { // 최신순
+                                CommentModel cm = gson.fromJson(c_array.getJSONObject(i).toString(), CommentModel.class);
+                                c_list.add(cm);
+                            }
+                            am.setComments(c_list);
+                            articleItems.add(am);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+
+
+    }
+
 }

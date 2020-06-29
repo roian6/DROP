@@ -22,7 +22,12 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+
 import gun0912.tedimagepicker.builder.TedImagePicker;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,6 +122,51 @@ public class ArticleUploadActivity extends AppCompatActivity {
 
     void uploadArticle(String group, ArticleModel model, String type, Uri image) {
         //gogo🥕
+
+        Retrofit register = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+
+        File file;
+        try {
+            file = new File(image.getPath());
+        } catch(NullPointerException e) {
+            showErrorMsg("이미지를 넣어주세요");
+            return;
+        }
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        RequestBody titlebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_name());
+        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), type);
+        RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_time());
+        RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_place());
+        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_addinfo());
+        RequestBody groupid = RequestBody.create(MediaType.parse("multipart/form-data"), group);
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreatePost(TokenCache.getToken(this).getAccess(), titlebody, typebody, timebody, placebody, rewardbody, groupid, photo);
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body().string() == null) {
+                        showErrorMsg("게시물을 업로드할 수 없습니다.");
+                        return;
+                    }
+                    finish();
+                } catch(Exception e) {
+                    showErrorMsg("게시물을 업로드할 수 없습니다.");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMsg("서버가 응답하지 않습니다.");
+            }
+        });
+
     }
 
     private void setArticleImage(Uri uri) {

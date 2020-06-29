@@ -132,9 +132,9 @@ public class RegisterActivity extends AppCompatActivity {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
         RequestBody userid =
-                RequestBody.create(MediaType.parse("multipart/form-data"), email);
-        RequestBody namebody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), email);RequestBody namebody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), name);
+
         RequestBody password =
                 RequestBody.create(MediaType.parse("multipart/form-data"), pw);
         Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(userid, password, namebody, photo);
