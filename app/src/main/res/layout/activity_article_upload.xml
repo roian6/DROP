@@ -5,9 +5,17 @@
 
     <data>
 
+        <import type="androidx.databinding.ObservableArrayList" />
+
+        <import type="com.david0926.drop.model.GroupModel" />
+
         <variable
             name="article"
             type="com.david0926.drop.model.ArticleModel" />
+
+        <variable
+            name="groupList"
+            type="ObservableArrayList&lt;GroupModel&gt;" />
 
         <variable
             name="type"
@@ -97,7 +105,8 @@
                     android:padding="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/box_regi_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/box_regi_profile"
+                    app:spinnerItem="@{groupList}" />
 
                 <EditText
                     android:id="@+id/edt_article_upload_name"
@@ -130,7 +139,7 @@
                     android:importantForAutofill="no"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_name}"
+                    android:text="@={article.product_time}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +158,7 @@
                     android:importantForAutofill="no"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_name}"
+                    android:text="@={article.product_place}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +176,7 @@
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_addinfo:@string/article_upload_found_addinfo, default=`More Info`}"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_name}"
+                    android:text="@={article.product_addinfo}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +195,7 @@
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_desc:@string/article_upload_found_desc, default=`Description`}"
                     android:minLines="3"
                     android:padding="16dp"
-                    android:text="@={article.product_name}"
+                    android:text="@={article.product_desc}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"

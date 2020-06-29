@@ -1,8 +1,11 @@
 package com.david0926.drop.util;
 
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -37,6 +40,12 @@ public class BindingOptions {
     public static void setImageLink(ImageView view, String link) {
         if (link == null || link.isEmpty()) return;
         Glide.with(view).load(link).into(view);
+    }
+
+    @BindingAdapter("spinnerItem")
+    public static void bindSpinnerItem(Spinner spinner, ObservableArrayList<GroupModel> items) {
+        if(items==null) return;
+        spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_dropdown_item, items));
     }
 
     @BindingAdapter("articleItem")

@@ -2,11 +2,13 @@ package com.david0926.drop;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.david0926.drop.databinding.ActivityArticleUploadBinding;
+import com.david0926.drop.util.UserCache;
 
 public class ArticleUploadActivity extends AppCompatActivity {
 
@@ -23,6 +25,6 @@ public class ArticleUploadActivity extends AppCompatActivity {
         Intent getIntent = getIntent();
         binding.setType(getIntent.getStringExtra("type"));
 
-
+        //binding.setGroupList(UserCache.getUser(this).getGroup());
     }
 }

@@ -1,12 +1,12 @@
 package com.david0926.drop;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.adapter.GroupAdapter;
@@ -57,7 +57,17 @@ public class GroupActivity extends AppCompatActivity {
 
         binding.btnGroupNew.setOnClickListener(view ->
                 startActivity(new Intent(GroupActivity.this, GroupNewActivity.class)));
+    }
 
+    @Override
+    protected void onResume() {
+        groupItems.clear();
+        loadGroup();
+
+        super.onResume();
+    }
+
+    void loadGroup() {
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -75,57 +85,20 @@ public class GroupActivity extends AppCompatActivity {
 
                     Gson gson = new Gson();
 
-                    for(int i = array.length()-1; i >= 0; i--) { // 최신순
+                    for (int i = array.length() - 1; i >= 0; i--) { // 최신순
                         GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupItems.add(model);
                     }
 
-                } catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-//        groupItems.clear();
-//        Retrofit register = new Retrofit.Builder()
-//                .baseUrl(getString(R.string.base_url))
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
-//        Call<ResponseBody> mCallResponse = mRetrofitAPI.getGroups(TokenCache.getToken(this).getAccess());
-//        mCallResponse.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                try {
-//                    String body = response.body().string();
-//                    System.out.println(body);
-//                    JSONObject object = new JSONObject(body);
-//                    JSONArray array = object.getJSONArray("data");
-//
-//                    Gson gson = new Gson();
-//
-//                    for(int i = array.length()-1; i >= 0; i--) { // 최신순
-//                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
-//                        groupItems.add(model);
-//                    }
-//
-//                } catch(Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
-
-        super.onResume();
     }
 }

@@ -14,8 +14,8 @@
             type="com.david0926.drop.model.GroupModel" />
 
         <variable
-            name="isMember"
-            type="Boolean" />
+            name="user"
+            type="com.david0926.drop.model.UserModel" />
 
         <variable
             name="articleList"
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
                     android:layout_marginTop="6dp"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
+                    android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:gravity="start"
                     android:includeFontPadding="false"
                     android:text="@{group.description, default=`Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis`}"
@@ -104,7 +104,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:visibility="@{isMember, default=gone}"
+                    android:visibility="@{user.name.equals(group.user_id), default=gone}"
                     app:articleItem="@{articleList}"
                     app:layout_constraintTop_toBottomOf="@id/txt_group_info_desc"
                     tools:listitem="@layout/row_article" />
@@ -123,7 +123,7 @@
             android:includeFontPadding="false"
             android:text="게시물은 그룹 멤버만 확인할 수 있습니다."
             android:textColor="@color/colorPrimary"
-            android:visibility="@{!isMember, default=visible}"
+            android:visibility="@{!(user.name.equals(group.user_id)), default=visible}"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toTopOf="@+id/btn_group_info_join"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +141,7 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:visibility="@{!isMember, default=visible}"
+            android:visibility="@{!(user.name.equals(group.user_id)), default=visible}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
