@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.david0926.drop.model.CommentModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_box"
+        android:backgroundTint="@android:color/white"
+        android:elevation="4dp"
+        android:padding="16dp"
+        app:isViewSelected="@{item.isImportant}">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_row_comment_profile"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_undraw_quitting_time"
+            app:imageLink="@{item.user.photo}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.david0926.drop.util.NPTextView
+            android:id="@+id/txt_row_comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:text="@{item.user.name, default=`Username`}"
+            android:textColor="@color/materialGray7"
+            android:textSize="18sp"
+            app:isBlackTextSelected="@{item.isImportant}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toTopOf="@id/txt_row_comment_time"
+            app:layout_constraintStart_toEndOf="@+id/img_row_comment_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_row_comment_profile" />
+
+        <com.david0926.drop.util.NPTextView
+            android:id="@+id/txt_row_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:includeFontPadding="false"
+            android:text="0 hour ago"
+            android:textColor="@color/materialGray5"
+            android:textSize="14sp"
+            app:isGrayTextSelected="@{item.isImportant}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/img_row_comment_profile"
+            app:layout_constraintStart_toEndOf="@+id/img_row_comment_profile"
+            app:layout_constraintTop_toBottomOf="@+id/txt_row_comment_name"
+            app:timeago="@{item.time}" />
+
+        <TextView
+            android:id="@+id/txt_row_comment_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:includeFontPadding="false"
+            android:text="Lorem Ipsum"
+            android:textColor="@color/materialGray5"
+            android:textSize="16sp"
+            app:isGrayTextSelected="@{item.isImportant}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_row_comment_profile"
+            app:timeago="@{item.content}" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

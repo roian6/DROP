@@ -1,68 +1,64 @@
 package com.david0926.drop.model;
 
+import com.google.firebase.firestore.auth.User;
+
 import java.io.Serializable;
 
 public class CommentModel implements Serializable {
 
-    private String user_name, user_email, user_profile, upload_time, text;
-    private Boolean important;
+    private String time;
+    private String _id;
+    private String content;
+    private Boolean isImportant;
+    private UserModel user;
 
     public CommentModel() { }
 
-    public CommentModel(String user_name, String user_email, String user_profile, String upload_time, String text, Boolean important) {
-        this.user_name = user_name;
-        this.user_email = user_email;
-        this.user_profile = user_profile;
-        this.upload_time = upload_time;
-        this.text = text;
-        this.important = important;
+    public CommentModel(String time, String _id, String content, Boolean isImportant, UserModel user) {
+        this.time = time;
+        this._id = _id;
+        this.content = content;
+        this.isImportant = isImportant;
+        this.user = user;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getTime() {
+        return time;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String get_id() {
+        return _id;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getUser_profile() {
-        return user_profile;
+    public String getContent() {
+        return content;
     }
 
-    public void setUser_profile(String user_profile) {
-        this.user_profile = user_profile;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getUpload_time() {
-        return upload_time;
+    public Boolean getIsImportant() {
+        return isImportant;
     }
 
-    public void setUpload_time(String upload_time) {
-        this.upload_time = upload_time;
+    public void setIsImportant(Boolean isImportant) {
+        this.isImportant = isImportant;
     }
 
-    public String getText() {
-        return text;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Boolean getImportant() {
-        return important;
-    }
-
-    public void setImportant(Boolean important) {
-        this.important = important;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

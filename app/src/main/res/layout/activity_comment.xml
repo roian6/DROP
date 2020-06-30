@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="androidx.databinding.ObservableArrayList" />
+
+        <import type="com.david0926.drop.model.CommentModel" />
+
+        <variable
+            name="commentList"
+            type="ObservableArrayList&lt;CommentModel&gt;" />
+
+        <variable
+            name="isImportant"
+            type="Boolean" />
+
+        <variable
+            name="type"
+            type="String" />
+
+        <variable
+            name="content"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_comment"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
+            app:title="댓글"
+            app:titleTextAppearance="@style/TitleBarTextAppearance" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_comment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            app:commentItem="@{commentList}"
+            app:layout_constraintBottom_toTopOf="@+id/edt_comment_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_comment"
+            tools:listitem="@layout/row_comment" />
+
+        <EditText
+            android:id="@+id/edt_comment_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/round_box"
+            android:backgroundTint="@color/materialGray1"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
+            android:gravity="top"
+            android:hint="@{!isImportant?@string/comment_hint_normal:type.equals(`lost`)?@string/comment_hint_important_lost:@string/comment_hint_important_found, default=`Add comment...`}"
+            android:padding="12dp"
+            android:text="@={content}"
+            android:textColorHint="@color/materialGray5"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_comment"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/btn_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_box"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="4dp"
+            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:padding="8dp"
+            android:src="@{!isImportant?@drawable/ic_comment_black_24dp:@drawable/ic_account_balance_wallet_black_24dp, default=@drawable/ic_comment_black_24dp}"
+            android:tint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/edt_comment_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edt_comment_text"
+            app:layout_constraintTop_toTopOf="@+id/edt_comment_text" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

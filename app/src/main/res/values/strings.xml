@@ -33,5 +33,12 @@
     <string name="article_upload_lost_desc">물건의 생김새나 특징, 잃어버린 계기 등 자세한 설명을 적어주세요.</string>
     <string name="article_upload_found_desc">물건의 생김새나 특징, 발견 경로 등 자세한 설명을 적어주세요.</string>
 
+    <string name="comment_hint_normal">댓글을 남겨 보세요</string>
+    <string name="comment_hint_important_lost">물건을 전달해줄 방법이나, 연락 가능한 주소를 댓글로 남겨 주세요!</string>
+    <string name="comment_hint_important_found">물건을 전달받을 방법을 댓글로 남겨 주세요. 자신의 물건임을 알릴 수 있는 내용을 적으면 더 좋아요!</string>
+
+    <string name="article_comment" formatted="false">댓글 %d</string>
+    <string name="article_important_lost">제가 찾았어요!</string>
+    <string name="article_important_found">제 물건이에요!</string>
 
 </resources>

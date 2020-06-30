@@ -83,18 +83,26 @@
                     app:timeago="@{item.uploadTime}" />
 
 
-                <ImageView
-                    android:id="@+id/img_article_product"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_article_product"
                     android:layout_width="match_parent"
-                    android:layout_height="161dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_undraw_quitting_time"
-                    app:imageLink="@{item.photo}"
+                    android:layout_height="196dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_article_profile" />
+                    app:layout_constraintTop_toBottomOf="@+id/img_article_profile">
 
+                    <ImageView
+                        android:id="@+id/img_article_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_undraw_quitting_time"
+                        app:imageLink="@{item.photo}" />
+
+                </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/txt_article_product"
@@ -108,7 +116,7 @@
                     android:textSize="32sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_article_product" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_article_product" />
 
                 <TextView
                     android:id="@+id/txt_article_productdesc"
@@ -224,7 +232,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/btn_article_comments"
+                android:id="@+id/btn_article_comment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -232,17 +240,17 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/round_box_radius"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:text="@{`Comments `+item.comment.size(), default=`Comments 3`}"
+                android:text="@{@string/article_comment(item.comment.size()), default=`Comments 0`}"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button2"
+                app:layout_constraintEnd_toStartOf="@+id/btn_article_important"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btn_article_important"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -251,13 +259,13 @@
                 android:background="@drawable/round_box"
                 android:backgroundTint="@color/colorPrimary"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:text="Interaction Button"
+                android:text="@{item.type.equals(`lost`)?@string/article_important_lost:@string/article_important_found, default=`Important`}"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_article_comments" />
+                app:layout_constraintStart_toEndOf="@id/btn_article_comment" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

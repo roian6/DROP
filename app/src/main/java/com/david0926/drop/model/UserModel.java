@@ -15,6 +15,8 @@ public class UserModel implements Serializable {
     private String photo;
     private Integer v;
 
+    public UserModel(){}
+
     public UserModel(String authority, List<String> group, String _id, String userid, String password, String enckey, String name, String photo, Integer v) {
         this.authority = authority;
         this.group = group;

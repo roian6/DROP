@@ -21,16 +21,30 @@
         android:elevation="4dp"
         android:padding="16dp">
 
-        <ImageView
-            android:scaleType="centerCrop"
-            android:id="@+id/img_row_group_name"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_row_group_image"
             android:layout_width="match_parent"
             android:layout_height="196dp"
-            android:src="@drawable/ic_undraw_quitting_time"
-            app:imageLink="@{item.photo}"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageView
+                android:id="@+id/img_row_group_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_undraw_quitting_time"
+                app:imageLink="@{item.photo}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.cardview.widget.CardView>
 
 
         <TextView
@@ -47,7 +61,7 @@
             android:textSize="24sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_row_group_name" />
+            app:layout_constraintTop_toBottomOf="@+id/card_row_group_image" />
 
         <TextView
             android:id="@+id/txt_row_group_desc"

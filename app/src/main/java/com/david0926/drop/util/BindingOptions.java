@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
+import com.david0926.drop.adapter.CommentAdapter;
 import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.model.ArticleModel;
+import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.model.GroupModel;
 
 import java.text.ParseException;
@@ -69,6 +71,12 @@ public class BindingOptions {
         if (adapter != null) adapter.setItem(items);
     }
 
+    @BindingAdapter("commentItem")
+    public static void bindCommentItem(RecyclerView recyclerView, ObservableArrayList<CommentModel> items) {
+        CommentAdapter adapter = (CommentAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
     @BindingAdapter("isViewSelected")
     public static void setIsViewSelected(View view, Boolean selected) {
         if (selected == null) return;
@@ -80,6 +88,18 @@ public class BindingOptions {
     public static void setIsTextSelected(TextView view, Boolean selected) {
         if (selected == null) return;
         view.setTextColor(view.getContext().getColor(selected ? R.color.colorWhite : R.color.colorPrimary));
+    }
+
+    @BindingAdapter("isBlackTextSelected")
+    public static void setIsBlackTextSelected(TextView view, Boolean selected) {
+        if (selected == null) return;
+        view.setTextColor(view.getContext().getColor(selected ? R.color.colorWhite : R.color.materialGray7));
+    }
+
+    @BindingAdapter("isGrayTextSelected")
+    public static void setIsGrayTextSelected(TextView view, Boolean selected) {
+        if (selected == null) return;
+        view.setTextColor(view.getContext().getColor(selected ? R.color.colorWhite : R.color.materialGray5));
     }
 
     @BindingAdapter("buttonEnabled")

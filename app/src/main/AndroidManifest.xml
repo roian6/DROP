@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".GroupInfoActivity"></activity>
+        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".GroupInfoActivity" />
         <activity
             android:name=".GroupNewActivity"
             android:screenOrientation="portrait"
