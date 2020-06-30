@@ -2,6 +2,8 @@ package com.david0926.drop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -29,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GroupActivity extends AppCompatActivity {
 
     private ObservableArrayList<GroupModel> groupItems = new ObservableArrayList<>();
+    private ObservableArrayList<GroupModel> groupItemsCache = new ObservableArrayList<>();
 
     private ActivityGroupBinding binding;
 
@@ -57,17 +60,38 @@ public class GroupActivity extends AppCompatActivity {
 
         binding.btnGroupNew.setOnClickListener(view ->
                 startActivity(new Intent(GroupActivity.this, GroupNewActivity.class)));
+
+        binding.edtGroupSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                groupItems.clear();
+                for(GroupModel model:groupItemsCache){
+                    if(model.getName().contains(charSequence)) groupItems.add(model);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     @Override
     protected void onResume() {
-        groupItems.clear();
         loadGroup();
-
         super.onResume();
     }
 
     void loadGroup() {
+        groupItems.clear();
+        groupItemsCache.clear();
+
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -89,6 +113,7 @@ public class GroupActivity extends AppCompatActivity {
                         GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupItems.add(model);
                     }
+                    groupItemsCache.addAll(groupItems);
 
                 } catch (Exception e) {
                     e.printStackTrace();

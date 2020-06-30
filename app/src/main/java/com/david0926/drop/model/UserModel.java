@@ -1,8 +1,9 @@
 package com.david0926.drop.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserModel {
+public class UserModel implements Serializable {
 
     private String authority;
     private List<String> group;

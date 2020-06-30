@@ -48,11 +48,11 @@ public class ArticleUploadActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_upload);
 
         ArticleModel articleModel = new ArticleModel();
-        articleModel.setProduct_name("");
-        articleModel.setProduct_time("");
-        articleModel.setProduct_place("");
-        articleModel.setProduct_addinfo("");
-        articleModel.setProduct_desc("");
+        articleModel.setTitle("");
+        articleModel.setTime("");
+        articleModel.setPlace("");
+        articleModel.setReward("");
+        articleModel.setDescription("");
 
         binding.setArticle(articleModel);
 
@@ -72,9 +72,9 @@ public class ArticleUploadActivity extends AppCompatActivity {
         });
 
         binding.btnArticleUpload.setOnClickListener(view -> {
-            if (binding.getArticle().getProduct_name().isEmpty() || binding.getArticle().getProduct_time().isEmpty()
-                    || binding.getArticle().getProduct_place().isEmpty() || binding.getArticle().getProduct_addinfo().isEmpty()
-                    || binding.getArticle().getProduct_desc().isEmpty())
+            if (binding.getArticle().getTitle().isEmpty() || binding.getArticle().getTime().isEmpty()
+                    || binding.getArticle().getPlace().isEmpty() || binding.getArticle().getReward().isEmpty()
+                    || binding.getArticle().getDescription().isEmpty())
                 showErrorMsg("빈칸을 모두 채워주세요.");
 
             else if (imageUri == null)
@@ -138,14 +138,15 @@ public class ArticleUploadActivity extends AppCompatActivity {
         }
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
-        RequestBody titlebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_name());
+        RequestBody titlebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTitle());
+        RequestBody descriptionbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getDescription());
         RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), type);
-        RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_time());
-        RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_place());
-        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getProduct_addinfo());
+        RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTime());
+        RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getPlace());
+        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getReward());
         RequestBody groupid = RequestBody.create(MediaType.parse("multipart/form-data"), group);
 
-        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreatePost(TokenCache.getToken(this).getAccess(), titlebody, typebody, timebody, placebody, rewardbody, groupid, photo);
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreatePost(TokenCache.getToken(this).getAccess(), titlebody, descriptionbody, typebody, timebody, placebody, rewardbody, groupid, photo);
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

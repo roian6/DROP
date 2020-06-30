@@ -53,7 +53,7 @@
 
                 <RelativeLayout
                     android:id="@+id/box_article_upload_image"
-                    android:layout_width="144dp"
+                    android:layout_width="192dp"
                     android:layout_height="144dp"
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -80,8 +80,8 @@
                     <ImageView
                         android:scaleType="centerCrop"
                         android:id="@+id/img_article_upload_image"
-                        android:layout_width="128dp"
-                        android:layout_height="128dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
@@ -90,9 +90,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
-                        android:src="@drawable/ic_undraw_quitting_time"
-                        app:civ_border_color="@color/materialGray2"
-                        app:civ_border_width="0.5dp" />
+                        android:src="@drawable/ic_undraw_quitting_time" />
 
                 </RelativeLayout>
 
@@ -137,7 +135,7 @@
                     android:importantForAutofill="no"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_name}"
+                    android:text="@={article.title}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +154,7 @@
                     android:importantForAutofill="no"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_time}"
+                    android:text="@={article.time}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +173,7 @@
                     android:importantForAutofill="no"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_place}"
+                    android:text="@={article.place}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -193,7 +191,7 @@
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_addinfo:@string/article_upload_found_addinfo, default=`More Info`}"
                     android:maxLines="1"
                     android:padding="16dp"
-                    android:text="@={article.product_addinfo}"
+                    android:text="@={article.reward}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -212,7 +210,7 @@
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_desc:@string/article_upload_found_desc, default=`Description`}"
                     android:minLines="5"
                     android:padding="16dp"
-                    android:text="@={article.product_desc}"
+                    android:text="@={article.description}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:fontFamily="@font/apple_sd_gothic_neo_h"
+            android:fontFamily="@font/apple_sd_gothic_neo_r"
             android:text="Error Message"
             android:textColor="@color/materialRed"
             android:textSize="15sp"

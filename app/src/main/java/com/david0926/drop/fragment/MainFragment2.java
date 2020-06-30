@@ -21,6 +21,7 @@ import com.david0926.drop.R;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.databinding.FragmentMain2Binding;
 import com.david0926.drop.model.GroupModel;
+import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
@@ -114,7 +115,13 @@ public class MainFragment2 extends Fragment {
                     Gson gson = new Gson();
 
                     for(int i = array.length()-1; i >= 0; i--) { // 최신순
-                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
+                        JSONObject groupObject = array.getJSONObject(i);
+
+                        GroupModel model = gson.fromJson(groupObject.toString(), GroupModel.class);
+
+                        JSONObject creatorObject = groupObject.getJSONObject("creator");
+                        model.setCreator(gson.fromJson(creatorObject.toString(), UserModel.class));
+
                         groupItems.add(model);
                     }
 

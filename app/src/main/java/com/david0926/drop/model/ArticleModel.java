@@ -7,73 +7,105 @@ import com.david0926.drop.BR;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleModel extends BaseObservable implements Serializable {
 
-    private String group_id, id, user_name, user_email, user_profile, type, upload_time, product_name,
-            product_image, product_desc, product_time, product_place, product_addinfo;
-    private Boolean solve;
-    private ArrayList<CommentModel> comments;
+    private Boolean isResolved;
+    private String photo;
+    private String reward;
+    private ArrayList<CommentModel> comment;
+    private String _id;
+    private String title;
+    private String description;
+    private String type;
+    private String time;
+    private String place;
+    private GroupModel group;
+    private UserModel user;
+    private String uploadTime;
+    private Integer __v;
 
     public ArticleModel() {
     }
 
-    public ArticleModel(String group_id, String id, String user_name, String user_email, String user_profile, String type, String upload_time, String product_name, String product_image, String product_desc, String product_time, String product_place, String product_addinfo, Boolean solve, ArrayList<CommentModel> comments) {
-        this.group_id = group_id;
-        this.id = id;
-        this.user_name = user_name;
-        this.user_email = user_email;
-        this.user_profile = user_profile;
+    public ArticleModel(Boolean isResolved, String photo, String reward, ArrayList<CommentModel> comment, String _id, String title, String description, String type, String time, String place, GroupModel group, UserModel user, String uploadTime, Integer __v) {
+        this.isResolved = isResolved;
+        this.photo = photo;
+        this.reward = reward;
+        this.comment = comment;
+        this._id = _id;
+        this.title = title;
+        this.description = description;
         this.type = type;
-        this.upload_time = upload_time;
-        this.product_name = product_name;
-        this.product_image = product_image;
-        this.product_desc = product_desc;
-        this.product_time = product_time;
-        this.product_place = product_place;
-        this.product_addinfo = product_addinfo;
-        this.solve = solve;
-        this.comments = comments;
+        this.time = time;
+        this.place = place;
+        this.group = group;
+        this.user = user;
+        this.uploadTime = uploadTime;
+        this.__v = __v;
     }
 
-    public String getGroup_id() {
-        return group_id;
+    public Boolean getResolved() {
+        return isResolved;
     }
 
-    public void setGroup_id(String group_id) {
-        this.group_id = group_id;
+    public void setResolved(Boolean resolved) {
+        isResolved = resolved;
     }
 
-    public String getId() {
-        return id;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
-    public String getUser_name() {
-        return user_name;
+    @Bindable
+    public String getReward() {
+        return reward;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setReward(String reward) {
+        notifyPropertyChanged(BR.reward);
+        this.reward = reward;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public ArrayList<CommentModel> getComment() {
+        return comment;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setComment(ArrayList<CommentModel> comment) {
+        this.comment = comment;
     }
 
-    public String getUser_profile() {
-        return user_profile;
+    public String get_id() {
+        return _id;
     }
 
-    public void setUser_profile(String user_profile) {
-        this.user_profile = user_profile;
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    @Bindable
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        notifyPropertyChanged(BR.title);
+        this.title = title;
+    }
+
+    @Bindable
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        notifyPropertyChanged(BR.description);
+        this.description = description;
     }
 
     public String getType() {
@@ -84,87 +116,56 @@ public class ArticleModel extends BaseObservable implements Serializable {
         this.type = type;
     }
 
-    public String getUpload_time() {
-        return upload_time;
+    @Bindable
+    public String getTime() {
+        return time;
     }
 
-    public void setUpload_time(String upload_time) {
-        this.upload_time = upload_time;
+    public void setTime(String time) {
+        notifyPropertyChanged(BR.time);
+        this.time = time;
     }
 
     @Bindable
-    public String getProduct_name() {
-        return product_name;
+    public String getPlace() {
+        return place;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
-        notifyPropertyChanged(BR.product_name);
+    public void setPlace(String place) {
+        notifyPropertyChanged(BR.place);
+        this.place = place;
     }
 
-    @Bindable
-    public String getProduct_image() {
-        return product_image;
+    public GroupModel getGroup() {
+        return group;
     }
 
-    public void setProduct_image(String product_image) {
-        this.product_image = product_image;
-        notifyPropertyChanged(BR.product_image);
+    public void setGroup(GroupModel group) {
+        this.group = group;
     }
 
-    @Bindable
-    public String getProduct_desc() {
-        return product_desc;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setProduct_desc(String product_desc) {
-        this.product_desc = product_desc;
-        notifyPropertyChanged(BR.product_desc);
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
-    @Bindable
-    public String getProduct_time() {
-        return product_time;
+    public String getUploadTime() {
+        return uploadTime;
     }
 
-    public void setProduct_time(String product_time) {
-        this.product_time = product_time;
-        notifyPropertyChanged(BR.product_time);
+    public void setUploadTime(String uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
-    @Bindable
-    public String getProduct_place() {
-        return product_place;
+    public Integer get__v() {
+        return __v;
     }
 
-    public void setProduct_place(String product_place) {
-        this.product_place = product_place;
-        notifyPropertyChanged(BR.product_place);
-    }
-
-    @Bindable
-    public String getProduct_addinfo() {
-        return product_addinfo;
-    }
-
-    public void setProduct_addinfo(String product_addinfo) {
-        this.product_addinfo = product_addinfo;
-        notifyPropertyChanged(BR.product_addinfo);
-    }
-
-    public Boolean getSolve() {
-        return solve;
-    }
-
-    public void setSolve(Boolean solve) {
-        this.solve = solve;
-    }
-
-    public ArrayList<CommentModel> getComments() {
-        return comments;
-    }
-
-    public void setComments(ArrayList<CommentModel> comments) {
-        this.comments = comments;
+    public void set__v(Integer __v) {
+        this.__v = __v;
     }
 }
+

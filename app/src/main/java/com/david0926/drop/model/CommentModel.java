@@ -1,6 +1,8 @@
 package com.david0926.drop.model;
 
-public class CommentModel {
+import java.io.Serializable;
+
+public class CommentModel implements Serializable {
 
     private String user_name, user_email, user_profile, upload_time, text;
     private Boolean important;

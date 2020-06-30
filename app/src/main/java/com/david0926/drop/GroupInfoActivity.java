@@ -17,6 +17,7 @@ import com.david0926.drop.databinding.ActivityGroupInfoBinding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.model.GroupModel;
+import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
@@ -30,6 +31,7 @@ import org.w3c.dom.Comment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -106,8 +108,13 @@ public class GroupInfoActivity extends AppCompatActivity {
 
                     Gson gson = new Gson();
                     for (int i = array.length() - 1; i >= 0; i--) { // 최신순
-                        GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
-                        groupList.add(model);
+                        JSONObject groupObject = array.getJSONObject(i);
+                        GroupModel groupModel = gson.fromJson(groupObject.toString(), GroupModel.class);
+
+                        JSONObject creatorObject = groupObject.getJSONObject("creator");
+                        groupModel.setCreator(gson.fromJson(creatorObject.toString(), UserModel.class));
+
+                        groupList.add(groupModel);
                     }
                     setMemberState();
 
@@ -162,31 +169,30 @@ public class GroupInfoActivity extends AppCompatActivity {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
                         String body = response.body().string();
-                        JSONObject object = new JSONObject(body);
-                        JSONArray array = object.getJSONArray("data");
+                        JSONObject object = new JSONObject(body).getJSONObject("data");
+
+                        int count = object.getInt("count");
+                        object.remove("count");
+
+                        JSONArray array = object.toJSONArray(object.names());
+
+                        object.put("count", count);
 
                         Gson gson = new Gson();
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj = array.getJSONObject(i);
-                            ArticleModel am = new ArticleModel();
-                            am.setGroup_id(obj.getString("group"));
-                            am.setId(obj.getString("_id"));
+                            ArticleModel am = gson.fromJson(obj.toString(), ArticleModel.class);
 
-                            am.setType(obj.getString("type"));
-                            am.setSolve(obj.getBoolean("isResolved"));
+                            JSONObject userObject = obj.getJSONObject("user");
+                            am.setUser(gson.fromJson(userObject.toString(), UserModel.class));
 
-//                            am.setUser_email();
-//                            am.setUser_name();
-//                            am.setUser_profile();
+                            JSONObject groupObject = obj.getJSONObject("group");
+                            GroupModel groupModel = gson.fromJson(groupObject.toString(), GroupModel.class);
 
-                            am.setProduct_addinfo(obj.getString("reward"));
-//                            am.setProduct_desc(obj.getString("description"));
-                            am.setProduct_image(obj.getString("photo"));
-                            am.setProduct_name(obj.getString("title"));
-                            am.setProduct_place(obj.getString("place"));
-//                            am.setProduct_time(obj.getString("time"));
+                            JSONObject creatorObject = groupObject.getJSONObject("creator");
+                            groupModel.setCreator(gson.fromJson(creatorObject.toString(), UserModel.class));
 
-//                            am.setUpload_time("uploadTime");
+                            am.setGroup(groupModel);
 
                             JSONArray c_array = obj.getJSONArray("comment");
                             ArrayList<CommentModel> c_list = new ArrayList<>();
@@ -194,9 +200,12 @@ public class GroupInfoActivity extends AppCompatActivity {
                                 CommentModel cm = gson.fromJson(c_array.getJSONObject(i).toString(), CommentModel.class);
                                 c_list.add(cm);
                             }
-                            am.setComments(c_list);
+
+                            am.setComment(c_list);
                             articleItems.add(am);
                         }
+
+                        Collections.reverse(articleItems);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -246,14 +255,6 @@ public class GroupInfoActivity extends AppCompatActivity {
 
     void setMemberState() {
 
-        Gson gson = new Gson();
-
-        Logger.json(gson.toJson(group));
-        Logger.json(gson.toJson(groupList));
-
-        Logger.d(group.getCreator());
-        Logger.d(UserCache.getUser(this).get_id());
-
         for(GroupModel model:groupList){
             if(model.get_id().equals(group.get_id())) binding.setIsMember(true);
         }
@@ -271,7 +272,7 @@ public class GroupInfoActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if (group.getCreator().equals(UserCache.getUser(this).get_id())) { //admin
+        if (group.getCreator().get_id().equals(UserCache.getUser(this).get_id())) { //admin
             menu.findItem(R.id.action_delete).setVisible(true);
             menu.findItem(R.id.action_edit).setVisible(true);
         } else if (binding.getIsMember()) { //member

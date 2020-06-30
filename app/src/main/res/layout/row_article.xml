@@ -22,7 +22,7 @@
         android:padding="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            app:imageLink="@{item.product_image}"
+            app:imageLink="@{item.user.photo}"
             android:id="@+id/img_rowarticle_profile"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -37,7 +37,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:includeFontPadding="false"
-            android:text="@{item.user_name, default=`Username`}"
+            android:text="@{item.user.name, default=`Username`}"
             android:textColor="@color/materialGray7"
             android:textSize="18sp"
             app:layout_constrainedWidth="true"
@@ -59,16 +59,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_rowarticle_profile"
             app:layout_constraintStart_toEndOf="@+id/img_rowarticle_profile"
             app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_name"
-            app:timeago="@{item.upload_time}" />
+            app:timeago="@{item.uploadTime}" />
 
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/img_rowarticle_product"
             android:layout_width="match_parent"
             android:layout_height="164dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/ic_undraw_quitting_time"
-            app:imageLink="@{item.product_image}"
+            app:imageLink="@{item.photo}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_profile" />
@@ -87,7 +88,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
-                android:text="@{item.product_name, default=`Product Name`}"
+                android:text="@{item.title, default=`Product Name`}"
                 android:textColor="@color/materialGray7"
                 android:textSize="24sp"
                 app:layout_constrainedWidth="true"
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
-                android:text="@{item.product_time+` | `+item.product_place, default=`6/25 3:00 PM | PC 14`}"
+                android:text="@{item.time+` | `+item.place, default=`6/25 3:00 PM | PC 14`}"
                 android:textColor="@color/materialGray5"
                 android:textSize="14sp"
                 app:layout_constrainedWidth="true"

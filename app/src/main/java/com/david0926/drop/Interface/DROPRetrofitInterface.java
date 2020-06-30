@@ -51,6 +51,7 @@ public interface DROPRetrofitInterface {
     Call<ResponseBody> CreatePost(
             @Header("x-access-token") String token,
             @Part("title") RequestBody title,
+            @Part("description") RequestBody description,
             @Part("type") RequestBody type,
             @Part("time") RequestBody time,
             @Part("place") RequestBody place,

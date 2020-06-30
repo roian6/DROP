@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
@@ -103,8 +104,8 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject tokenObject = dataObject.getJSONObject("token");
                     JSONObject userObject = dataObject.getJSONObject("user");
 
-
-                    //Logger.d(tokenObject.toString());
+                    Logger.addLogAdapter(new AndroidLogAdapter());
+                    Logger.d(tokenObject.toString());
 
                     TokenCache.setToken(LoginActivity.this, tokenObject.toString());
                     UserCache.setUser(LoginActivity.this, userObject.toString());

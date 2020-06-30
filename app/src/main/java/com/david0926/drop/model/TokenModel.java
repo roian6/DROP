@@ -1,8 +1,9 @@
 package com.david0926.drop.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TokenModel {
+public class TokenModel implements Serializable {
 
     private String access, refresh;
 
