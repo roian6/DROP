@@ -3,6 +3,8 @@ package com.david0926.drop.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,7 @@ public class MainFragment1 extends Fragment {
     private FragmentMain1Binding binding;
 
     int offset = 10;
+    private boolean isNowsearching = false;
 
     @Override
     public void onAttach(@NotNull Context context) {
@@ -81,6 +84,40 @@ public class MainFragment1 extends Fragment {
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
+        binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능
+            articleItems.clear();
+            if(binding.edtMain1Search.getText().toString().trim().isEmpty() == false) { // 비어있지 않다면
+                isNowsearching = true; // 검색모드 활성화
+                offset = 10; // offset 초기화
+                refreshPost(0, binding.edtMain1Search.getText().toString().trim());
+            }
+            // 비었다면
+            // 실제 새로고침은 이뤄지지 않음. (새로고침은 TextChangedListener에서 텍스트 비었을때)
+
+        });
+
+        binding.edtMain1Search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.toString().isEmpty()) { // 검색창이 비었을때 즉시 검색모드 비활성화하고 새로고침
+                    articleItems.clear();
+                    isNowsearching = false; // 검색모드 비활성화
+                    offset = 10; // offset 초기화
+                    refreshPost(0, "");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         binding.recyclerMain1.addOnScrollListener(new RecyclerView.OnScrollListener() { // 페이지네이션
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -94,18 +131,20 @@ public class MainFragment1 extends Fragment {
                 int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
                 int totalCount = recyclerView.getAdapter().getItemCount();
                 if (lastPosition == totalCount - 1 && totalCount % 10 == 0) {
-                    refreshPost(offset);
+                    if(isNowsearching) // 검색모드라면
+                        refreshPost(offset, binding.edtMain1Search.getText().toString()); // 입력해둔 검색 키워드로 페이지네이션
+                    else // 검색모드가 아니라면
+                        refreshPost(offset, ""); // 계속 쭊쭊
                     offset += 10;
                 }
             }
         });
 
-        refreshPost(0);
+        refreshPost(0, "");
         return binding.getRoot();
     }
 
-    private void refreshPost(int length) {
-
+    private void refreshPost(int length, String keyword) {
 
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -113,7 +152,7 @@ public class MainFragment1 extends Fragment {
                 .build();
         DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
 
-        Call<ResponseBody> mCallResponse = mRetrofitAPI.getPosts(TokenCache.getToken(mContext).getAccess(), length);
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.getPosts(TokenCache.getToken(mContext).getAccess(), length, keyword);
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -130,7 +169,7 @@ public class MainFragment1 extends Fragment {
 
 
                     Gson gson = new Gson();
-                    for (int i = 0; i < array.length(); i++) {
+                    for (int i = array.length()-1; i >= 0; i--) {
                         JSONObject obj = array.getJSONObject(i);
                         ArticleModel am = gson.fromJson(obj.toString(), ArticleModel.class);
 
@@ -147,7 +186,7 @@ public class MainFragment1 extends Fragment {
 
                         JSONArray c_array = obj.getJSONArray("comment");
                         ArrayList<CommentModel> c_list = new ArrayList<>();
-                        for (int j = c_array.length() - 1; j >= 0; j--) { // 최신순
+                        for (int j = c_array.length()-1; j >= 0; j--) { // 최신순
                             CommentModel cm = gson.fromJson(c_array.getJSONObject(i).toString(), CommentModel.class);
                             c_list.add(cm);
                         }
@@ -155,8 +194,6 @@ public class MainFragment1 extends Fragment {
 
                         articleItems.add(am);
                     }
-
-                    Collections.reverse(articleItems);
 
                 } catch (Exception e) {
                     e.printStackTrace();

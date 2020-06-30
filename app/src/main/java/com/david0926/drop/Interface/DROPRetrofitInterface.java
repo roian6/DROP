@@ -73,6 +73,13 @@ public interface DROPRetrofitInterface {
             @Query("length") int length
     );
 
+    @GET("v1/post")
+    Call<ResponseBody> getPosts(
+            @Header("x-access-token") String token,
+            @Query("length") int length,
+            @Query("search") String keyword
+    );
+
     @GET("v1/group")
     Call<ResponseBody> getGroups(
             @Header("x-access-token") String token
