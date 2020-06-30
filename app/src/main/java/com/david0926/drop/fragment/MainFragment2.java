@@ -114,7 +114,7 @@ public class MainFragment2 extends Fragment {
 
                     Gson gson = new Gson();
 
-                    for(int i = array.length()-1; i >= 0; i--) { // 최신순
+                    for(int i = 0; i < array.length(); i++) { // 최신순
                         JSONObject groupObject = array.getJSONObject(i);
 
                         GroupModel model = gson.fromJson(groupObject.toString(), GroupModel.class);
