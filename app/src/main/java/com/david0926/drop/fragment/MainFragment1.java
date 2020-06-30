@@ -85,14 +85,18 @@ public class MainFragment1 extends Fragment {
         adapter.setOnItemLongClickListener((view, item) -> true);
 
         binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능
-            articleItems.clear();
             if(binding.edtMain1Search.getText().toString().trim().isEmpty() == false) { // 비어있지 않다면
+                articleItems.clear();
                 isNowsearching = true; // 검색모드 활성화
                 offset = 10; // offset 초기화
                 refreshPost(0, binding.edtMain1Search.getText().toString().trim());
+            } else {
+                articleItems.clear();
+                isNowsearching = false; // 검색모드 비활성화
+                offset = 10; // offset 초기화
+                refreshPost(0, "");
             }
-            // 비었다면
-            // 실제 새로고침은 이뤄지지 않음. (새로고침은 TextChangedListener에서 텍스트 비었을때)
+            // 빈 상태에서 누르면 그냥 새로고침
 
         });
 
@@ -186,8 +190,9 @@ public class MainFragment1 extends Fragment {
 
                         JSONArray c_array = obj.getJSONArray("comment");
                         ArrayList<CommentModel> c_list = new ArrayList<>();
+                        System.out.println("LEN : " + c_array.length());
                         for (int j = c_array.length()-1; j >= 0; j--) { // 최신순
-                            CommentModel cm = gson.fromJson(c_array.getJSONObject(i).toString(), CommentModel.class);
+                            CommentModel cm = gson.fromJson(c_array.getJSONObject(j).toString(), CommentModel.class);
                             c_list.add(cm);
                         }
                         am.setComment(c_list);

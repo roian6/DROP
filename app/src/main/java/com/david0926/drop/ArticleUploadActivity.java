@@ -121,7 +121,6 @@ public class ArticleUploadActivity extends AppCompatActivity {
     }
 
     void uploadArticle(String group, ArticleModel model, String type, Uri image) {
-        //gogo🥕
 
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))

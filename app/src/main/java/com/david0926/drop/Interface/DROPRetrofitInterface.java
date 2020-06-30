@@ -60,11 +60,26 @@ public interface DROPRetrofitInterface {
             @Part MultipartBody.Part photo
     );
 
+    @Multipart
+    @POST("v1/post/comment")
+    Call<ResponseBody> addComment(
+            @Header("x-access-token") String token,
+            @Part("postid") RequestBody title,
+            @Part("content") RequestBody description,
+            @Part("isImportant") RequestBody type
+    );
+
     @GET("v1/post")
     Call<ResponseBody> getPosts(
             @Header("x-access-token") String token,
             @Query("group") String groupid,
             @Query("length") int length
+    );
+
+    @GET("v1/post/{postid}")
+    Call<ResponseBody> getPost(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid
     );
 
     @GET("v1/post")
@@ -101,5 +116,6 @@ public interface DROPRetrofitInterface {
     Call<ResponseBody> getToken(
             @Body LoginModel lm
     );
+
 
 }
