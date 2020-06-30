@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="248dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_undraw_quitting_time"
+                    android:src="@drawable/placeholder"
                     app:imageLink="@{group.photo}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

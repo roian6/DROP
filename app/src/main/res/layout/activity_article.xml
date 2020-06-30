@@ -46,7 +46,7 @@
                     android:id="@+id/img_article_profile"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:src="@drawable/ic_undraw_quitting_time"
+                    android:src="@drawable/placeholder"
                     app:imageLink="@{item.user.photo}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_undraw_quitting_time"
+                        android:src="@drawable/placeholder"
                         app:imageLink="@{item.photo}" />
 
                 </androidx.cardview.widget.CardView>
@@ -240,7 +240,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/round_box_radius"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
-                android:text="@{@string/article_comment(item.comment.size()), default=`Comments 0`}"
+                android:text="댓글"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"

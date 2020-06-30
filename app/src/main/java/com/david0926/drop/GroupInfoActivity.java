@@ -197,7 +197,7 @@ public class GroupInfoActivity extends AppCompatActivity {
                             JSONArray c_array = obj.getJSONArray("comment");
                             ArrayList<CommentModel> c_list = new ArrayList<>();
                             for(int j = c_array.length() - 1; j >= 0; j--) { // 최신순
-                                CommentModel cm = gson.fromJson(c_array.getJSONObject(i).toString(), CommentModel.class);
+                                CommentModel cm = gson.fromJson(c_array.getJSONObject(j).toString(), CommentModel.class);
                                 c_list.add(cm);
                             }
 

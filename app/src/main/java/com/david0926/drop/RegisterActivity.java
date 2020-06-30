@@ -1,20 +1,14 @@
 package com.david0926.drop;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.MimeTypeMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -23,17 +17,9 @@ import com.bumptech.glide.Glide;
 import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.databinding.ActivityRegisterBinding;
 import com.david0926.drop.util.MimeTypeUtil;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RegisterActivity extends AppCompatActivity {
 
     private Uri uri;
+    private String fcmToken = "";
 
     private ActivityRegisterBinding binding;
 
@@ -65,6 +52,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         //finish activity, when back button pressed
         binding.toolbarRegi.setNavigationOnClickListener(view -> finish());
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(runnable -> {
+            fcmToken = runnable.getToken();
+            System.out.println("fcm token: " + fcmToken);
+        });
 
         //scroll to bottom when keyboard up
         new TedKeyboardObserver(this).listen(isShow -> {
@@ -125,29 +117,34 @@ public class RegisterActivity extends AppCompatActivity {
         File file;
         try {
             file = new File(profile.getPath());
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             showErrorMsg("프로필 사진을 넣어주세요");
             return;
         }
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
         RequestBody userid =
-                RequestBody.create(MediaType.parse("multipart/form-data"), email);RequestBody namebody =
+                RequestBody.create(MediaType.parse("multipart/form-data"), email);
+        RequestBody namebody =
                 RequestBody.create(MediaType.parse("multipart/form-data"), name);
 
         RequestBody password =
                 RequestBody.create(MediaType.parse("multipart/form-data"), pw);
-        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(userid, password, namebody, photo);
+
+        RequestBody fcmtoken =
+                RequestBody.create(MediaType.parse("multipart/form-data"), fcmToken);
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.CreateUser(userid, password, namebody, fcmtoken, photo);
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                        if (response.body().string() == null) {
-                            showErrorMsg("이미 존재하는 계정입니다.");
-                            return;
-                        }
+                    if (response.body().string() == null) {
+                        showErrorMsg("이미 존재하는 계정입니다.");
+                        return;
+                    }
                     finishSignUp();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     showErrorMsg("이미 존재하는 계정입니다.");
                     e.printStackTrace();
                 }

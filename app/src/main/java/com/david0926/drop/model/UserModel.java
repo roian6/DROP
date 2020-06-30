@@ -13,11 +13,12 @@ public class UserModel implements Serializable {
     private String enckey;
     private String name;
     private String photo;
+    private String fcmtoken;
     private Integer v;
 
     public UserModel(){}
 
-    public UserModel(String authority, List<String> group, String _id, String userid, String password, String enckey, String name, String photo, Integer v) {
+    public UserModel(String authority, List<String> group, String _id, String userid, String password, String enckey, String name, String photo, String fcmtoken, Integer v) {
         this.authority = authority;
         this.group = group;
         this._id = _id;
@@ -26,6 +27,7 @@ public class UserModel implements Serializable {
         this.enckey = enckey;
         this.name = name;
         this.photo = photo;
+        this.fcmtoken = fcmtoken;
         this.v = v;
     }
 
@@ -91,6 +93,14 @@ public class UserModel implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getFcmtoken() {
+        return fcmtoken;
+    }
+
+    public void setFcmtoken(String fcmtoken) {
+        this.fcmtoken = fcmtoken;
     }
 
     public Integer getV() {

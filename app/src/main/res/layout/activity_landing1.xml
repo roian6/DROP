@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:src="@drawable/ic_undraw_quitting_time"
+            android:src="@drawable/walk_lost"
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="196dp"
@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="Intro 1"
+            android:text="물건을 잃어버렸다고요?"
             android:textColor="@color/materialGray7"
-            android:textSize="32sp"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -47,7 +47,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/apple_sd_gothic_neo_r"
             android:gravity="center"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            android:text="게시물과 키워드 알림을 통해, \n빠르게 찾을 수 있도록 도와줄게요!"
             android:textColor="@color/materialGray7"
             android:textSize="18sp"
             app:layout_constrainedWidth="true"

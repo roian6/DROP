@@ -16,42 +16,16 @@
 
         <ImageView
             android:id="@+id/img_splash_icon"
-            android:layout_width="196dp"
-            android:layout_height="196dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:backgroundTint="@color/materialGreen"
-            android:src="@drawable/ic_undraw_quitting_time"
+            android:src="@drawable/app_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/productt"
-            android:includeFontPadding="false"
-            android:text="DROP."
-            android:textColor="@color/colorPrimary"
-            android:textSize="64sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_splash_icon" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/apple_sd_gothic_neo_r"
-            android:includeFontPadding="false"
-            android:text="이거 떨어트린 사람?"
-            android:textColor="@color/materialGray6"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

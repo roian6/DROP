@@ -25,7 +25,7 @@
             android:id="@+id/img_rowarticle_profile"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_undraw_quitting_time"
+            android:src="@drawable/placeholder"
             app:imageLink="@{item.user.photo}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_undraw_quitting_time"
+                android:src="@drawable/placeholder"
                 app:imageLink="@{item.photo}" />
 
         </androidx.cardview.widget.CardView>
@@ -90,10 +90,23 @@
             app:layout_constraintTop_toBottomOf="@+id/card_rowarticle_product">
 
             <TextView
-                android:id="@+id/txt_rowarticle_product"
+                android:id="@+id/txt_rowarticle_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/apple_sd_gothic_neo_h"
+                android:includeFontPadding="false"
+                android:text="@{item.group.name, default=`Group Name`}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_rowarticle_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
                 android:text="@{item.title, default=`Product Name`}"
@@ -101,7 +114,7 @@
                 android:textSize="24sp"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_group" />
 
             <TextView
                 android:id="@+id/txt_rowarticle_productinfo"

@@ -29,6 +29,7 @@ public interface DROPRetrofitInterface {
             @Part("userid") RequestBody userid,
             @Part("password") RequestBody password,
             @Part("name") RequestBody name,
+            @Part("fcmtoken") RequestBody fcmtoken,
             @Part MultipartBody.Part photo
     );
 

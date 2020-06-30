@@ -33,7 +33,7 @@ public class FabFragment extends AAH_FabulousFragment {
         });
 
         setAnimationDuration(400);
-        setPeekHeight(300);
+        setPeekHeight(250);
         setViewgroupStatic(binding.constraintFabBottom);
         setViewMain(binding.relativeFabContent);
         setMainContentView(binding.getRoot());

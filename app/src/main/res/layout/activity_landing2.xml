@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:src="@drawable/ic_undraw_quitting_time"
+            android:src="@drawable/walk_found"
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="196dp"
@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="Intro 2"
+            android:text="잃어버린 물건을 주웠다고요?"
             android:textColor="@color/materialGray7"
-            android:textSize="32sp"
+            android:textSize="28sp"
             app:layout_constraintEnd_toEndOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -47,7 +47,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/apple_sd_gothic_neo_r"
             android:gravity="center"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+            android:text="사진과 함께 그룹에 게시물을 올리면, \n주인이 나타날지도 몰라요!"
             android:textColor="@color/materialGray7"
             android:textSize="18sp"
             app:layout_constrainedWidth="true"
