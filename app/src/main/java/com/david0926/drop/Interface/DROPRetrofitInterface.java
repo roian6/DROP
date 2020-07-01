@@ -83,6 +83,12 @@ public interface DROPRetrofitInterface {
             @Path("postid") String postid
     );
 
+    @POST("v1/post/{postid}/resolve")
+    Call<ResponseBody> setPostSolved(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid
+    );
+
     @GET("v1/post")
     Call<ResponseBody> getPosts(
             @Header("x-access-token") String token,
