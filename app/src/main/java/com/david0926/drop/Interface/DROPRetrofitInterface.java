@@ -77,6 +77,11 @@ public interface DROPRetrofitInterface {
             @Query("length") int length
     );
 
+    @GET("v1/post/notification")
+    Call<ResponseBody> getNotification(
+            @Header("x-access-token") String token
+    );
+
     @GET("v1/post/{postid}")
     Call<ResponseBody> getPost(
             @Header("x-access-token") String token,
