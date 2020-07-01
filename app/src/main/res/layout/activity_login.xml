@@ -29,16 +29,17 @@
         android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
 
 
             <ImageView
                 android:id="@+id/lottieAnimationView"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
                 android:background="@drawable/round_box"
+                android:elevation="4dp"
                 android:fontFamily="@font/productt"
                 android:padding="16dp"
                 android:src="@drawable/app_logo"
@@ -48,17 +49,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25" />
 
-            <TextView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/productb"
-                android:text="DROP."
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
-                app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
-                app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

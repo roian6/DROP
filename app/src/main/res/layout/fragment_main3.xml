@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="androidx.databinding.ObservableArrayList" />
+
+        <import type="com.david0926.drop.model.NotiModel" />
+
+        <variable
+            name="isEmpty"
+            type="Boolean" />
+
+        <variable
+            name="notiList"
+            type="ObservableArrayList&lt;NotiModel&gt;" />
 
     </data>
 
@@ -22,6 +35,17 @@
             app:title="알림"
             app:titleTextAppearance="@style/TitleBarTextAppearance"
             app:titleTextColor="@android:color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            app:notiItem="@{notiList}"
+            android:id="@+id/recycler_noti"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_main3"
+            tools:listitem="@layout/row_noti" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

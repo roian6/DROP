@@ -19,10 +19,12 @@ import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.adapter.CommentAdapter;
 import com.david0926.drop.adapter.GroupAdapter;
+import com.david0926.drop.adapter.NotiAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.model.GroupModel;
+import com.david0926.drop.model.NotiModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +76,12 @@ public class BindingOptions {
     @BindingAdapter("commentItem")
     public static void bindCommentItem(RecyclerView recyclerView, ObservableArrayList<CommentModel> items) {
         CommentAdapter adapter = (CommentAdapter) recyclerView.getAdapter();
+        if (adapter != null) adapter.setItem(items);
+    }
+
+    @BindingAdapter("notiItem")
+    public static void bindNotiItem(RecyclerView recyclerView, ObservableArrayList<NotiModel> items) {
+        NotiAdapter adapter = (NotiAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setItem(items);
     }
 

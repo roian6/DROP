@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -123,6 +124,27 @@ public class MainFragment1 extends Fragment {
             }
         });
 
+        binding.edtMain1Search.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if(i== EditorInfo.IME_ACTION_SEARCH){
+
+                if(!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
+                    articleItems.clear();
+                    isNowsearching = true; // 검색모드 활성화
+                    offset = 10; // offset 초기화
+                    refreshPost(0, binding.edtMain1Search.getText().toString().trim());
+                } else {
+                    articleItems.clear();
+                    isNowsearching = false; // 검색모드 비활성화
+                    offset = 10; // offset 초기화
+                    refreshPost(0, "");
+                }
+                // 빈 상태에서 누르면 그냥 새로고침
+
+                return true;
+            }
+            return false;
+        });
+
         binding.recyclerMain1.addOnScrollListener(new RecyclerView.OnScrollListener() { // 페이지네이션
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -179,7 +201,7 @@ public class MainFragment1 extends Fragment {
 
                     JSONArray array = object.toJSONArray(object.names());
 
-                    if(!isNowsearching&&array==null) binding.setIsEmpty(true);
+                    if(!isNowsearching&&array==null&&articleItems.isEmpty()) binding.setIsEmpty(true);
                     else binding.setIsEmpty(false);
 
                     object.put("count", count);

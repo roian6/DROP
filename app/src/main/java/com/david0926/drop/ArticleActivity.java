@@ -47,21 +47,18 @@ public class ArticleActivity extends AppCompatActivity {
         model = (ArticleModel) getIntent().getSerializableExtra("article");
         binding.setItem(model);
 
-        binding.btnArticleComment.setOnClickListener(view -> {
-            Intent intent = new Intent(this, CommentActivity.class);
-            intent.putExtra("is_important", false);
-            intent.putExtra("article", model);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
-        });
+        if(getIntent().getBooleanExtra("to_comment", false)) showComment(false);
 
-        binding.btnArticleImportant.setOnClickListener(view -> {
-            Intent intent = new Intent(this, CommentActivity.class);
-            intent.putExtra("is_important", true);
-            intent.putExtra("article", model);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
-        });
+        binding.btnArticleComment.setOnClickListener(view -> showComment(false));
+        binding.btnArticleImportant.setOnClickListener(view -> showComment(true));
+    }
+
+    void showComment(boolean isImportant){
+        Intent intent = new Intent(this, CommentActivity.class);
+        intent.putExtra("is_important", isImportant);
+        intent.putExtra("article", model);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
     }
 
     @Override
