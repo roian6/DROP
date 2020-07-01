@@ -150,7 +150,7 @@ public class MainFragment1 extends Fragment {
 
     @Override
     public void onResume() {
-        binding.edtMain1Search.setText("");
+        //binding.edtMain1Search.setText("");
         articleItems.clear();
         isNowsearching = false; // 검색모드 비활성화
         offset = 10; // offset 초기화
