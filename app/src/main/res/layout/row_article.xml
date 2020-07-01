@@ -65,9 +65,9 @@
             android:id="@+id/card_rowarticle_product"
             android:layout_width="match_parent"
             android:layout_height="196dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_rowarticle_profile">
@@ -86,6 +86,10 @@
             android:id="@+id/constraintLayout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txt_rowarticle_type"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_rowarticle_product">
 
@@ -109,10 +113,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
+                android:singleLine="true"
                 android:text="@{item.title, default=`Product Name`}"
                 android:textColor="@color/materialGray7"
                 android:textSize="24sp"
                 app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_group" />
 
@@ -122,10 +129,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
+                android:singleLine="true"
                 android:text="@{item.time+` | `+item.place, default=`Time | Place`}"
                 android:textColor="@color/materialGray5"
                 android:textSize="14sp"
                 app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_rowarticle_product" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -140,8 +150,8 @@
             android:elevation="8dp"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:includeFontPadding="false"
-            android:paddingVertical="8dp"
             android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
             android:text="분실"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
@@ -149,8 +159,6 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout3" />
 
 
