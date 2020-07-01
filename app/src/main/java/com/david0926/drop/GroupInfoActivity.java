@@ -107,7 +107,7 @@ public class GroupInfoActivity extends AppCompatActivity {
                     JSONArray array = object.getJSONArray("data");
 
                     Gson gson = new Gson();
-                    for (int i = array.length() - 1; i >= 0; i--) { // 최신순
+                    for (int i = 0; i < array.length(); i++) { // 최신순
                         JSONObject groupObject = array.getJSONObject(i);
                         GroupModel groupModel = gson.fromJson(groupObject.toString(), GroupModel.class);
 
@@ -204,9 +204,6 @@ public class GroupInfoActivity extends AppCompatActivity {
                             am.setComment(c_list);
                             articleItems.add(am);
                         }
-
-                        Collections.reverse(articleItems);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
