@@ -151,10 +151,12 @@ public class ArticleUploadActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    if (response.body().string() == null) {
+                    String body;
+                    if ((body = response.body().string()) == null) {
                         showErrorMsg("게시물을 업로드할 수 없습니다.");
                         return;
                     }
+
                     finish();
                 } catch(Exception e) {
                     showErrorMsg("게시물을 업로드할 수 없습니다.");

@@ -208,8 +208,9 @@ public class MainFragment1 extends Fragment {
 
 
                     Gson gson = new Gson();
-                    for (int i = array.length()-1; i >= 0; i--) {
+                    for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
+                        System.out.println("POST : " + obj.toString() + "\n\n");
                         ArticleModel am = gson.fromJson(obj.toString(), ArticleModel.class);
 
                         JSONObject userObject = obj.getJSONObject("user");

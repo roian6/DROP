@@ -17,15 +17,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.david0926.drop.ArticleActivity;
 import com.david0926.drop.GroupActivity;
 import com.david0926.drop.GroupInfoActivity;
+import com.david0926.drop.Interface.DROPRetrofitInterface;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.adapter.NotiAdapter;
 import com.david0926.drop.databinding.FragmentMain3Binding;
+import com.david0926.drop.model.ArticleModel;
+import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.NotiModel;
+import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
+import com.david0926.drop.util.TokenCache;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainFragment3 extends Fragment {
 
@@ -72,6 +89,37 @@ public class MainFragment3 extends Fragment {
 //        notiItems.add(model);
 
         //종수: 노티 가져와서 리스트에 넣기
+
+        Retrofit register = new Retrofit.Builder()
+                .baseUrl(getString(R.string.base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.getNotification(TokenCache.getToken(mContext).getAccess());
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body = response.body().string();
+                    JSONObject obj = new JSONObject(body);
+                    JSONArray arr = obj.getJSONArray("data");
+                    System.out.println("노티바디 : " + body);
+                    for(int i = 0; i < arr.length(); i++) {
+                        NotiModel nm = new Gson().fromJson(arr.getJSONObject(i).toString(), NotiModel.class);
+                        notiItems.add(nm);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
 
         return binding.getRoot();
     }
