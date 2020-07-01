@@ -144,11 +144,20 @@ public class MainFragment1 extends Fragment {
             }
         });
 
-        refreshPost(0, "");
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        articleItems.clear();
+        isNowsearching = false; // 검색모드 비활성화
+        offset = 10; // offset 초기화
+        refreshPost(0, "");
+        super.onResume();
+    }
+
     private void refreshPost(int length, String keyword) {
+
 
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -190,7 +199,6 @@ public class MainFragment1 extends Fragment {
 
                         JSONArray c_array = obj.getJSONArray("comment");
                         ArrayList<CommentModel> c_list = new ArrayList<>();
-                        System.out.println("LEN : " + c_array.length());
                         for (int j = c_array.length()-1; j >= 0; j--) { // 최신순
                             CommentModel cm = gson.fromJson(c_array.getJSONObject(j).toString(), CommentModel.class);
                             c_list.add(cm);

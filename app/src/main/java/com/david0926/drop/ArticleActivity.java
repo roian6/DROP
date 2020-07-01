@@ -10,11 +10,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.LoginModel;
 import com.david0926.drop.databinding.ActivityArticleBinding;
 import com.david0926.drop.model.ArticleModel;
+import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
+import org.json.JSONObject;
 import org.w3c.dom.Comment;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ArticleActivity extends AppCompatActivity {
 
@@ -72,9 +85,37 @@ public class ArticleActivity extends AppCompatActivity {
                     .setMessage("이 게시물을 해결 완료 처리할까요? 더 이상 피드에 노출되지 않습니다.")
                     .setPositiveButton("확인", (dialogInterface, i) -> {
                         //여기에 resolve 구현
+
+                        Retrofit register = new Retrofit.Builder()
+                                .baseUrl(getString(R.string.base_url))
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+                        Call<ResponseBody> mCallResponse = mRetrofitAPI.setPostSolved(TokenCache.getToken(this).getAccess(), model.get_id());
+                        mCallResponse.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    if(response.body() != null) {
+                                        finish();
+                                    }
+                                } catch(Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+
+
                     })
                     .setNegativeButton("취소", (dialogInterface, i) -> {});
             builder.show();
+        } else {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
