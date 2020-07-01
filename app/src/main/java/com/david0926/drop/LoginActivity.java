@@ -73,17 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
         });
 
-        //finish when sign up success
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action != null && action.equals("finish_signup")) {
-                    finish();
-                }
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("finish_signup"));
     }
 
     private void signIn(String id, String pw) {

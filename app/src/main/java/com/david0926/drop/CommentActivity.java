@@ -165,7 +165,6 @@ public class CommentActivity extends AppCompatActivity {
                     commentItems.clear();
                     commentItems.addAll(article.getComment());
                 } catch(Exception err) {
-                    // 만약에 에러메세지 띄울 수 있으면 ㄱㄱ
                     err.printStackTrace();
                 }
             }
