@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.david0926.drop.GroupActivity;
 import com.david0926.drop.GroupInfoActivity;
 import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.databinding.FragmentMain2Binding;
@@ -83,6 +84,12 @@ public class MainFragment2 extends Fragment {
             }
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
+
+        binding.btnMain2Logout.setOnClickListener(view -> {
+            UserCache.logoutUser(mContext);
+            startActivity(new Intent(mContext, LoginActivity.class));
+            getActivity().finish();
+        });
 
         return binding.getRoot();
     }

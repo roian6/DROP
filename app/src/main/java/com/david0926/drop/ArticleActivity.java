@@ -52,6 +52,7 @@ public class ArticleActivity extends AppCompatActivity {
             intent.putExtra("is_important", false);
             intent.putExtra("article", model);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
         });
 
         binding.btnArticleImportant.setOnClickListener(view -> {
@@ -59,6 +60,7 @@ public class ArticleActivity extends AppCompatActivity {
             intent.putExtra("is_important", true);
             intent.putExtra("article", model);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.slide_up_before);
         });
     }
 

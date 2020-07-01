@@ -162,11 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
     private void finishSignUp() {
 
         binding.animatorRegi.showNext();
-        binding.lottieRegiFinish.playAnimation();
-
-        new Handler().postDelayed(() -> {
-            finish();
-        }, binding.lottieRegiFinish.getDuration() + 1000);
+        new Handler().postDelayed(this::finish, 1500);
     }
 
     private void setProfileImage(Uri uri) {

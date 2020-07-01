@@ -265,19 +265,19 @@ public class GroupInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_group_info, menu);
+        //getMenuInflater().inflate(R.menu.menu_group_info, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if (group.getCreator().get_id().equals(UserCache.getUser(this).get_id())) { //admin
-            menu.findItem(R.id.action_delete).setVisible(true);
-            menu.findItem(R.id.action_edit).setVisible(true);
-        } else if (binding.getIsMember()) { //member
-            menu.findItem(R.id.action_exit).setVisible(true);
-        }
+//        if (group.getCreator().get_id().equals(UserCache.getUser(this).get_id())) { //admin
+//            menu.findItem(R.id.action_delete).setVisible(true);
+//            menu.findItem(R.id.action_edit).setVisible(true);
+//        } else if (binding.getIsMember()) { //member
+//            menu.findItem(R.id.action_exit).setVisible(true);
+//        }
         return super.onPrepareOptionsMenu(menu);
     }
 }

@@ -151,14 +151,14 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_main2_edit_profile"
+                        android:id="@+id/btn_main2_logout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:background="@drawable/round_box"
                         android:backgroundTint="@color/colorPrimary"
                         android:fontFamily="@font/apple_sd_gothic_neo_h"
-                        android:text="프로필 수정하기"
+                        android:text="로그아웃"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

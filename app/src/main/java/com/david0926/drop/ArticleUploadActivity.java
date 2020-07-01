@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -107,9 +108,9 @@ public class ArticleUploadActivity extends AppCompatActivity {
                         GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupList.add(model);
                     }
-                    if (groupList.isEmpty()) noGroupError();
 
                 } catch(Exception e) {
+                    noGroupError();
                     e.printStackTrace();
                 }
             }
@@ -184,9 +185,10 @@ public class ArticleUploadActivity extends AppCompatActivity {
     }
 
     private void noGroupError(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("게시물을 작성하기 전에, 최소 하나 이상의 그룹에 가입해 주세요.");
-        builder.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("게시물을 작성하기 전에, 최소 하나 이상의 그룹에 가입해 주세요.");
+//        builder.show();
+        Toast.makeText(this, "게시물을 작성하기 전에, 최소 하나 이상의 그룹에 가입해 주세요.", Toast.LENGTH_SHORT).show();
         finish();
     }
 }

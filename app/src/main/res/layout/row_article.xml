@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/apple_sd_gothic_neo_h"
                 android:includeFontPadding="false"
-                android:text="@{item.time+` | `+item.place, default=`6/25 3:00 PM | PC 14`}"
+                android:text="@{item.time+` | `+item.place, default=`Time | Place`}"
                 android:textColor="@color/materialGray5"
                 android:textSize="14sp"
                 app:layout_constrainedWidth="true"

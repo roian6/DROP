@@ -77,16 +77,16 @@ public class CommentActivity extends AppCompatActivity {
 
         });
         adapter.setOnItemLongClickListener((view, item) -> {
-            if (!item.getUser().get_id().equals(UserCache.getUser(this).get_id())) return false;
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("댓글 삭제하기")
-                    .setMessage("이 댓글을 삭제할까요?")
-                    .setPositiveButton("삭제", (dialogInterface, i) -> {
-                        //여기에 댓글 삭제 구현
-                    })
-                    .setNegativeButton("취소", (dialogInterface, i) -> {});
-            builder.show();
+//            if (!item.getUser().get_id().equals(UserCache.getUser(this).get_id())) return false;
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle("댓글 삭제하기")
+//                    .setMessage("이 댓글을 삭제할까요?")
+//                    .setPositiveButton("삭제", (dialogInterface, i) -> {
+//                        //여기에 댓글 삭제 구현
+//                    })
+//                    .setNegativeButton("취소", (dialogInterface, i) -> {});
+//            builder.show();
 
             return true;
         });

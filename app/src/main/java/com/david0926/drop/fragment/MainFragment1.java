@@ -68,6 +68,7 @@ public class MainFragment1 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main1, container, false);
+        binding.setIsEmpty(false);
 
         LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
                 mContext, LinearLayoutManager.VERTICAL, false);
@@ -85,7 +86,7 @@ public class MainFragment1 extends Fragment {
         adapter.setOnItemLongClickListener((view, item) -> true);
 
         binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능
-            if(binding.edtMain1Search.getText().toString().trim().isEmpty() == false) { // 비어있지 않다면
+            if(!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
                 articleItems.clear();
                 isNowsearching = true; // 검색모드 활성화
                 offset = 10; // offset 초기화
@@ -149,6 +150,7 @@ public class MainFragment1 extends Fragment {
 
     @Override
     public void onResume() {
+        binding.edtMain1Search.setText("");
         articleItems.clear();
         isNowsearching = false; // 검색모드 비활성화
         offset = 10; // offset 초기화
@@ -157,7 +159,6 @@ public class MainFragment1 extends Fragment {
     }
 
     private void refreshPost(int length, String keyword) {
-
 
         Retrofit register = new Retrofit.Builder()
                 .baseUrl(getString(R.string.base_url))
@@ -177,6 +178,9 @@ public class MainFragment1 extends Fragment {
                     object.remove("count");
 
                     JSONArray array = object.toJSONArray(object.names());
+
+                    if(!isNowsearching&&array==null) binding.setIsEmpty(true);
+                    else binding.setIsEmpty(false);
 
                     object.put("count", count);
 
@@ -207,6 +211,8 @@ public class MainFragment1 extends Fragment {
 
                         articleItems.add(am);
                     }
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
