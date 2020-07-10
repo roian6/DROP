@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.david0926.drop.Interface.DROPRetrofit;
-import com.david0926.drop.Interface.DROPRetrofitService;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityArticleBinding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.util.TokenCache;
@@ -21,8 +21,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ArticleActivity extends AppCompatActivity {
 

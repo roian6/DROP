@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.david0926.drop.GroupActivity;
 import com.david0926.drop.GroupInfoActivity;
-import com.david0926.drop.Interface.DROPRetrofit;
-import com.david0926.drop.Interface.DROPRetrofitService;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.SocialGroupAdapter;
@@ -37,8 +37,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainFragment2 extends Fragment {
 

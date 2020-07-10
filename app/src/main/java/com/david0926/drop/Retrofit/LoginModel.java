@@ -1,4 +1,4 @@
-package com.david0926.drop.Interface;
+package com.david0926.drop.Retrofit;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -10,8 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.david0926.drop.Interface.DROPRetrofit;
-import com.david0926.drop.Interface.DROPRetrofitService;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.databinding.ActivityGroupBinding;
 import com.david0926.drop.model.GroupModel;
@@ -26,8 +26,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GroupActivity extends AppCompatActivity {
 
