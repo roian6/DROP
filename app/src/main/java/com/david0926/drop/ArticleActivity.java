@@ -10,17 +10,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.david0926.drop.Interface.DROPRetrofitInterface;
-import com.david0926.drop.Interface.LoginModel;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityArticleBinding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-
-import org.json.JSONObject;
-import org.w3c.dom.Comment;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -85,11 +80,7 @@ public class ArticleActivity extends AppCompatActivity {
                     .setPositiveButton("확인", (dialogInterface, i) -> {
                         //여기에 resolve 구현
 
-                        Retrofit register = new Retrofit.Builder()
-                                .baseUrl(getString(R.string.base_url))
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-                        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+                        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
                         Call<ResponseBody> mCallResponse = mRetrofitAPI.setPostSolved(TokenCache.getToken(this).getAccess(), model.get_id());
                         mCallResponse.enqueue(new Callback<ResponseBody>() {
                             @Override

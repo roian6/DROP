@@ -10,7 +10,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.databinding.ActivityGroupBinding;
 import com.david0926.drop.model.GroupModel;
@@ -92,11 +93,7 @@ public class GroupActivity extends AppCompatActivity {
         groupItems.clear();
         groupItemsCache.clear();
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
         Call<ResponseBody> mCallResponse = mRetrofitAPI.getGroups(TokenCache.getToken(this).getAccess());
         mCallResponse.enqueue(new Callback<ResponseBody>() {
             @Override

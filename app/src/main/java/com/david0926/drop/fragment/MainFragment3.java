@@ -15,18 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.david0926.drop.ArticleActivity;
-import com.david0926.drop.GroupActivity;
-import com.david0926.drop.GroupInfoActivity;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.R;
-import com.david0926.drop.adapter.GroupAdapter;
 import com.david0926.drop.adapter.NotiAdapter;
 import com.david0926.drop.databinding.FragmentMain3Binding;
-import com.david0926.drop.model.ArticleModel;
-import com.david0926.drop.model.CommentModel;
-import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.NotiModel;
-import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
 import com.google.gson.Gson;
@@ -34,8 +28,6 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -90,11 +82,7 @@ public class MainFragment3 extends Fragment {
 
         //종수: 노티 가져와서 리스트에 넣기
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(mContext).getDropService();
 
         Call<ResponseBody> mCallResponse = mRetrofitAPI.getNotification(TokenCache.getToken(mContext).getAccess());
         mCallResponse.enqueue(new Callback<ResponseBody>() {

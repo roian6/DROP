@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 
 import com.bumptech.glide.Glide;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityArticleUploadBinding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.GroupModel;
@@ -87,11 +87,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
             }
         });
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
         System.out.println("T " + TokenCache.getToken(this).getAccess());
         Call<ResponseBody> mCallResponse = mRetrofitAPI.MyGroups(TokenCache.getToken(this).getAccess());
         mCallResponse.enqueue(new Callback<ResponseBody>() {
@@ -123,11 +119,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
 
     void uploadArticle(String group, ArticleModel model, String type, Uri image) {
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         File file;
         try {

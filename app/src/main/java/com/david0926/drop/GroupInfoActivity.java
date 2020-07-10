@@ -11,7 +11,8 @@ import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.databinding.ActivityGroupInfoBinding;
 import com.david0926.drop.model.ArticleModel;
@@ -20,19 +21,15 @@ import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
-import com.david0926.drop.util.UserCache;
 import com.google.gson.Gson;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Comment;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -90,11 +87,7 @@ public class GroupInfoActivity extends AppCompatActivity {
 
         adapter.setOnItemLongClickListener((view, item) -> true);
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
         System.out.println("T " + TokenCache.getToken(this).getAccess());
         Call<ResponseBody> mCallResponse = mRetrofitAPI.MyGroups(TokenCache.getToken(this).getAccess());
         mCallResponse.enqueue(new Callback<ResponseBody>() {
@@ -156,11 +149,7 @@ public class GroupInfoActivity extends AppCompatActivity {
 
         if(binding.getIsMember()) { // 만약 그룹 멤버일 경우 게시글 표시
 
-            Retrofit register = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+            DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
             Call<ResponseBody> mCallResponse = mRetrofitAPI.getPosts(TokenCache.getToken(this).getAccess(), group.get_id(), length);
             System.out.println("Group : " + group.get_id());
@@ -221,11 +210,7 @@ public class GroupInfoActivity extends AppCompatActivity {
 
     private void joinGroup(String id) {
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         RequestBody idbody = RequestBody.create(MediaType.parse("multipart/form-data"), id);
 

@@ -19,7 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.david0926.drop.ArticleActivity;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.databinding.FragmentMain1Binding;
@@ -36,7 +37,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -182,11 +182,7 @@ public class MainFragment1 extends Fragment {
 
     private void refreshPost(int length, String keyword) {
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(mContext).getDropService();
 
         Call<ResponseBody> mCallResponse = mRetrofitAPI.getPosts(TokenCache.getToken(mContext).getAccess(), length, keyword);
         mCallResponse.enqueue(new Callback<ResponseBody>() {

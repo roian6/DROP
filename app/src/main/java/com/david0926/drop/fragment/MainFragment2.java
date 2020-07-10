@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.david0926.drop.GroupActivity;
 import com.david0926.drop.GroupInfoActivity;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
 import com.david0926.drop.adapter.SocialGroupAdapter;
@@ -103,11 +104,7 @@ public class MainFragment2 extends Fragment {
         addModel.setName("그룹 추가");
         groupItems.add(addModel);
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(mContext).getDropService();
         System.out.println("T " + TokenCache.getToken(mContext).getAccess());
         Call<ResponseBody> mCallResponse = mRetrofitAPI.MyGroups(TokenCache.getToken(mContext).getAccess());
         mCallResponse.enqueue(new Callback<ResponseBody>() {

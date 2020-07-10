@@ -20,7 +20,7 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface DROPRetrofitInterface {
+public interface DROPRetrofitService {
 
     @Multipart
     @POST("v1/user")

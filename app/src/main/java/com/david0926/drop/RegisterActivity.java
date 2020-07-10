@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Interface.DROPRetrofit;
+import com.david0926.drop.Interface.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityRegisterBinding;
 import com.david0926.drop.util.MimeTypeUtil;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -108,12 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void createAccount(Uri profile, String name, String email, String pw) {
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
-
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
         File file;
         try {
             file = new File(profile.getPath());
