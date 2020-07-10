@@ -3,39 +3,29 @@ package com.david0926.drop;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.adapter.CommentAdapter;
 import com.david0926.drop.databinding.ActivityCommentBinding;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.CommentModel;
-import com.david0926.drop.model.GroupModel;
-import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
-import com.david0926.drop.util.UserCache;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CommentActivity extends AppCompatActivity {
 
@@ -95,11 +85,7 @@ public class CommentActivity extends AppCompatActivity {
 
     void uploadComment(String postId, String content, Boolean isImportant){
         //여기에 댓글 작성 구현
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         if(content.trim().isEmpty())
             return;
@@ -143,11 +129,7 @@ public class CommentActivity extends AppCompatActivity {
 
     void refreshComment() {
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         Call<ResponseBody> mCallResponse = mRetrofitAPI.getPost(TokenCache.getToken(this).getAccess(), article.get_id());
         System.out.println("A ID : " + article.get_id());

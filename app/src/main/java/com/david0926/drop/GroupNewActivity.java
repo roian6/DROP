@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
-import com.david0926.drop.Interface.DROPRetrofitInterface;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityGroupNewBinding;
 import com.david0926.drop.util.MimeTypeUtil;
 import com.david0926.drop.util.TokenCache;
@@ -25,8 +26,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GroupNewActivity extends AppCompatActivity {
 
@@ -70,11 +69,7 @@ public class GroupNewActivity extends AppCompatActivity {
     void newGroup(String name, String description, Uri photo) {
         Log.d("debug", "newGroup: " + name + ", " + description);
 
-        Retrofit register = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        DROPRetrofitInterface mRetrofitAPI = register.create(DROPRetrofitInterface.class);
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         File file;
         try {
