@@ -6,7 +6,7 @@ import java.util.List;
 public class UserModel implements Serializable {
 
     private String authority;
-    private List<String> group;
+    private List<String> group, keyword;
     private String _id;
     private String userid;
     private String password;
@@ -16,11 +16,13 @@ public class UserModel implements Serializable {
     private String fcmtoken;
     private Integer v;
 
-    public UserModel(){}
+    public UserModel() {
+    }
 
-    public UserModel(String authority, List<String> group, String _id, String userid, String password, String enckey, String name, String photo, String fcmtoken, Integer v) {
+    public UserModel(String authority, List<String> group, List<String> keyword, String _id, String userid, String password, String enckey, String name, String photo, String fcmtoken, Integer v) {
         this.authority = authority;
         this.group = group;
+        this.keyword = keyword;
         this._id = _id;
         this.userid = userid;
         this.password = password;
@@ -45,6 +47,14 @@ public class UserModel implements Serializable {
 
     public void setGroup(List<String> group) {
         this.group = group;
+    }
+
+    public List<String> getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(List<String> keyword) {
+        this.keyword = keyword;
     }
 
     public String get_id() {
