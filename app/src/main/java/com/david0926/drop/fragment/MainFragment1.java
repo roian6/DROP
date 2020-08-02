@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.david0926.drop.ArticleActivity;
+import com.david0926.drop.R;
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
-import com.david0926.drop.R;
 import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.databinding.FragmentMain1Binding;
 import com.david0926.drop.model.ArticleModel;
@@ -93,7 +93,7 @@ public class MainFragment1 extends Fragment {
         });
 
         binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능
-            if(!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
+            if (!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
                 articleItems.clear();
                 isNowsearching = true; // 검색모드 활성화
                 offset = 10; // offset 초기화
@@ -116,7 +116,7 @@ public class MainFragment1 extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().isEmpty()) { // 검색창이 비었을때 즉시 검색모드 비활성화하고 새로고침
+                if (charSequence.toString().isEmpty()) { // 검색창이 비었을때 즉시 검색모드 비활성화하고 새로고침
                     articleItems.clear();
                     isNowsearching = false; // 검색모드 비활성화
                     offset = 10; // offset 초기화
@@ -131,17 +131,15 @@ public class MainFragment1 extends Fragment {
         });
 
         binding.edtMain1Search.setOnEditorActionListener((textView, i, keyEvent) -> {
-            if(i== EditorInfo.IME_ACTION_SEARCH){
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
 
-                if(!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
+                if (!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
                     articleItems.clear();
                     isNowsearching = true; // 검색모드 활성화
                     offset = 10; // offset 초기화
                     refreshPost(0, binding.edtMain1Search.getText().toString().trim());
                 } else {
-
                     initPostList();
-
                 }
                 // 빈 상태에서 누르면 그냥 새로고침
 
@@ -163,7 +161,7 @@ public class MainFragment1 extends Fragment {
                 int lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
                 int totalCount = recyclerView.getAdapter().getItemCount();
                 if (lastPosition == totalCount - 1 && totalCount % 10 == 0) {
-                    if(isNowsearching) // 검색모드라면
+                    if (isNowsearching) // 검색모드라면
                         refreshPost(offset, binding.edtMain1Search.getText().toString()); // 입력해둔 검색 키워드로 페이지네이션
                     else // 검색모드가 아니라면
                         refreshPost(offset, ""); // 계속 쭊쭊
@@ -179,7 +177,7 @@ public class MainFragment1 extends Fragment {
 
     @Override
     public void onResume() {
-        if(isNeedInit) {
+        if (isNeedInit) {
             initPostList();
             isNeedInit = false;
         }
@@ -210,7 +208,8 @@ public class MainFragment1 extends Fragment {
 
                     JSONArray array = object.toJSONArray(object.names());
 
-                    if(!isNowsearching&&array==null&&articleItems.isEmpty()) binding.setIsEmpty(true);
+                    if (!isNowsearching && array == null && articleItems.isEmpty())
+                        binding.setIsEmpty(true);
                     else binding.setIsEmpty(false);
 
                     object.put("count", count);
@@ -235,7 +234,7 @@ public class MainFragment1 extends Fragment {
 
                         JSONArray c_array = obj.getJSONArray("comment");
                         ArrayList<CommentModel> c_list = new ArrayList<>();
-                        for (int j = c_array.length()-1; j >= 0; j--) { // 최신순
+                        for (int j = c_array.length() - 1; j >= 0; j--) { // 최신순
                             CommentModel cm = gson.fromJson(c_array.getJSONObject(j).toString(), CommentModel.class);
                             c_list.add(cm);
                         }
@@ -243,10 +242,10 @@ public class MainFragment1 extends Fragment {
 
                         articleItems.add(am);
                     }
-
-
+                    binding.swipeMain1.setRefreshing(false);
 
                 } catch (Exception e) {
+                    binding.swipeMain1.setRefreshing(false);
                     e.printStackTrace();
                 }
             }
@@ -256,7 +255,6 @@ public class MainFragment1 extends Fragment {
 
             }
         });
-
 
     }
 

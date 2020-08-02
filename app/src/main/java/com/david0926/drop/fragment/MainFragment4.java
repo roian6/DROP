@@ -67,9 +67,9 @@ public class MainFragment4 extends Fragment {
 
         binding.setUser(UserCache.getUser(mContext));
 
-        binding.btnMain4EditProfile.setOnClickListener(view -> {
-
-        });
+//        binding.btnMain4EditProfile.setOnClickListener(view -> {
+//
+//        });
 
         binding.btnMain4Logout.setOnClickListener(view -> {
             UserCache.logoutUser(mContext);
@@ -170,7 +170,7 @@ public class MainFragment4 extends Fragment {
         binding.btnMain4Info.setOnClickListener(view -> {
             new AlertDialog.Builder(mContext)
                     .setTitle("개발자 정보")
-                    .setMessage("DROP 1.0\n\nApp: 정찬효, 최종수\nBackend: 이호준\nDesign: 이단비")
+                    .setMessage("DROP 2.0\n\nApp: 정찬효, 최종수\nBackend: 이호준\nDesign: 이단비\n\n[Open-Source Used]\n\nGlide, TedImagePicker, TedKeyboardObserver, CircleImageView, AppIntro, FabulousFilter (credit on github)")
                     .setPositiveButton("확인", (dialogInterface, i) -> {
                     })
                     .show();

@@ -51,8 +51,8 @@ public class MainFragment2 extends Fragment {
     }
 
     private ObservableArrayList<GroupModel> groupItems = new ObservableArrayList<>();
-
     private ObservableArrayList<ArticleModel> articleItems = new ObservableArrayList<>();
+
     private Context mContext;
     private FragmentMain2Binding binding;
 
@@ -95,6 +95,7 @@ public class MainFragment2 extends Fragment {
     @Override
     public void onResume() { // ㅎㅎ.. 이게 편해서 ^^..
         groupItems.clear();
+        articleItems.clear();
 
         GroupModel addModel = new GroupModel();
         addModel.set_id("add_group");
@@ -138,6 +139,10 @@ public class MainFragment2 extends Fragment {
 
         //gogo
         //get my articles and save to articleItems
+
+        LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
+                mContext, LinearLayoutManager.VERTICAL, false);
+        binding.recyclerMain2Myarticle.setLayoutManager(wrapper);
 
         ArticleAdapter adapter = new ArticleAdapter();
         binding.recyclerMain2Myarticle.setAdapter(adapter);

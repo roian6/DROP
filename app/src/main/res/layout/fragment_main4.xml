@@ -95,22 +95,22 @@
                     app:layout_constraintStart_toStartOf="@+id/lottie_regi_profile"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_main4_edit_profile"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/round_box"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="@font/apple_sd_gothic_neo_h"
-                    android:text="프로필 수정"
-                    android:textColor="@android:color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btn_main4_logout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+                <!--                <androidx.appcompat.widget.AppCompatButton-->
+                <!--                    android:id="@+id/btn_main4_edit_profile"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginHorizontal="4dp"-->
+                <!--                    android:layout_marginTop="12dp"-->
+                <!--                    android:background="@drawable/round_box"-->
+                <!--                    android:backgroundTint="@color/colorPrimary"-->
+                <!--                    android:fontFamily="@font/apple_sd_gothic_neo_h"-->
+                <!--                    android:text="프로필 수정"-->
+                <!--                    android:textColor="@android:color/white"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintEnd_toStartOf="@+id/btn_main4_logout"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/textView7" />-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_main4_logout"
@@ -118,13 +118,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/round_box_radius"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/apple_sd_gothic_neo_h"
                     android:text="로그아웃"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@android:color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_main4_edit_profile"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

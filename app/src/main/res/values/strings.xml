@@ -45,4 +45,6 @@
     <string name="article_important_lost">제가 찾았어요!</string>
     <string name="article_important_found">제 물건이에요!</string>
 
+    <string name="share_text" formatted="false">[분실/습득물 정보]\n\n물건 이름: %s\n상세 설명: %s\n분실/습득 시간: %s\n분실/습득 장소: %s\n\n편리한 그룹형 분실물 커뮤니티, DROP에서 더 많은 정보를 확인하세요!\nhttps://github.com/roian6/DROP</string>
+
 </resources>

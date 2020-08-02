@@ -19,8 +19,6 @@ import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +47,7 @@ public class ArticleActivity extends AppCompatActivity {
         binding.btnArticleComment.setOnClickListener(view -> showComment(false));
         binding.btnArticleImportant.setOnClickListener(view -> showComment(true));
 
-        if(model.getReward().contains("Non-Reward")) { // 보상이 없다면 보상칸은 지워버립세!
+        if (model.getReward().contains("Non-Reward")) { // 보상이 없다면 보상칸은 지워버립세!
             binding.txtArticleProductaddinfo.setVisibility(View.GONE);
             binding.txtArticleProductaddinfotitle.setVisibility(View.GONE);
         }
@@ -85,7 +83,13 @@ public class ArticleActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_article_share:
-                //share article
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, String.format(getString(R.string.share_text),
+                        model.getTitle(), model.getDescription(), model.getTime(), model.getPlace()));
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
                 break;
             case R.id.action_article_resolve:
                 builder.setTitle("해결 완료")
@@ -130,7 +134,7 @@ public class ArticleActivity extends AppCompatActivity {
                             //gogo
                             DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
-                            Call<ResponseBody> mCallResponse = mRetrofitAPI.DeletePost(TokenCache.getToken(this).getAccess(),model.get_id());
+                            Call<ResponseBody> mCallResponse = mRetrofitAPI.DeletePost(TokenCache.getToken(this).getAccess(), model.get_id());
                             mCallResponse.enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
