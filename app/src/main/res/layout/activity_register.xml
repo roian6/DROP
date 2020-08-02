@@ -28,10 +28,6 @@
             name="pwcheck"
             type="String" />
 
-        <variable
-            name="user"
-            type="com.david0926.drop.model.UserModel" />
-
     </data>
 
     <ScrollView
@@ -98,7 +94,6 @@
                             android:translationZ="16dp" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            app:imageLink="@{user.photo}"
                             android:src="@drawable/placeholder"
                             android:id="@+id/img_regi_profile"
                             android:layout_width="128dp"

@@ -86,6 +86,11 @@ public class MainFragment1 extends Fragment {
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
 
+        binding.swipeMain1.setOnRefreshListener(() -> {
+            //refresh gogo
+            //after refresh do binding.swipeMain1.setRefreshing(false);
+        });
+
         binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능
             if(!binding.edtMain1Search.getText().toString().trim().isEmpty()) { // 비어있지 않다면
                 articleItems.clear();

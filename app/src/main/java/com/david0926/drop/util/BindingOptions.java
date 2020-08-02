@@ -121,11 +121,11 @@ public class BindingOptions {
     public static void bindArticleType(TextView view, String type) {
         if (type == null) return;
         if (type.equals("lost")) {
-            view.setText("분실");
+            view.setText("분실물");
             view.setTextColor(view.getContext().getColor(R.color.colorPrimary));
             view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius));
         } else {
-            view.setText("습득");
+            view.setText("습득물");
             view.setTextColor(view.getContext().getColor(R.color.materialGreen));
             view.setBackground(view.getContext().getDrawable(R.drawable.round_box_radius_green));
         }

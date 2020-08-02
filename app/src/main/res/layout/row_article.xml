@@ -152,7 +152,7 @@
             android:includeFontPadding="false"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="분실"
+            android:text="분실물"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             app:articleType="@{item.type}"
