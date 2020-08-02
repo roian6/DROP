@@ -1,5 +1,7 @@
 package com.david0926.drop.Retrofit;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -26,6 +28,13 @@ public interface DROPRetrofitService {
             @Part("name") RequestBody name,
             @Part("fcmtoken") RequestBody fcmtoken,
             @Part MultipartBody.Part photo
+    );
+
+    @Multipart
+    @PATCH("v1/user")
+    Call<ResponseBody> UpdateUser(
+            @Header("x-access-token") String token,
+            @Part("keyword") List<RequestBody> keyword
     );
 
     @POST("v1/auth")
@@ -137,6 +146,11 @@ public interface DROPRetrofitService {
 
     @GET("v1/group/user")
     Call<ResponseBody> MyGroups(
+            @Header("x-access-token") String token
+    );
+
+    @GET("v1/user")
+    Call<ResponseBody> MyInfo(
             @Header("x-access-token") String token
     );
 

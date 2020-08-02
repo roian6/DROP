@@ -89,6 +89,7 @@ public class MainFragment1 extends Fragment {
         binding.swipeMain1.setOnRefreshListener(() -> {
             //refresh gogo
             //after refresh do binding.swipeMain1.setRefreshing(false);
+            initPostList();
         });
 
         binding.btnMain1Search.setOnClickListener(view -> { // 검색 기능

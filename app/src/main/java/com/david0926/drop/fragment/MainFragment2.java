@@ -25,6 +25,7 @@ import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.databinding.FragmentMain2Binding;
 import com.david0926.drop.model.ArticleModel;
+import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
@@ -35,6 +36,8 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,6 +52,7 @@ public class MainFragment2 extends Fragment {
 
     private ObservableArrayList<GroupModel> groupItems = new ObservableArrayList<>();
 
+    private ObservableArrayList<ArticleModel> articleItems = new ObservableArrayList<>();
     private Context mContext;
     private FragmentMain2Binding binding;
 
@@ -132,7 +136,6 @@ public class MainFragment2 extends Fragment {
             }
         });
 
-        ObservableArrayList<ArticleModel> articleItems = null;
         //gogo
         //get my articles and save to articleItems
 
@@ -146,6 +149,66 @@ public class MainFragment2 extends Fragment {
             startActivity(intent);
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
+
+        DROPRetrofitService mRetrofitAPI2 = DROPRetrofit.getInstance(mContext).getDropService();
+
+        Call<ResponseBody> mCallResponse2 = mRetrofitAPI2.getPosts(TokenCache.getToken(mContext).getAccess(), 0);
+        mCallResponse2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body = response.body().string();
+                    JSONObject object = new JSONObject(body).getJSONObject("data");
+
+                    int count = object.getInt("count");
+                    object.remove("count");
+
+                    JSONArray array = object.toJSONArray(object.names());
+
+                    Gson gson = new Gson();
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = array.getJSONObject(i);
+                        System.out.println("POST : " + obj.toString() + "\n\n");
+                        ArticleModel am = gson.fromJson(obj.toString(), ArticleModel.class);
+
+                        JSONObject userObject = obj.getJSONObject("user");
+                        am.setUser(gson.fromJson(userObject.toString(), UserModel.class));
+
+                        if(am.getUser().get_id().equals(UserCache.getUser(mContext).get_id()) == false) // 유저아이디 다르면 패스
+                            continue;
+
+                        JSONObject groupObject = obj.getJSONObject("group");
+                        GroupModel groupModel = gson.fromJson(groupObject.toString(), GroupModel.class);
+
+                        JSONObject creatorObject = groupObject.getJSONObject("creator");
+                        groupModel.setCreator(gson.fromJson(creatorObject.toString(), UserModel.class));
+
+                        am.setGroup(groupModel);
+
+                        JSONArray c_array = obj.getJSONArray("comment");
+                        ArrayList<CommentModel> c_list = new ArrayList<>();
+                        for (int j = c_array.length()-1; j >= 0; j--) { // 최신순
+                            CommentModel cm = gson.fromJson(c_array.getJSONObject(j).toString(), CommentModel.class);
+                            c_list.add(cm);
+                        }
+                        am.setComment(c_list);
+
+                        articleItems.add(am);
+                    }
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
 
         super.onResume();
     }
