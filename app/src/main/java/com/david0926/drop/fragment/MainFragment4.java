@@ -11,18 +11,36 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.arch.core.internal.SafeIterableMap;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
+import com.david0926.drop.Retrofit.DROPRetrofit;
+import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.databinding.DialogKeywordBinding;
 import com.david0926.drop.databinding.FragmentMain4Binding;
+import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainFragment4 extends Fragment {
 
@@ -38,6 +56,7 @@ public class MainFragment4 extends Fragment {
         super.onAttach(context);
         mContext = context;
     }
+
 
     @Nullable
     @Override
@@ -72,17 +91,70 @@ public class MainFragment4 extends Fragment {
 
             dialogKeywordBinding.btnKeywordConfirm.setOnClickListener(view1 -> {
                 String[] keyword = dialogKeywordBinding.getKeyword().split(",");
+                List<RequestBody> list = new ArrayList<>();
                 for (int i = 0; i < keyword.length; i++)
-                    keyword[i] = keyword[i].trim();
+                    list.add(RequestBody.create(MediaType.parse("multipart/form-data"),keyword[i].trim()));
 
                 //gogo update user's keyword info with array 'keyword'
-                //when finish, update UserCache with response UserModel
+                DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(getContext()).getDropService();
+
+                Call<ResponseBody> mCallResponse = mRetrofitAPI.UpdateUser(TokenCache.getToken(getContext()).getAccess(), list);
+                mCallResponse.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String body;
+                            if ((body = response.body().string()) == null) {
+                                return;
+                            }
+
+                            //when finish, update UserCache with response UserModel
+
+
+                            Call<ResponseBody> mCallResponse = mRetrofitAPI.MyInfo(TokenCache.getToken(getContext()).getAccess());
+                            mCallResponse.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    try {
+                                        String body = response.body().string();
+                                        System.out.println(body);
+                                        JSONObject dataObject = new JSONObject(body).getJSONObject("data");
+
+                                        Logger.addLogAdapter(new AndroidLogAdapter());
+
+                                        UserCache.setUser(getContext(), dataObject.toString());
+                                        dialog.dismiss();
+                                    } catch(Exception e) {
+                                        System.out.println("===");
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    System.out.println("error");
+                                }
+                            });
+
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println("error");
+                    }
+                });
                 //and do dialog.dismiss();
             });
 
             dialog.show();
 
         });
+
 
 //        binding.btnMain4Share.setOnClickListener(view -> {
 //            Intent sendIntent = new Intent();
