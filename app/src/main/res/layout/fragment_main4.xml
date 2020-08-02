@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
-                    android:text="곧 키워드 알림 기능이 추가됩니다!"
+                    android:text="원하는 게시물이 등록되면 알려드려요!"
                     android:textColor="@color/materialGray6"
                     android:textSize="16sp"
                     app:layout_constrainedWidth="true"

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,13 @@ import androidx.fragment.app.Fragment;
 
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
+import com.david0926.drop.databinding.DialogKeywordBinding;
 import com.david0926.drop.databinding.FragmentMain4Binding;
 import com.david0926.drop.util.UserCache;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class MainFragment4 extends Fragment {
 
@@ -57,11 +59,29 @@ public class MainFragment4 extends Fragment {
         });
 
         binding.btnMain4Keyword.setOnClickListener(view -> {
-            new AlertDialog.Builder(mContext)
-                    .setTitle("준비중인 기능")
-                    .setMessage("이 정도는 하루만에 만들 수 있죠! \n키워드 알림 기능을 기대해 주세요!")
-                    .setPositiveButton("기대되네요!", (dialogInterface, i) -> {})
-                    .show();
+            List<String> oldKeywordList = UserCache.getUser(mContext).getKeyword();
+
+            DialogKeywordBinding dialogKeywordBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
+                    R.layout.dialog_keyword, null, false);
+            dialogKeywordBinding.setKeyword(oldKeywordList != null ? TextUtils.join(",", oldKeywordList) : "");
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setView(dialogKeywordBinding.getRoot());
+
+            AlertDialog dialog = builder.create();
+
+            dialogKeywordBinding.btnKeywordConfirm.setOnClickListener(view1 -> {
+                String[] keyword = dialogKeywordBinding.getKeyword().split(",");
+                for (int i = 0; i < keyword.length; i++)
+                    keyword[i] = keyword[i].trim();
+
+                //gogo update user's keyword info with array 'keyword'
+                //when finish, update UserCache with response UserModel
+                //and do dialog.dismiss();
+            });
+
+            dialog.show();
+
         });
 
 //        binding.btnMain4Share.setOnClickListener(view -> {
@@ -79,7 +99,8 @@ public class MainFragment4 extends Fragment {
             new AlertDialog.Builder(mContext)
                     .setTitle("개발자 정보")
                     .setMessage("DROP 1.0\n\nApp: 정찬효, 최종수\nBackend: 이호준\nDesign: 이단비")
-                    .setPositiveButton("확인", (dialogInterface, i) -> {})
+                    .setPositiveButton("확인", (dialogInterface, i) -> {
+                    })
                     .show();
         });
 
