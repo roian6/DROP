@@ -44,6 +44,18 @@ public class MainFragment4 extends Fragment {
 
         //sorry for not using @string resource...
 
+        binding.setUser(UserCache.getUser(mContext));
+
+        binding.btnMain4EditProfile.setOnClickListener(view -> {
+
+        });
+
+        binding.btnMain4Logout.setOnClickListener(view -> {
+            UserCache.logoutUser(mContext);
+            startActivity(new Intent(mContext, LoginActivity.class));
+            getActivity().finish();
+        });
+
         binding.btnMain4Keyword.setOnClickListener(view -> {
             new AlertDialog.Builder(mContext)
                     .setTitle("준비중인 기능")
@@ -52,16 +64,16 @@ public class MainFragment4 extends Fragment {
                     .show();
         });
 
-        binding.btnMain4Share.setOnClickListener(view -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "편리한 분실물 공유 커뮤니티 서비스, DROP! \n" +
-                    "같이 사용해 보지 않을래요?\nhttps://github.com/roian6/DROP");
-            sendIntent.setType("text/plain");
-
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
-        });
+//        binding.btnMain4Share.setOnClickListener(view -> {
+//            Intent sendIntent = new Intent();
+//            sendIntent.setAction(Intent.ACTION_SEND);
+//            sendIntent.putExtra(Intent.EXTRA_TEXT, "편리한 분실물 공유 커뮤니티 서비스, DROP! \n" +
+//                    "같이 사용해 보지 않을래요?\nhttps://github.com/roian6/DROP");
+//            sendIntent.setType("text/plain");
+//
+//            Intent shareIntent = Intent.createChooser(sendIntent, null);
+//            startActivity(shareIntent);
+//        });
 
         binding.btnMain4Info.setOnClickListener(view -> {
             new AlertDialog.Builder(mContext)

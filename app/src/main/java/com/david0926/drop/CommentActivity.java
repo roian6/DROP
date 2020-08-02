@@ -158,10 +158,4 @@ public class CommentActivity extends AppCompatActivity {
         });
 
     }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_down_before, R.anim.slide_down);
-    }
 }

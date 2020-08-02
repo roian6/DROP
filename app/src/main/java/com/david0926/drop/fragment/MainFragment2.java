@@ -62,8 +62,6 @@ public class MainFragment2 extends Fragment {
 
         mContext.getTheme().applyStyle(R.style.AppTheme, true);
 
-        binding.setUser(UserCache.getUser(mContext));
-
         LinearLayoutManagerWrapper wrapper = new LinearLayoutManagerWrapper(
                 mContext, LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerMain2Group.setLayoutManager(wrapper);
@@ -83,12 +81,6 @@ public class MainFragment2 extends Fragment {
             }
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
-
-        binding.btnMain2Logout.setOnClickListener(view -> {
-            UserCache.logoutUser(mContext);
-            startActivity(new Intent(mContext, LoginActivity.class));
-            getActivity().finish();
-        });
 
         return binding.getRoot();
     }

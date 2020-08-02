@@ -34,7 +34,7 @@ public class FabFragment extends AAH_FabulousFragment {
 
         setAnimationDuration(400);
         setPeekHeight(250);
-        setViewgroupStatic(binding.constraintFabBottom);
+        //setViewgroupStatic(binding.constraintFabBottom);
         setViewMain(binding.relativeFabContent);
         setMainContentView(binding.getRoot());
         super.setupDialog(dialog, style);
