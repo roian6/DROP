@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -44,6 +45,21 @@ public interface DROPRetrofitService {
     @POST("v1/post")
     Call<ResponseBody> CreatePost(
             @Header("x-access-token") String token,
+            @Part("title") RequestBody title,
+            @Part("description") RequestBody description,
+            @Part("type") RequestBody type,
+            @Part("time") RequestBody time,
+            @Part("place") RequestBody place,
+            @Part("reward") RequestBody reward,
+            @Part("group") RequestBody groupid,
+            @Part MultipartBody.Part photo
+    );
+
+    @Multipart
+    @PATCH("v1/post/{postid}")
+    Call<ResponseBody> UpdatePost(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid,
             @Part("title") RequestBody title,
             @Part("description") RequestBody description,
             @Part("type") RequestBody type,

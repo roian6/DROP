@@ -181,10 +181,87 @@ public class ArticleUploadActivity extends AppCompatActivity {
 
     private void editArticle(ArticleModel model) {
         //gogo
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
+
+
+        RequestBody titlebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTitle());
+        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), getArticleModel().getType());
+        RequestBody descriptionbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getDescription());
+        RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTime());
+        RequestBody groupbody = RequestBody.create(MediaType.parse("multipart/form-data"), getArticleModel().getGroup().get_id());
+        RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getPlace());
+        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getReward().isEmpty() == false ? model.getReward() : "Non-Reward");
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.UpdatePost(TokenCache.getToken(this).getAccess(),getArticleModel().get_id(), titlebody, descriptionbody, typebody, timebody, placebody, rewardbody, groupbody, null);
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body;
+                    if ((body = response.body().string()) == null) {
+                        showErrorMsg("게시물을 수정할 수 없습니다.");
+                        return;
+                    }
+                    MainFragment1.isNeedInit = true;
+                    finish();
+                } catch (Exception e) {
+                    showErrorMsg("게시물을 수정할 수 없습니다.");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMsg("서버가 응답하지 않습니다.");
+            }
+        });
     }
 
     private void editArticleWithImage(ArticleModel model, Uri image) {
         //gogo
+        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
+
+        File file;
+        try {
+            file = new File(image.getPath());
+        } catch (NullPointerException e) {
+            showErrorMsg("이미지를 넣어주세요");
+            return;
+        }
+
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(), requestFile);
+        RequestBody titlebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTitle());
+        RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), getArticleModel().getType());
+        RequestBody descriptionbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getDescription());
+        RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTime());
+        RequestBody groupbody = RequestBody.create(MediaType.parse("multipart/form-data"), getArticleModel().getGroup().get_id());
+        RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getPlace());
+        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getReward().isEmpty() == false ? model.getReward() : "Non-Reward");
+
+        Call<ResponseBody> mCallResponse = mRetrofitAPI.UpdatePost(TokenCache.getToken(this).getAccess(),getArticleModel().get_id(), titlebody, descriptionbody, typebody, timebody, placebody, rewardbody, groupbody, photo);
+        mCallResponse.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body;
+                    if ((body = response.body().string()) == null) {
+                        showErrorMsg("게시물을 수정할 수 없습니다.");
+                        return;
+                    }
+                    MainFragment1.isNeedInit = true;
+                    finish();
+                } catch (Exception e) {
+                    showErrorMsg("게시물을 수정할 수 없습니다.");
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMsg("서버가 응답하지 않습니다.");
+            }
+        });
     }
 
     private void setArticleImage(Uri uri) {
