@@ -5,9 +5,11 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
@@ -52,6 +54,27 @@ public interface DROPRetrofitService {
             @Part("reward") RequestBody reward,
             @Part("group") RequestBody groupid,
             @Part MultipartBody.Part photo
+    );
+
+    @Multipart
+    @PATCH("v1/post/{postid}")
+    Call<ResponseBody> UpdatePost(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid,
+            @Part("title") RequestBody title,
+            @Part("description") RequestBody description,
+            @Part("type") RequestBody type,
+            @Part("time") RequestBody time,
+            @Part("place") RequestBody place,
+            @Part("reward") RequestBody reward,
+            @Part("group") RequestBody groupid,
+            @Part MultipartBody.Part photo
+    );
+
+    @DELETE("v1/post/{postid}")
+    Call<ResponseBody> DeletePost(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid
     );
 
     @Multipart
