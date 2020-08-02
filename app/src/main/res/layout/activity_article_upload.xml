@@ -20,6 +20,10 @@
         <variable
             name="type"
             type="String" />
+
+        <variable
+            name="isEdit"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
-            app:title="@{type.equals(`lost`)?@string/article_upload_lost_title:@string/article_upload_found_title, default=`Title`}"
+            app:title="@{isEdit?@string/article_edit_title:type.equals(`lost`)?@string/article_upload_lost_title:@string/article_upload_found_title, default=`Title`}"
             app:titleTextAppearance="@style/TitleBarTextAppearance" />
 
         <ScrollView
@@ -96,6 +100,7 @@
                         app:layout_constraintStart_toStartOf="parent">
 
                         <ImageView
+                            app:imageLink="@{article.photo}"
                             android:id="@+id/img_article_upload_image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -116,6 +121,7 @@
                     android:text="업로드할 그룹"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
+                    android:visibility="@{!isEdit}"
                     app:layout_constraintBottom_toBottomOf="@+id/spinner_article_upload_group"
                     app:layout_constraintEnd_toStartOf="@+id/spinner_article_upload_group"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -127,10 +133,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/round_box"
                     android:backgroundTint="@color/materialGray1"
                     android:theme="@style/SpinnerTheme"
+                    android:visibility="@{!isEdit}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView9"
                     app:layout_constraintTop_toBottomOf="@+id/box_article_upload_image"
@@ -146,8 +153,8 @@
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_name:@string/article_upload_found_name, default=`Name`}"
                     android:importantForAutofill="no"
-                    android:singleLine="true"
                     android:padding="16dp"
+                    android:singleLine="true"
                     android:text="@={article.title}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
@@ -165,8 +172,8 @@
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_time:@string/article_upload_found_time, default=`Time`}"
                     android:importantForAutofill="no"
-                    android:singleLine="true"
                     android:padding="16dp"
+                    android:singleLine="true"
                     android:text="@={article.time}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
@@ -184,8 +191,8 @@
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_place:@string/article_upload_found_place, default=`Place`}"
                     android:importantForAutofill="no"
-                    android:singleLine="true"
                     android:padding="16dp"
+                    android:singleLine="true"
                     android:text="@={article.place}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
@@ -202,8 +209,8 @@
                     android:backgroundTint="@color/materialGray1"
                     android:fontFamily="@font/apple_sd_gothic_neo_r"
                     android:hint="@{type.equals(`lost`)?@string/article_upload_lost_addinfo:@string/article_upload_found_addinfo, default=`More Info`}"
-                    android:singleLine="true"
                     android:padding="16dp"
+                    android:singleLine="true"
                     android:text="@={article.reward}"
                     android:textColorHint="@color/materialGray5"
                     android:textSize="16sp"
@@ -255,7 +262,7 @@
             android:background="@drawable/round_box"
             android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
-            android:text="게시물 등록하기"
+            android:text="@{isEdit?@string/article_edit_button:@string/article_upload_button, default=`Upload Article`}"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

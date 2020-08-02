@@ -1,14 +1,14 @@
 package com.david0926.drop;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
@@ -40,13 +40,13 @@ public class ArticleActivity extends AppCompatActivity {
         model = (ArticleModel) getIntent().getSerializableExtra("article");
         binding.setItem(model);
 
-        if(getIntent().getBooleanExtra("to_comment", false)) showComment(false);
+        if (getIntent().getBooleanExtra("to_comment", false)) showComment(false);
 
         binding.btnArticleComment.setOnClickListener(view -> showComment(false));
         binding.btnArticleImportant.setOnClickListener(view -> showComment(true));
     }
 
-    void showComment(boolean isImportant){
+    void showComment(boolean isImportant) {
         Intent intent = new Intent(this, CommentActivity.class);
         intent.putExtra("is_important", isImportant);
         intent.putExtra("article", model);
@@ -63,7 +63,8 @@ public class ArticleActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (model.getUser().get_id().equals(UserCache.getUser(this).get_id())) { //my article
-            menu.findItem(R.id.action_resolve).setVisible(true);
+            menu.findItem(R.id.action_article_resolve).setVisible(true);
+            menu.findItem(R.id.action_article_edit).setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -71,23 +72,21 @@ public class ArticleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId()==R.id.action_resolve){
+        if (item.getItemId() == R.id.action_article_resolve) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("해결 완료")
                     .setMessage("이 게시물을 해결 완료 처리할까요? 더 이상 피드에 노출되지 않습니다.")
                     .setPositiveButton("확인", (dialogInterface, i) -> {
-                        //여기에 resolve 구현
-
                         DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
                         Call<ResponseBody> mCallResponse = mRetrofitAPI.setPostSolved(TokenCache.getToken(this).getAccess(), model.get_id());
                         mCallResponse.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 try {
-                                    if(response.body() != null) {
+                                    if (response.body() != null) {
                                         finish();
                                     }
-                                } catch(Exception e) {
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -97,14 +96,16 @@ public class ArticleActivity extends AppCompatActivity {
 
                             }
                         });
-
-
                     })
-                    .setNegativeButton("취소", (dialogInterface, i) -> {});
-            builder.show();
-        } else {
+                    .setNegativeButton("취소", (dialogInterface, i) -> {
+                    }).show();
+        } else if (item.getItemId() == R.id.action_article_edit) {
+            Intent intent = new Intent(ArticleActivity.this, ArticleUploadActivity.class);
+            intent.putExtra("is_edit", true);
+            intent.putExtra("article", model);
+            startActivity(intent);
             finish();
-        }
+        } else finish();
 
         return super.onOptionsItemSelected(item);
     }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -60,7 +61,11 @@ public class GroupNewActivity extends AppCompatActivity {
                 showErrorMsg("그룹 사진을 등록해 주세요.");
 
             else { //confirm success
-                newGroup(binding.getName(), binding.getDescription(), profileUri);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("그룹 생성").setMessage("그룹은 추후 삭제하거나 변경할 수 없으니, 내용이 올바른지 꼼꼼하게 확인해주세요!");
+                builder.setPositiveButton("생성", (dialogInterface, i) ->
+                        newGroup(binding.getName(), binding.getDescription(), profileUri));
+                builder.setNegativeButton("취소", (dialogInterface, i) -> {}).show();
             }
 
         });

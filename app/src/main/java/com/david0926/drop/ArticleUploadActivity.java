@@ -1,5 +1,6 @@
 package com.david0926.drop;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -46,14 +47,8 @@ public class ArticleUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_article_upload);
 
-        ArticleModel articleModel = new ArticleModel();
-        articleModel.setTitle("");
-        articleModel.setTime("");
-        articleModel.setPlace("");
-        articleModel.setReward("");
-        articleModel.setDescription("");
-
-        binding.setArticle(articleModel);
+        binding.setIsEdit(getIntent().getBooleanExtra("is_edit", false));
+        binding.setArticle(getArticleModel());
 
         //finish activity, when back button pressed
         binding.toolbarArticleUpload.setNavigationOnClickListener(view -> finish());
@@ -76,12 +71,16 @@ public class ArticleUploadActivity extends AppCompatActivity {
                     || binding.getArticle().getDescription().isEmpty())
                 showErrorMsg("빈칸을 모두 채워주세요.");
 
-            else if (imageUri == null)
+            else if (imageUri == null && !binding.getIsEdit())
                 showErrorMsg("물건 이미지를 등록해 주세요.");
 
             else { //confirm success
-                uploadArticle(groupList.get(binding.spinnerArticleUploadGroup.getSelectedItemPosition()).get_id(),
-                        binding.getArticle(), getIntent().getStringExtra("type"), imageUri);
+                if (!binding.getIsEdit())
+                    uploadArticle(groupList.get(binding.spinnerArticleUploadGroup.getSelectedItemPosition()).get_id(),
+                            binding.getArticle(), getIntent().getStringExtra("type"), imageUri);
+                else if (imageUri != null)
+                    editArticleWithImage(binding.getArticle(), imageUri);
+                else editArticle(binding.getArticle());
             }
         });
 
@@ -98,16 +97,17 @@ public class ArticleUploadActivity extends AppCompatActivity {
                     JSONArray array = object.getJSONArray("data");
 
                     Gson gson = new Gson();
-                    for(int i = array.length()-1; i >= 0; i--) { // 최신순
+                    for (int i = array.length() - 1; i >= 0; i--) { // 최신순
                         GroupModel model = gson.fromJson(array.getJSONObject(i).toString(), GroupModel.class);
                         groupList.add(model);
                     }
 
-                } catch(Exception e) {
+                } catch (Exception e) {
                     noGroupError();
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
@@ -115,14 +115,31 @@ public class ArticleUploadActivity extends AppCompatActivity {
         });
     }
 
-    void uploadArticle(String group, ArticleModel model, String type, Uri image) {
+    private ArticleModel getArticleModel() {
+        Intent getIntent = getIntent();
+        ArticleModel articleModel = new ArticleModel();
+
+        if (getIntent.getBooleanExtra("is_edit", false)) {
+            articleModel = (ArticleModel) getIntent.getSerializableExtra("article");
+        } else {
+            articleModel.setTitle("");
+            articleModel.setTime("");
+            articleModel.setPlace("");
+            articleModel.setReward("");
+            articleModel.setDescription("");
+        }
+
+        return articleModel;
+    }
+
+    private void uploadArticle(String group, ArticleModel model, String type, Uri image) {
 
         DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
 
         File file;
         try {
             file = new File(image.getPath());
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             showErrorMsg("이미지를 넣어주세요");
             return;
         }
@@ -148,7 +165,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
                     }
 
                     finish();
-                } catch(Exception e) {
+                } catch (Exception e) {
                     showErrorMsg("게시물을 업로드할 수 없습니다.");
                     e.printStackTrace();
                 }
@@ -160,6 +177,14 @@ public class ArticleUploadActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void editArticle(ArticleModel model) {
+        //gogo
+    }
+
+    private void editArticleWithImage(ArticleModel model, Uri image) {
+        //gogo
     }
 
     private void setArticleImage(Uri uri) {
@@ -176,7 +201,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
         binding.txtArticleUploadError.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake));
     }
 
-    private void noGroupError(){
+    private void noGroupError() {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setMessage("게시물을 작성하기 전에, 최소 하나 이상의 그룹에 가입해 주세요.");
 //        builder.show();

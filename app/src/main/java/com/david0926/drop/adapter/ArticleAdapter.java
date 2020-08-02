@@ -68,6 +68,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
         ArticleHolder(RowArticleBinding binding) {
             super(binding.getRoot());
+            //move click listener
             this.binding = binding;
         }
 

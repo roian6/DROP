@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_resolve"
+        android:id="@+id/action_article_edit"
+        android:title="게시물 수정"
+        app:showAsAction="never"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/action_article_resolve"
         android:title="해결 완료"
         app:showAsAction="never"
         android:visible="false"/>
