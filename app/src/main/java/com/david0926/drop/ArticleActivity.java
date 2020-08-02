@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
@@ -44,6 +45,11 @@ public class ArticleActivity extends AppCompatActivity {
 
         binding.btnArticleComment.setOnClickListener(view -> showComment(false));
         binding.btnArticleImportant.setOnClickListener(view -> showComment(true));
+
+        if(model.getReward().contains("Non-Reward")) { // 보상이 없다면 보상칸은 지워버립세!
+            binding.txtArticleProductaddinfo.setVisibility(View.GONE);
+            binding.txtArticleProductaddinfotitle.setVisibility(View.GONE);
+        }
     }
 
     void showComment(boolean isImportant){

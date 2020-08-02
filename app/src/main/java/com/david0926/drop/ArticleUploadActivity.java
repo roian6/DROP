@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityArticleUploadBinding;
+import com.david0926.drop.fragment.MainFragment1;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.util.MimeTypeUtil;
@@ -72,8 +73,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
 
         binding.btnArticleUpload.setOnClickListener(view -> {
             if (binding.getArticle().getTitle().isEmpty() || binding.getArticle().getTime().isEmpty()
-                    || binding.getArticle().getPlace().isEmpty() || binding.getArticle().getReward().isEmpty()
-                    || binding.getArticle().getDescription().isEmpty())
+                    || binding.getArticle().getPlace().isEmpty() || binding.getArticle().getDescription().isEmpty())
                 showErrorMsg("빈칸을 모두 채워주세요.");
 
             else if (imageUri == null)
@@ -133,7 +133,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
         RequestBody typebody = RequestBody.create(MediaType.parse("multipart/form-data"), type);
         RequestBody timebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getTime());
         RequestBody placebody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getPlace());
-        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getReward());
+        RequestBody rewardbody = RequestBody.create(MediaType.parse("multipart/form-data"), model.getReward().isEmpty() == false ? model.getReward() : "Non-Reward");
         RequestBody groupid = RequestBody.create(MediaType.parse("multipart/form-data"), group);
 
         Call<ResponseBody> mCallResponse = mRetrofitAPI.CreatePost(TokenCache.getToken(this).getAccess(), titlebody, descriptionbody, typebody, timebody, placebody, rewardbody, groupid, photo);
@@ -146,7 +146,7 @@ public class ArticleUploadActivity extends AppCompatActivity {
                         showErrorMsg("게시물을 업로드할 수 없습니다.");
                         return;
                     }
-
+                    MainFragment1.isNeedInit = true;
                     finish();
                 } catch(Exception e) {
                     showErrorMsg("게시물을 업로드할 수 없습니다.");

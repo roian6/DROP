@@ -54,6 +54,8 @@ public class MainFragment1 extends Fragment {
     private Context mContext;
     private FragmentMain1Binding binding;
 
+    public static boolean isNeedInit = false;
+
     int offset = 10;
     private boolean isNowsearching = false;
 
@@ -131,10 +133,9 @@ public class MainFragment1 extends Fragment {
                     offset = 10; // offset 초기화
                     refreshPost(0, binding.edtMain1Search.getText().toString().trim());
                 } else {
-                    articleItems.clear();
-                    isNowsearching = false; // 검색모드 비활성화
-                    offset = 10; // offset 초기화
-                    refreshPost(0, "");
+
+                    initPostList();
+
                 }
                 // 빈 상태에서 누르면 그냥 새로고침
 
@@ -165,17 +166,25 @@ public class MainFragment1 extends Fragment {
             }
         });
 
+        initPostList();
+
         return binding.getRoot();
     }
 
     @Override
     public void onResume() {
-        //binding.edtMain1Search.setText("");
+        if(isNeedInit) {
+            initPostList();
+            isNeedInit = false;
+        }
+        super.onResume();
+    }
+
+    public void initPostList() {
         articleItems.clear();
         isNowsearching = false; // 검색모드 비활성화
         offset = 10; // offset 초기화
         refreshPost(0, "");
-        super.onResume();
     }
 
     private void refreshPost(int length, String keyword) {
