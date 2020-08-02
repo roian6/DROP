@@ -14,14 +14,17 @@ import androidx.databinding.ObservableArrayList;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.david0926.drop.ArticleActivity;
 import com.david0926.drop.GroupActivity;
 import com.david0926.drop.GroupInfoActivity;
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.LoginActivity;
 import com.david0926.drop.R;
+import com.david0926.drop.adapter.ArticleAdapter;
 import com.david0926.drop.adapter.SocialGroupAdapter;
 import com.david0926.drop.databinding.FragmentMain2Binding;
+import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.GroupModel;
 import com.david0926.drop.model.UserModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
@@ -129,7 +132,20 @@ public class MainFragment2 extends Fragment {
             }
         });
 
+        ObservableArrayList<ArticleModel> articleItems = null;
+        //gogo
+        //get my articles and save to articleItems
 
+        ArticleAdapter adapter = new ArticleAdapter();
+        binding.recyclerMain2Myarticle.setAdapter(adapter);
+        binding.setArticleList(articleItems);
+
+        adapter.setOnItemClickListener((view, item) -> {
+            Intent intent = new Intent(mContext, ArticleActivity.class);
+            intent.putExtra("article", item);
+            startActivity(intent);
+        });
+        adapter.setOnItemLongClickListener((view, item) -> true);
 
         super.onResume();
     }

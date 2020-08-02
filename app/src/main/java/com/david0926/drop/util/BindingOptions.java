@@ -1,7 +1,6 @@
 package com.david0926.drop.util;
 
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -49,14 +48,15 @@ public class BindingOptions {
 
     @BindingAdapter("spinnerItem")
     public static void bindSpinnerItem(Spinner spinner, ObservableArrayList<GroupModel> items) {
-        if(items==null) return;
+        if (items == null) return;
         ArrayList<String> name = new ArrayList<>();
-        for(GroupModel model:items) name.add(model.getName());
+        for (GroupModel model : items) name.add(model.getName());
         spinner.setAdapter(new ArrayAdapter<>(spinner.getContext(), android.R.layout.simple_spinner_dropdown_item, name));
     }
 
     @BindingAdapter("articleItem")
     public static void bindArticleItem(RecyclerView recyclerView, ObservableArrayList<ArticleModel> items) {
+        if (items == null) return;
         ArticleAdapter adapter = (ArticleAdapter) recyclerView.getAdapter();
         if (adapter != null) adapter.setItem(items);
     }
