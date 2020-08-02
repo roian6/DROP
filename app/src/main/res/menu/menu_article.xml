@@ -3,14 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_article_share"
+        android:title="게시물 공유"
+        android:icon="@drawable/ic_share_black_24dp"
+        app:showAsAction="ifRoom"
+        android:visible="true"/>
+
+    <item
         android:id="@+id/action_article_edit"
         android:title="게시물 수정"
         app:showAsAction="never"
         android:visible="false"/>
 
     <item
+        android:id="@+id/action_article_delete"
+        android:title="게시물 삭제"
+        app:showAsAction="never"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/action_article_resolve"
-        android:title="해결 완료"
+        android:title="해결 완료로 변경"
         app:showAsAction="never"
         android:visible="false"/>
 

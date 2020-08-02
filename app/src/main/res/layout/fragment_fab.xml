@@ -48,11 +48,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/constraint_fab_bottom"
-                    app:layout_constraintTop_toBottomOf="@id/view_fab_dot">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_fab_dot">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btn_fragfab_lost"
+                        isViewSelected="@{selected.equals(`lost`), default=false}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
@@ -62,7 +63,6 @@
                         android:backgroundTint="@android:color/white"
                         android:elevation="4dp"
                         android:padding="8dp"
-                        isViewSelected="@{selected.equals(`lost`), default=false}"
                         app:layout_constraintEnd_toStartOf="@id/btn_fragfab_found"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -80,13 +80,13 @@
 
                         <TextView
                             android:id="@+id/txt_fragfab_lost"
+                            isTextSelected="@{selected.equals(`lost`), default=false}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/apple_sd_gothic_neo_h"
                             android:text="물건 분실"
                             android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
-                            isTextSelected="@{selected.equals(`lost`), default=false}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +96,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btn_fragfab_found"
+                        isViewSelected="@{selected.equals(`found`), default=false}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -104,7 +105,6 @@
                         android:background="@drawable/round_box"
                         android:elevation="4dp"
                         android:padding="8dp"
-                        isViewSelected="@{selected.equals(`found`), default=false}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/btn_fragfab_lost"
                         app:layout_constraintTop_toTopOf="parent">
@@ -122,13 +122,13 @@
 
                         <TextView
                             android:id="@+id/txt_fragfab_found"
+                            isTextSelected="@{selected.equals(`found`), default=false}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/apple_sd_gothic_neo_h"
                             android:text="분실물 습득"
                             android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
-                            isTextSelected="@{selected.equals(`found`), default=false}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -137,24 +137,12 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_fab_bottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_fragfab_upload"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="12dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginTop="24dp"
                         android:background="@drawable/round_box"
                         android:backgroundTint="@color/colorPrimary"
                         android:fontFamily="@font/apple_sd_gothic_neo_h"
@@ -163,12 +151,12 @@
                         android:text="게시물 등록하기"
                         android:textColor="@android:color/white"
                         app:buttonEnabled="@{selected!=null}"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/btn_fragfab_lost" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
