@@ -14,10 +14,13 @@ import androidx.databinding.DataBindingUtil;
 import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.databinding.ActivityArticleBinding;
+import com.david0926.drop.fragment.MainFragment1;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.util.TokenCache;
 import com.david0926.drop.util.UserCache;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -125,6 +128,27 @@ public class ArticleActivity extends AppCompatActivity {
                         .setMessage("이 게시물을 삭제할까요? 삭제된 게시물은 복구할 수 없습니다.")
                         .setPositiveButton("확인", (dialogInterface, i) -> {
                             //gogo
+                            DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
+
+                            Call<ResponseBody> mCallResponse = mRetrofitAPI.DeletePost(TokenCache.getToken(this).getAccess(),model.get_id());
+                            mCallResponse.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    try {
+                                        String body = response.body().string();
+                                        MainFragment1.isNeedInit = true;
+                                        finish();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                }
+                            });
+
                         })
                         .setNegativeButton("취소", (dialogInterface, i) -> {
                         }).show();
