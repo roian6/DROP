@@ -95,6 +95,13 @@ public interface DROPRetrofitService {
             @Part("isImportant") RequestBody type
     );
 
+    @DELETE("v1/post/comment/{postid}/{commentindex}")
+    Call<ResponseBody> DeleteComment(
+            @Header("x-access-token") String token,
+            @Path("postid") String postid,
+            @Path("commentindex") String commentindex
+    );
+
     @GET("v1/post")
     Call<ResponseBody> getPosts(
             @Header("x-access-token") String token,
