@@ -40,7 +40,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/apple_sd_gothic_neo_h"
             android:includeFontPadding="false"
-            android:text="새로운 댓글"
+            android:text="@{item.title, default=`Noti Title`}"
             android:textColor="@color/materialGray7"
             android:textSize="18sp"
             app:layout_constrainedWidth="true"

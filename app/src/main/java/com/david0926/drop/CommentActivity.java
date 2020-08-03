@@ -2,6 +2,7 @@ package com.david0926.drop;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,11 +86,14 @@ public class CommentActivity extends AppCompatActivity {
                                 target = cm;
                         }
 
-                        Call<ResponseBody> mCallResponse = mRetrofitAPI.DeleteComment(TokenCache.getToken(this).getAccess(), article.get_id(), Integer.toString(commentItems.indexOf(target))); // 인덱스 번호 전송
+                        Log.d("debuggg", "onCreate: "+commentItems.indexOf(target));
+                        Call<ResponseBody> mCallResponse = mRetrofitAPI.DeleteComment(TokenCache.getToken(this).getAccess(), article.get_id(), String.valueOf(commentItems.indexOf(target))); // 인덱스 번호 전송
                         mCallResponse.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 try {
+                                    String body = response.body().string();
+                                    Log.d("whyyy", "onResponse: noo"+body);
                                     refreshComment();
                                 } catch (Exception e) {
                                     e.printStackTrace();

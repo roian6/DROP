@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -40,6 +41,12 @@ public class ArticleActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbarArticle);
 
         model = (ArticleModel) getIntent().getSerializableExtra("article");
+        if(model==null) {
+            Toast.makeText(this, "삭제된 게시물입니다.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         binding.setItem(model);
 
         if (getIntent().getBooleanExtra("to_comment", false)) showComment(false);

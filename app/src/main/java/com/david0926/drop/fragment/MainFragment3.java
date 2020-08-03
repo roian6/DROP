@@ -67,7 +67,7 @@ public class MainFragment3 extends Fragment {
         adapter.setOnItemClickListener((view, item) -> {
             Intent intent = new Intent(mContext, ArticleActivity.class);
             intent.putExtra("article", item.getPost());
-            intent.putExtra("to_comment", true);
+            intent.putExtra("to_comment", item.getTitle().contains("댓글"));
             startActivity(intent);
         });
         adapter.setOnItemLongClickListener((view, item) -> true);
