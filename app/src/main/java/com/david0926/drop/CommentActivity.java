@@ -1,5 +1,6 @@
 package com.david0926.drop;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 
@@ -12,10 +13,12 @@ import com.david0926.drop.Retrofit.DROPRetrofit;
 import com.david0926.drop.Retrofit.DROPRetrofitService;
 import com.david0926.drop.adapter.CommentAdapter;
 import com.david0926.drop.databinding.ActivityCommentBinding;
+import com.david0926.drop.fragment.MainFragment1;
 import com.david0926.drop.model.ArticleModel;
 import com.david0926.drop.model.CommentModel;
 import com.david0926.drop.util.LinearLayoutManagerWrapper;
 import com.david0926.drop.util.TokenCache;
+import com.david0926.drop.util.UserCache;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -67,16 +70,40 @@ public class CommentActivity extends AppCompatActivity {
 
         });
         adapter.setOnItemLongClickListener((view, item) -> {
-//            if (!item.getUser().get_id().equals(UserCache.getUser(this).get_id())) return false;
-//
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("댓글 삭제하기")
-//                    .setMessage("이 댓글을 삭제할까요?")
-//                    .setPositiveButton("삭제", (dialogInterface, i) -> {
-//                        //여기에 댓글 삭제 구현
-//                    })
-//                    .setNegativeButton("취소", (dialogInterface, i) -> {});
-//            builder.show();
+            if (!item.getUser().get_id().equals(UserCache.getUser(this).get_id())) return false;
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("댓글 삭제하기")
+                    .setMessage("이 댓글을 삭제할까요?")
+                    .setPositiveButton("삭제", (dialogInterface, i) -> {
+                        //여기에 댓글 삭제 구현
+                        DROPRetrofitService mRetrofitAPI = DROPRetrofit.getInstance(this).getDropService();
+
+                        CommentModel target = null;
+                        for(CommentModel cm : commentItems) { // 길게 눌렀던 댓글의 인덱스 번호를 확인하기 위해 댓글리스트에서 해당 댓글 검색
+                            if(cm.get_id().equals(item.get_id()))
+                                target = cm;
+                        }
+
+                        Call<ResponseBody> mCallResponse = mRetrofitAPI.DeleteComment(TokenCache.getToken(this).getAccess(), article.get_id(), Integer.toString(commentItems.indexOf(target))); // 인덱스 번호 전송
+                        mCallResponse.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    refreshComment();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                    })
+                    .setNegativeButton("취소", (dialogInterface, i) -> {});
+            builder.show();
 
             return true;
         });
